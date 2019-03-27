@@ -8,6 +8,7 @@ import vipmember from '../components/VipMember/VipMember'
 import singlevideo from '../components/SingleVideo/SingleVideo'
 import vipsuccessful from '../components/VipSuccessful/VipSuccessful'
 import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
+import shoppingmall from '../components/ShoppingMall/ShoppingMall'
 
 export default [
     {
@@ -59,6 +60,10 @@ export default [
     {
       path:'/videosuccessful',
       component:videosuccessful,
+    },
+    {
+      path:'/shoppingmall',
+      component:shoppingmall,
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面

@@ -19,7 +19,7 @@
     </div>
     <div>
     <div class="liveSharing_nva">
-          <div class="liveSharing_nvatitle">2016天亮到天黑做一场真正的路演</div>
+          <div class="liveSharing_nvatitle" @click="shopping">2016天亮到天黑做一场真正的路演</div>
           <span class="liveSharing_nvapeople">观看人数：5727人</span>
           <span  class="liveSharing_nvastart"></span>
     </div>
@@ -153,6 +153,11 @@
             document.getElementsByTagName("body")[0].removeEventListener('touchmove',
                this.handler,{passive:false});//打开默认事件
           },  
+          shopping(){
+            this.$router.push({
+              path:'/shoppingmall'
+            })
+          }
     },
     // destroyed () {
     //       window.removeEventListener('scroll', this.handleScrollfoot)
