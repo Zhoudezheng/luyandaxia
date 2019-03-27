@@ -82,6 +82,8 @@
     mounted(){
          this.setVideo();
          this.box = this.$refs.wo;
+         //获取直播信息
+         this.$store.dispatch('getliveData')
          this.box.addEventListener('scroll', () => {
          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
           if (this.$refs.wo.scrollTop+180 > offsetTop) {
@@ -152,9 +154,9 @@
                this.handler,{passive:false});//打开默认事件
           },  
     },
-    destroyed () {
-          window.removeEventListener('scroll', this.handleScrollfoot)
-    },
+    // destroyed () {
+    //       window.removeEventListener('scroll', this.handleScrollfoot)
+    // },
 }
 </script>
 

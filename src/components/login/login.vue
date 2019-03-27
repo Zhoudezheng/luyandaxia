@@ -40,6 +40,7 @@
 
 <script>
   import { reqPwdLogin} from '../../api'
+  import { Toast, MessageBox } from 'mint-ui'
   import Vue from 'vue'
   export default {
    data(){
@@ -81,9 +82,7 @@
      login(){
        this.$router.push({  
         //  回到注册页面
-        // path:'/',
-        // 测试直播分享页面
-            path:'/liveSharing',
+        path:'/',
       })
    },
    
@@ -100,7 +99,7 @@
         const {username, password} = this
         let result
           // 2. 发送登陆的请求
-        result = await reqPwdLogin(username, password)
+        result = await reqPwdLogin(username, password);
          if (!password) {
             return MessageBox.alert('密码必须指定')
           } 
@@ -108,7 +107,9 @@
         // 2. 根据请求返回的结果, 做不同的响应
         if(result.code===200) { // 登陆请求成功
           // 保存user到state中
-          const user = result.data
+          const user = result.data;
+          const userToken =result.data.token;
+          this.$store.dispatch('getUserData', userToken)
           // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
           this.$router.replace('/liveSharing')
