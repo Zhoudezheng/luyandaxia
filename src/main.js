@@ -21,7 +21,7 @@ Vue.use('/api',proxy({
   changeOrigin:true
 }));
 Vue.use(VueVideoPlayer);
-Vue.use(Mint)
+Vue.use(Mint);
 Vue.config.productionTip = false
 
 window.onresize = setHtmlFontSize;

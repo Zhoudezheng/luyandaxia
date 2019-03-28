@@ -47,7 +47,7 @@
           <span class="content_total">总计</span>
           <span class="content_mony">¥28.00</span>
         </div>
-        <input type="button" value="去支付" class="buy_link" @click="singlevideo">
+        <input type="button" value="去支付" class="buy_link" @click="singlevideoed">
     </div>
   </div>
 </template>
@@ -59,15 +59,13 @@
             activeClass:1
         }
     },
-    mounted(){
-    },
     methods: {
         liveSharing(){
             this.$router.push({  
                 path:'/liveSharing',
             })
         },
-        singlevideo(){
+        singlevideoed(){
             this.$router.push({  
                 path:'/videosuccessful',
             })
@@ -78,9 +76,7 @@
         showactives(){
            this.activeClass=2
         }
-    },
-    destroyed () {
-    },
+    }
 }
 </script>
 

@@ -61,9 +61,9 @@
       },
       /***取消滑动限制***/
     },
-     destroyed () {
-        document.body.removeEventListener('touchmove',mo, { passive: false });
-    },
+    //  destroyed () {
+    //     document.body.removeEventListener('touchmove',mo, { passive: false });
+    // },
   }
 </script>
 
