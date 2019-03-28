@@ -1,22 +1,22 @@
 <template>
   <div class="footer_guide border-1px">
-    <span class="guide_item" :class="{on: $route.path==='/shoppingmall'}" @click="goTo('/shoppingmall')">
-      <span class="item_icon">
-        <i class="iconfont icon-waimai"></i>
+    <span class="guide_item"  @click="goTo('/shoppingmall')">
+      <span class="item_icona" :class="{ona: $route.path==='/shoppingmall'}">
+        <!-- <i class="iconfont icon-waimai"></i> -->
       </span>
-      <span class="span_a">商场</span>
+      <span class="span_a" :class="{ona: $route.path==='/shoppingmall'}">商场</span>
     </span>
-    <a href="javascript:;" class="guide_item"  :class="{on: $route.path==='/shoppingcart'}" @click="goTo('/shoppingcart')">
-      <span class="item_icon">
-        <i class="iconfont icon-search"></i>
+    <a href="javascript:;" class="guide_item"   @click="goTo('/shoppingcart')">
+      <span class="item_iconb" :class="{ona: $route.path==='/shoppingcart'}">
+        <!-- <i class="iconfont icon-search"></i> -->
       </span>
-      <span class="span_a">购物车</span>
+      <span class="span_a" :class="{ona: $route.path==='/shoppingcart'}">购物车</span>
     </a>
-    <a href="javascript:;" class="guide_item"  :class="{on: $route.path==='/'}" @click="goTo('/')">
-      <span class="item_icon">
-        <i class="iconfont icon-geren"></i>
+    <a href="javascript:;" class="guide_item"   @click="goTo('/')">
+      <span class="item_iconc" :class="{ona: $route.path==='/'}">
+        <!-- <i class="iconfont icon-geren"></i> -->
       </span>
-      <span class="span_a">我的</span>
+      <span class="span_a" :class="{on: $route.path==='/'}">我的</span>
     </a>
   </div>
 </template>
@@ -51,8 +51,50 @@
       margin-top:21px;
       color :#999999;
 }
-.on{
-    color: rgba(243, 117, 5, 1)
+.item_icona{
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/shoppcheck.png');
+  background-size: 35px 35px;
+}
+.item_icona.ona{
+   display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/mycheck.png');
+  background-size: 35px 35px;
+}
+.item_iconb{
+   display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/mallcheck.png');
+  background-size: 35px 35px;
+}
+.item_iconb.ona{
+   display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/mallchecked.png');
+  background-size: 35px 35px;
+}
+.item_iconc{
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/mycheck.png');
+  background-size: 35px 35px;
+}
+.item_iconc.ona{
+   display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url('./image/mychecked.png');
+  background-size: 35px 35px;
+}
+.span_a.ona{
+    color: rgba(243, 117, 5, 1);
 }
 .guide_item .span_a{
      font-size :12px;
