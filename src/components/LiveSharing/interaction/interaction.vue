@@ -67,7 +67,7 @@
   }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../../static/font/font.css';
   /* .interaction{
      height:100%;

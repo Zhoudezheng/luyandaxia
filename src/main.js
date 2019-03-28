@@ -12,6 +12,10 @@ import VueVideoPlayer from 'vue-video-player'
 import proxy from 'http-proxy-middleware'
 import 'video.js/dist/video-js.css';
 import 'vue-video-player/src/custom-theme.css';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use('/api',proxy({
   target:'http://47.93.41.61',
   changeOrigin:true

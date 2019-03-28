@@ -9,7 +9,8 @@ import singlevideo from '../components/SingleVideo/SingleVideo'
 import vipsuccessful from '../components/VipSuccessful/VipSuccessful'
 import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
 import shoppingmall from '../components/ShoppingMall/ShoppingMall'
-
+import shoppingcart from '../components/ShoppingCart/ShoppingCart'
+ 
 export default [
     {
       path: '/',
@@ -62,8 +63,18 @@ export default [
       component:videosuccessful,
     },
     {
+      path:'/shoppingcart',
+      component:shoppingcart,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
       path:'/shoppingmall',
       component:shoppingmall,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面

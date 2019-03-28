@@ -181,7 +181,7 @@
 }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../static/font/font.css';
   .register_header img{
     width: 160px;

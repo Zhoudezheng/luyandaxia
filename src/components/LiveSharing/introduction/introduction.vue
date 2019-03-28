@@ -57,7 +57,7 @@
   }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../../static/font/font.css';
   .introduction_title {
     text-align: left;

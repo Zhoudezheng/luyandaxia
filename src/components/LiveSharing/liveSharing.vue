@@ -93,7 +93,6 @@
                  this.nvaBarFixed = false
           }
         },true)
-        window.addEventListener('scroll', this.handleScrollfoot,true);
     },
     methods: {
           setVideo(){
@@ -118,18 +117,6 @@
                        13: '直播已经结束，请稍后再来'
                 }
             })
-          },
-          handleScrollfoot () {
-              let sh = document.getElementById('aaa').scrollHeight
-              let st = document.documentElement.scrollTop
-              let ch = document.documentElement.clientHeight
-	          if (Math.ceil(st + ch) > sh) {
-		         this.footBarFixed = false
-               }else if(ch==sh || st == 0){
-                 this.footBarFixed = true
-               }else{
-                 this.footBarFixed = true
-               }
           },
           showBuyMask(){
             this.closeTouch();
@@ -165,7 +152,7 @@
 }
 </script>
 
-<style  scoped>
+<style scoped>
   @import '../../../static/font/font.css';
 .aaaaa{
       height: 100%;
@@ -217,7 +204,7 @@
     margin-top: 32px;
     margin-left: 120px;
     vertical-align: middle;
-    width:232px;
+    /* width:232px; */
     height:67px;
     background:rgba(5,5,5,1);
     border-radius:42px;

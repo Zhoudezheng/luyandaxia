@@ -43,7 +43,7 @@
   }
 </script>
 
-<style  lscoped>
+<style  scoped>
   @import '../../../../static/font/font.css';
   .recommend_list{
     height: 183px;
