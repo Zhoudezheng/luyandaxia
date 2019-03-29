@@ -10,6 +10,7 @@ import vipsuccessful from '../components/VipSuccessful/VipSuccessful'
 import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
 import shoppingmall from '../components/ShoppingMall/ShoppingMall'
 import shoppingcart from '../components/ShoppingCart/ShoppingCart'
+import personalcenter from '../components/PersonalCenter/PersonalCenter'
  
 export default [
     {
@@ -72,6 +73,13 @@ export default [
     {
       path:'/shoppingmall',
       component:shoppingmall,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/personalcenter',
+      component:personalcenter,
       meta: {
         isShow: true // 标识显示底部导航
       }

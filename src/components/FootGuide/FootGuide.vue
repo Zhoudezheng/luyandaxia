@@ -12,11 +12,11 @@
       </span>
       <span class="span_a" :class="{ona: $route.path==='/shoppingcart'}">购物车</span>
     </a>
-    <a href="javascript:;" class="guide_item"   @click="goTo('/')">
-      <span class="item_iconc" :class="{ona: $route.path==='/'}">
+    <a href="javascript:;" class="guide_item"   @click="goTo('/personalcenter')">
+      <span class="item_iconc" :class="{ona: $route.path==='/personalcenter'}">
         <!-- <i class="iconfont icon-geren"></i> -->
       </span>
-      <span class="span_a" :class="{on: $route.path==='/'}">我的</span>
+      <span class="span_a" :class="{ona: $route.path==='/personalcenter'}">我的</span>
     </a>
   </div>
 </template>
