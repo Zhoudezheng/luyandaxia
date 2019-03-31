@@ -11,7 +11,7 @@
             <img src="./video/shuaxin.png" alt="刷新">
             <a href="#">重新试看</a>
         </div>
-        <input type="text" class="masklive_input" value="开通VIP会员" @click="vipmember">
+        <input type="text" class="masklive_input" value="开通VIP会员" @click="membership">
         <div class="masklive_buy">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
@@ -127,10 +127,15 @@
             this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo
             
           },
-          vipmember(){
-            this.$router.push({  
-                path:'/vipmember',
-            })
+        //   vipmember(){
+        //     this.$router.push({  
+        //         path:'/vipmember',
+        //     })
+        //   },
+          membership(){
+              this.$router.replace({
+                  path:'/membership'
+              })
           },
           closeTouch(){
             document.getElementsByTagName("body")[0].addEventListener('touchmove',

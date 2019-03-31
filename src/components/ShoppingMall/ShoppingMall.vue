@@ -329,7 +329,7 @@
     background-color: #eeeeee;
 }
 .shopping_footer{
-    margin-bottom: 109px;
+    margin-bottom: 120px;
 }
 .shopping_list{
     height: 183px;

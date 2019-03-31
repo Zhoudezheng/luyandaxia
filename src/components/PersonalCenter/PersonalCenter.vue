@@ -7,7 +7,7 @@
       <div class="personal_head">
           <img src="./image/kishi.jpg" alt="头像" class="head_pert">
           <div class="head_cont">
-            <p class="head_name">张三</p>
+            <p class="head_name" @click="toAccount">张三</p>
             <span class="head_vip"> 普通会员</span>
           </div>
           <span class="head_adress">管理收货地址</span>
@@ -63,6 +63,13 @@
 
 <script>
 export default {
+    methods:{
+        toAccount(){
+            this.$router.push({
+                path:'/account'
+            })
+        }
+    }
 }
 </script>
 

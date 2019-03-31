@@ -123,7 +123,7 @@
 		watch: {
 			'goodLits': {
 				handler: function (val, oldVal) {
-                    // console.log(val)
+                    console.log('aaa',val)
 					return val;
 				},
 				deep: true
@@ -228,7 +228,12 @@
     height: 1334px;
 }
 .shoppingcart_div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 91px;
+    z-index: 10;
     background-color: #ffffff;
 }
 .shoppingcart_div .shoppingcart_check{
@@ -279,6 +284,7 @@ input::-webkit-input-placeholder{
 }
 .car-list {
 	background: #ffffff;
+    margin-top: 92px;
 }
 .car-item{
 	border-bottom :1px solid #ddd;

@@ -11,7 +11,10 @@ import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
 import shoppingmall from '../components/ShoppingMall/ShoppingMall'
 import shoppingcart from '../components/ShoppingCart/ShoppingCart'
 import personalcenter from '../components/PersonalCenter/PersonalCenter'
- 
+import account from '../components/Account/Account' 
+import membership from '../components/Membership/Membership'
+
+
 export default [
     {
       path: '/',
@@ -83,6 +86,14 @@ export default [
       meta: {
         isShow: true // 标识显示底部导航
       }
+    },
+    {
+      path:'/account',
+      component:account,
+    },
+    {
+      path:'/membership',
+      component:membership,
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面
