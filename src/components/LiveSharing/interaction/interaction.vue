@@ -61,13 +61,13 @@
       },
       /***取消滑动限制***/
     },
-     destroyed () {
-        document.body.removeEventListener('touchmove',mo, { passive: false });
-    },
+    //  destroyed () {
+    //     document.body.removeEventListener('touchmove',mo, { passive: false });
+    // },
   }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../../static/font/font.css';
   /* .interaction{
      height:100%;

@@ -7,7 +7,7 @@
       </div>
       <p class="vip_mony">
          <span class="mony_a">¥</span>
-         <span class="mony_b">{{this.price}}</span>
+         <span class="mony_b">28.00</span>
       </p>
       <p class="vip_Member">购买VIP年费会员</p>
     </div>
@@ -33,12 +33,10 @@
   export default {
     data(){
         return {
-             activeClass:1,
-             price:"0.00"
+             activeClass:1
         }
     },
     mounted(){
-        this.price = this.$route.query.cost
     },
     methods: {
         liveSharing(){

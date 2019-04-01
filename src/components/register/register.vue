@@ -133,7 +133,7 @@
           //   return MessageBox.alert('验证码必须是6位数字')
           // }
           // 2. 发送登陆的请求
-          result = await reqSmsLogin('小路',phone, code,password)
+          result = await reqSmsLogin(phone, code,password)
           if(result.code!==0) {
             // 停止计时
             this.computeTime = 0
@@ -181,7 +181,7 @@
 }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../static/font/font.css';
   .register_header img{
     width: 160px;

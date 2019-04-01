@@ -5,22 +5,22 @@
       <div class="purchase_details">
          <div class="purchase_list">
             <img src="./image/kishi.jpg" alt="1111">
-            <a href="#" class="list_a1">{{this.detail.title}}</a>
-            <a href="#" class="list_a2">{{this.detail.address}}</a>
+            <a href="#" class="list_a1">《如何在路演BP中进行高…</a>
+            <a href="#" class="list_a2">北京是丰台区中核路1号赛欧科技园孵化中心3号楼11层-路演室</a>
          </div>
          <div class="purchase_lines"></div>
-         <p class="purchase_content">{{this.detail.info}}</p>
+         <p class="purchase_content">2018年，5G、人工智能是TMT行业离不开的热词，各种新兴科技给这一年带来了许多惊喜，或将颠覆未来、引领我们进入新时代。此外，市场竞争的激烈迫使各大…</p>
          <div class="purchase_linesed"></div>
          <button type="button" :class="activeClass == 1 ? 'purchase_button':'purchase_buttoned'" @click="showactive">
            <span class="button_span">VIP会员</span>
            <span class="button_Vip">（所有全免费）</span>
-           <span class="button_money">¥{{this.vip_price}}</span>
+           <span class="button_money">¥128.00</span>
            <img src="./image/Group.png" alt="已勾选" v-show="activeClass == 1">
          </button>
           <button type="button" :class="activeClass == 2 ? 'purchase_button':'purchase_buttoned'" @click="showactives" >
            <span class="button_span">购买视频</span>
-           <span class="button_Vip">（本视频{{this.detail.viewing_time}}小时免费看）</span>
-           <span class="button_money">¥{{this.video_price}}</span>
+           <span class="button_Vip">（本视频24小时免费看）</span>
+           <span class="button_money">¥88.00</span>
            <img src="./image/Group.png" alt="已勾选" v-show='activeClass == 2'> 
          </button>
          <div class="purchase_quanyi">
@@ -35,7 +35,7 @@
       <div class="purchase_buy">
         <div class="buy_content">
          <span class="content_total">总计</span>
-         <span class="content_mony">¥{{this.tatal_cost}}</span>
+         <span class="content_mony">¥128.00</span>
         </div>
          <input type="button" value="购买视频" class="buy_link" @click="singlevideo">
       </div>
@@ -46,57 +46,30 @@
   export default {
     data(){
       return{
-        activeClass:1,
-        tatal_cost:"0.00",
-        vip_price:"128.00",
-        video_price:"0.00",
+        activeClass:1
     }
-    },
-    computed: {
-    detail: {
-        get:function () {
-            return this.$store.state.detail;
-        },
-        set:function(){
-            this.detail = this.$store.state.detail
-        }
-    }
-    },
-    mounted(){
-      if(this.activeClass == 1){
-         this.tatal_cost = this.vip_price
-      }else{
-        this.tatal_cost = this.video_price
-      }
-      setTimeout(()=>{
-          this.video_price = this.detail.individual_cost
-      },1000)
     },
     methods:{
       cancelVideo(){
         this.$emit('getcacel',false)
       },
       singlevideo(){
-        //console.log("cost",this.tatal_cost)
         if(this.activeClass ==1){
              this.$router.push({  
               path:'/vipmember',
-              query:{cost:this.tatal_cost}
             })
         }else{
             this.$router.push({  
-              path:'/singlevideo'
+              path:'/singlevideo',
             })
         }
          
       },
       showactive(){
         this.activeClass=1
-        this.tatal_cost = this.vip_price
       },
        showactives(){
         this.activeClass=2
-        this.tatal_cost = this.video_price
       }
     }
   }

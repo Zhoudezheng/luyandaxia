@@ -12,15 +12,16 @@ import VueVideoPlayer from 'vue-video-player'
 import proxy from 'http-proxy-middleware'
 import 'video.js/dist/video-js.css';
 import 'vue-video-player/src/custom-theme.css';
-import  VueResource  from 'vue-resource'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
-Vue.use(VueResource) 
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use('/api',proxy({
-  target:'http://47.95.224.184',
+  target:'http://47.93.41.61',
   changeOrigin:true
 }));
 Vue.use(VueVideoPlayer);
-Vue.use(Mint)
+Vue.use(Mint);
 Vue.config.productionTip = false
 
 window.onresize = setHtmlFontSize;
@@ -31,31 +32,25 @@ function setHtmlFontSize(){
 };
 setHtmlFontSize();
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  if(to.meta.requireAuth){ //判断该路由是否需要登录权限
-    console.log("auth")
-    if(store.state.Authorization){
-      next()
-    }else{
-      next({
-        path:'/login',
-        query:{redirect:to.fullPath}//{path:to.path,query:to.query}},
-      })
-      console.log(to.fullPath)
+  if (to.path === '/login') {
+    next();
+  } else {
+    let token = localStorage.getItem('Authorization');
+    if (token === null || token === '') {
+      next('/login');
+    } else {
+      next();
     }
-  }else{
-    next()
   }
 });
 /* eslint-disable no-new */
-//Axios.defaults.headers.common['Authentication-Token'] = store.state.Authorization;
+Axios.defaults.headers.common['Authentication-Token'] = store.state.token;
 // 添加请求拦截器
 Axios.interceptors.request.use(config => {
   // 在发送请求之前做些什么
   //判断是否存在token，如果存在将每个页面header都添加token
-  if(store.state.Authorization){
-    config.headers.common['Authentication-Token']=store.state.Authorization
-    console.log(store.state.Authorization)
+  if(store.state.token){
+    config.headers.common['Authentication-Token']=store.state.token
   } 
   return config;
   }, error => {
@@ -65,21 +60,22 @@ Axios.interceptors.request.use(config => {
    
   // http response 拦截器
   Axios.interceptors.response.use(
-    response => {
-    
-    return response;
-    },
-    error => {
+      response => {
+      
+      return response;
+      },
+      error => {
+      
       if (error.response) {
       switch (error.response.status) {
-        case 401,400:
-        this.$store.dispatch('del_token');
-        router.replace({
-        path: '/login',
-        query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+      case 401:
+      this.$store.dispatch('del_token');
+      router.replace({
+      path: '/login',
+      query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
       })
-    }
-  }
+      }
+      }
   return Promise.reject(error.response.data)
   });
   

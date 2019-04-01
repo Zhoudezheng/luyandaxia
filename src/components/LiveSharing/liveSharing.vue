@@ -9,39 +9,39 @@
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
         <div class="masklive_div">
             <img src="./video/shuaxin.png" alt="刷新">
-            <a href="#" @click="reWatch">重新试看</a>
+            <a href="#">重新试看</a>
         </div>
-        <input type="text" class="masklive_input" value="开通VIP会员" @click="vipmember">
-        <div class="masklive_buy" v-show="is_vip">
+        <input type="text" class="masklive_input" value="开通VIP会员" @click="membership">
+        <div class="masklive_buy">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
         </div>
     </div>
     <div>
     <div class="liveSharing_nva">
-          <div class="liveSharing_nvatitle">{{this.detail.title}}</div>
-          <span class="liveSharing_nvapeople">观看人数：{{this.detail.pv}}人</span>
-          <span  :class="is_collection?'liveSharing_nvastart':'liveSharing_nvastart_down'" @click="shoucang"></span>
+          <div class="liveSharing_nvatitle" @click="shopping">2016天亮到天黑做一场真正的路演</div>
+          <span class="liveSharing_nvapeople">观看人数：5727人</span>
+          <span  class="liveSharing_nvastart"></span>
     </div>
     <div class="liveSharing_row"></div>
     <div class="liveSharing_user">
-          <img :src="this.detail.publisher_avatar" class="liveuser_toen">
-          <span class="liveuser_span">{{this.detail.publisher_name}}</span>
-          <span class="liveuser_fensi">{{this.detail.publisher_fans}}个粉丝</span>
+          <img src="./video/Bitmap.png" class="liveuser_toen">
+          <span class="liveuser_span">路演兵法</span>
+          <span class="liveuser_fensi">430个粉丝</span>
           <div class="liveuser_sub">
-               <input class="liveuser_button" type="button" v-model=this.dingyue @click.prevent="liveuserToen">
+               <input class="liveuser_button" type="button" value=" + 订阅" @click.prevent="liveuserToen">
           </div>
     </div>
     <div class="liveSharing_row" :class=" nvaBarFixed === true ? 'nva_FixedRow' :''"></div>
     <div class="livSharing_router" id='nav_flexed' :class=" nvaBarFixed === true ? 'nva_Fixed' :''" >
 			<span class="liveSharing_roterone">
-                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍</router-link>
+                <router-link to='introduction' exact>介绍</router-link>
             </span>
 			<span class="liveSharing_rotertwo">
-                <router-link to='Interaction'>互动</router-link>
+                <router-link to='Interaction' exact>互动</router-link>
             </span>
 			<span class="liveSharing_roterthree">
-                <router-link :to="{path:'recommend',query:{id:this.detail.id}}">推荐</router-link>
+                <router-link to='recommend' exact>推荐</router-link>
             </span>	
 	</div>
     <div class='liveSharing_route' :class=" nvaBarFixed === true ? 'nva_Fixeded' :''">
@@ -64,25 +64,14 @@
 </template>
 
 <script>
-  import { reqDingyue,reqShoucang} from '../../api'
   import purchase from './PurchaseVideo/PurchaseVideo.vue'
-  import { Toast } from 'mint-ui';
   export default {
     data(){
         return {
             nvaBarFixed:false,
             footBarFixed:true,
-            isShowLive:false,
+            isShowLive:true,
             isBuyVideo:false,
-            computeTime:0,
-            currentTime:0,
-            is_vip:true,
-            dingyue:'',
-            is_subscribe:false,
-            is_collection:false,
-            video:{},
-            player:{},
-            vip_price:"128.00",
             handler:function(e){e.preventDefault();},
            
         }
@@ -90,58 +79,11 @@
     components:{
         "purchase":purchase
     },
-    watch:{
-        currentTime:{
-            deep: true,
-            handler: function (val){
-                //判断是否能看，能看则播放，不能看则判断试看时间
-                // if(this.detail.can_watch === 0)
-                // {
-                    if(val >= this.computeTime){
-                        this.player.pause()
-                        this.isShowLive = true
-                    }
-                // }
-            }
-        }
-    },
-    computed: {
-    detail: {
-        get:function () {
-            return this.$store.state.detail;
-        },
-        set:function(){
-            this.detail = this.$store.state.detail
-        }
-    }
-    },
     mounted(){
-        //获取直播id
-         let id = this.$route.query.id
-        //获取直播信息
-         this.$store.dispatch('getliveData',id)
-          setTimeout(()=>{
-            this.setVideo();
-            //判断是否显示购买单个视频
-            if(this.detail.is_vip === 2)
-            {
-                this.is_vip = false
-            }
-            //是否订阅
-            this.is_subscribe = this.detail.is_subscribe===0?false:true
-            if(!this.is_subscribe){
-                this.dingyue = "+ 订阅"
-            }else{
-                this.dingyue = "已订阅"
-            }
-            //是否收藏
-            this.is_collection = this.detail.is_collection===0?false:true
-            
-         },1000)
-        //   setTimeout(()=>{
-        //     this.tryPlay()
-        // },1000)
+         this.setVideo();
          this.box = this.$refs.wo;
+         //获取直播信息
+         this.$store.dispatch('getliveData')
          this.box.addEventListener('scroll', () => {
          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
           if (this.$refs.wo.scrollTop+180 > offsetTop) {
@@ -151,49 +93,21 @@
                  this.nvaBarFixed = false
           }
         },true)
-         window.addEventListener('scroll', this.handleScrollfoot,true);
     },
-    
     methods: {
-        // 直播时试看
-        // tryPlay() {
-        // // 开始倒计时
-        // // 启动循环定时器
-        
-        // //this.computeTime = this.$store.state.detail.preview_at
-        // if(this.$store.state.status === 1)
-        // {
-        //     const intervalId = setInterval(() => {
-        //     // 时间减1
-        //     this.computeTime--
-        //     // 一旦时间到了0, 停止计时
-        //     if(this.computeTime <= 0 ) {
-        //         this.isShowLive = true
-        //         this.computeTime = 0
-        //         this.player.pause();
-        //         clearInterval(intervalId)
-        //     }
-        //     }, 1000)
-        // }else{
-        //     var current = this.player.currentTime()
-        // }
-        // },
           setVideo(){
-               this.video = this.$store.state.videoUrl
-               this.computeTime = this.$store.state.detail.preview_at
-               console.log(this.video)
-                this.player =new TcPlayer('id_test_video', {
-                 "mp4":this.video.mp4,
-                "rtmp":this.video.rtmp,
-                 "m3u8":this.video.m3u8,
-                 "flv":this.video.flv, //请替换成实际可用的播放地址
+                const player = new TcPlayer('id_test_video', {
+                "mp4":'',
+                "rtmp":'rtmp://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4',
+                "m3u8":"http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
+                "flv":"http://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4.flv", //请替换成实际可用的播放地址
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
-                "coverpic" : {"style": "cover", "src":this.detail.cover},
-                "live":this.$store.state.detail.status === 1?true:false,
+                "coverpic" : {"src":"./video/Bitmap.png"},
+                "live":true,
                 "flash":true,
                 "h5_flv":true,
                 "x5_player":true,
-                "controls":"default",
+                "controls":"system",
                 "systemFullscreen":true,
                 // "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
                 "height" : '200px',//视频的显示高度，请尽量使用视频分辨率高度
@@ -201,56 +115,8 @@
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
                        13: '直播已经结束，请稍后再来'
-                },
-                "listener":(msg)=>{
-                    console.log(msg.src.el.currentTime)
-                    this.currentTime = msg.src.el.currentTime
-                    console.log("time:"+this.currentTime)
                 }
             })
-          },
-          async liveuserToen(){
-              
-            var result = await reqDingyue(this.$store.state.Authorization,this.detail.publisher_id)
-
-            if (result.code === 200) {
-                Toast(result.msg);
-                this.is_subscribe = !this.is_subscribe
-                if(!this.is_subscribe){
-                    this.dingyue = "+ 订阅"
-                }else{
-                    this.dingyue = "已订阅"
-                }
-            }
-          },
-          async shoucang(){
-              var result = await reqShoucang(this.$store.state.Authorization,"1",this.detail.id)
-
-            if (result.code === 200) {
-                Toast(result.msg);
-                this.is_collection = !this.is_collection
-            }
-          },
-          reWatch(){
-              this.player.play();
-            //   if(this.$store.state.detail.status != 1)
-            //   {
-                  this.player.currentTime(0)
-            //   }
-              
-              this.isShowLive = false;
-          },
-          handleScrollfoot () {
-              let sh = document.getElementById('aaa').scrollHeight
-              let st = document.documentElement.scrollTop
-              let ch = document.documentElement.clientHeight
-	          if (Math.ceil(st + ch) > sh) {
-		         this.footBarFixed = false
-               }else if(ch==sh || st == 0){
-                 this.footBarFixed = true
-               }else{
-                 this.footBarFixed = true
-               }
           },
           showBuyMask(){
             this.closeTouch();
@@ -261,11 +127,15 @@
             this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo
             
           },
-          vipmember(){
-            this.$router.push({  
-                path:'/vipmember',
-                query:{cost:this.vip_price}
-            })
+        //   vipmember(){
+        //     this.$router.push({  
+        //         path:'/vipmember',
+        //     })
+        //   },
+          membership(){
+              this.$router.replace({
+                  path:'/membership'
+              })
           },
           closeTouch(){
             document.getElementsByTagName("body")[0].addEventListener('touchmove',
@@ -275,10 +145,12 @@
             document.getElementsByTagName("body")[0].removeEventListener('touchmove',
                this.handler,{passive:false});//打开默认事件
           },  
+          shopping(){
+            this.$router.push({
+              path:'/shoppingmall'
+            })
+          }
     },
-    destroyed () {
-          window.removeEventListener('scroll', this.handleScrollfoot)
-    }
 }
 </script>
 
@@ -334,7 +206,7 @@
     margin-top: 32px;
     margin-left: 120px;
     vertical-align: middle;
-    width:232px;
+    /* width:232px; */
     height:67px;
     background:rgba(5,5,5,1);
     border-radius:42px;
@@ -393,13 +265,12 @@
 .liveSharing_nvatitle{
     width:618px;
     height:56px;
-    margin: 36px 104px 0 28px;
+    margin: 35px 104px 0 28px;
     font-size:40px;
     font-family:PingFangSC-Semibold;
     font-weight:600;
     color:rgba(74,74,74,1);
     line-height:56px;
-    text-align: left;
 }   
 .liveSharing_nva .liveSharing_nvapeople{
     /* display: inline-block; */
@@ -419,16 +290,6 @@
     height: 31px;
     margin: 32px 28px 36px 0;
     background-image: url('./video/shoucang.png');
-    background-size: 32px 31px;
-    outline: none
-}
-.liveSharing_nva .liveSharing_nvastart_down{
-    float:right;
-    /* display: inline-block; */
-    width: 32px;
-    height: 31px;
-    margin: 32px 28px 36px 0;
-    background-image: url('./video/shoucang_down.png');
     background-size: 32px 31px;
     outline: none
 }

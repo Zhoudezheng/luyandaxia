@@ -8,7 +8,8 @@ import axios from 'axios'
 export default function ajax(url, data={}, method='GET') {
   return new Promise((resolve, reject) => {
     let promise
-    //return axios.get(url, {params: data})
+    if(method==='GET') {
+      //return axios.get(url, {params: data})
       // 拼query请求参数串
       let queryStr = ''
       Object.keys(data).forEach(key => {
@@ -21,9 +22,6 @@ export default function ajax(url, data={}, method='GET') {
         queryStr = queryStr.substring(0, queryStr.length-1) // username=tom&password=123
         url += '?' + queryStr  // /login/?username=tom&password=123
       }
-      console.log(url)
-    if(method==='GET') {
-      
       promise = axios.get(url) // url?username=tom&password=123
       // return axios.get(url, {params: data}) // url?username=tom&password=123
     } else {

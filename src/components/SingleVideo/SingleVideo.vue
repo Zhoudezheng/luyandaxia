@@ -5,18 +5,18 @@
       <span  class="singlevideo_mode">路演直播</span>
     </div>
     <div class="singlevideo_list">
-      <img :src="this.detail.cover" alt="2222">
-      <a href="#" class="list_a1">{{this.detail.title}}</a>
-      <a href="#" class="list_a2">¥{{this.detail.individual_cost}}</a>
-      <span class="list_a3">{{this.amount}}</span>
-      <p class="list_a4">* 非VIP会员购买本直播后，{{this.detail.viewing_time}}小时内可无限次观看回看</p>
+      <img src="./image/kishi.jpg" alt="2222">
+      <a href="#" class="list_a1">“如何在路演BP中进行高效率呈现”电子课件</a>
+      <a href="#" class="list_a2">¥28</a>
+      <span class="list_a3">x 1</span>
+      <p class="list_a4">* 非VIP会员购买本直播后，24小时内可无限次观看回看</p>
     </div>
     <div class="singlevideo_lins"></div>
     <div class="Commodity_amount">
         <span class="amount_a1">商品金额</span>
         <span class="amount_a2">
             <span class="a2_un">￥</span>
-            <span class="a2_ut">{{this.detail.individual_cost}}</span>
+            <span class="a2_ut">28.00</span>
         </span>
     </div>
     <div class="amount_line"></div>
@@ -24,7 +24,7 @@
         <span class="amount_a3">实付金额</span>
         <span class="amount_a4">
             <span class="a2_un">￥</span>
-            <span class="a2_ut">{{this.amount*this.detail.individual_cost}}</span>
+            <span class="a2_ut">28.00</span>
         </span>
     </div>
     <div class="amount_lined"></div>  
@@ -45,9 +45,9 @@
     <div class="singlevideo_buy">
         <div class="buy_content">
           <span class="content_total">总计</span>
-          <span class="content_mony">¥{{this.total_cost}}</span>
+          <span class="content_mony">¥28.00</span>
         </div>
-        <input type="button" value="去支付" class="buy_link" @click="singlevideo">
+        <input type="button" value="去支付" class="buy_link" @click="singlevideoed">
     </div>
   </div>
 </template>
@@ -56,23 +56,8 @@
   export default {
     data(){
         return {
-            activeClass:1,
-            amount:1,
-            total_cost:0,
+            activeClass:1
         }
-    },
-    computed: {
-    detail: {
-        get:function () {
-            return this.$store.state.detail;
-        },
-        set:function(){
-            this.detail = this.$store.state.detail
-        }
-    }
-    },
-    mounted(){
-        this.total_cost = this.amount * this.detail.individual_cost
     },
     methods: {
         liveSharing(){
@@ -80,7 +65,7 @@
                 path:'/liveSharing',
             })
         },
-        singlevideo(){
+        singlevideoed(){
             this.$router.push({  
                 path:'/videosuccessful',
             })
@@ -91,9 +76,7 @@
         showactives(){
            this.activeClass=2
         }
-    },
-    destroyed () {
-    },
+    }
 }
 </script>
 

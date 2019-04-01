@@ -71,8 +71,8 @@
       isRightPhone () {
         return /^1\d{10}$/.test(this.username)
       },
+   
     },
-    
    methods: {
      inputLoseFocus() {
         setTimeout(() => {
@@ -84,7 +84,7 @@
         //  回到注册页面
         path:'/',
       })
-    },
+   },
    
     focus(){
          this.isfocus=true
@@ -99,8 +99,7 @@
         const {username, password} = this
         let result
           // 2. 发送登陆的请求
-        result = await reqPwdLogin(username, password)
-        console.log(result)
+        result = await reqPwdLogin(username, password);
          if (!password) {
             return MessageBox.alert('密码必须指定')
           } 
@@ -110,13 +109,11 @@
           // 保存user到state中
           const user = result.data;
           const userToken =result.data.token;
-          console.log(userToken)
-          this.$store.dispatch('setUserData', userToken)
+          this.$store.dispatch('getUserData', userToken)
+          // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
-          //console.log(this.$store.state.path)
-          this.$router.replace(this.$route.query.redirect)
+          this.$router.replace('/liveSharing')
         } else { // 失败
-          this.$store.dispatch('del_token')
           MessageBox.alert(result.msg)
         }
       },
@@ -124,7 +121,7 @@
   }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../static/font/font.css';
   .login_header img{
     width: 160px;
@@ -240,7 +237,7 @@
   }
   input:disabled{ 
      background-color: #C0C0C0!important; 
-   } 
+  } 
   .login_users{
     margin-top: 30px;
   }

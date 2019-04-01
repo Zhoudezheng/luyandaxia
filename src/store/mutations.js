@@ -1,14 +1,13 @@
 import {
-    LIVE_DETAIL,
+    LIVE_ADDRESS,
     USER_TOKEN,
-    DEL_TOKEN,
-    VIDEO_URL,
+    DEL_TOKEN
 } from './mutation-types'
 
 
 export default {
-    [LIVE_DETAIL] (state, {detail}) {
-      state.detail = detail
+    [LIVE_ADDRESS] (state, {lives}) {
+      state.lives = lives
     },
     // 获取用户token
     [USER_TOKEN] ( state,{user}){
@@ -17,14 +16,6 @@ export default {
     },
     // 删除用户token
     [DEL_TOKEN] (state) {
-      localStorage.removeItem('Authorization')
-      state.Authorization = ''
-    },
-    [VIDEO_URL](state,{video}){
-      state.videoUrl = video
+      state.Authorization=''
     }
-    //直播详解介绍页面
-    // [URL_CONTENT] (state,{url}){
-    //   state.url_content = url
-    // }
   }

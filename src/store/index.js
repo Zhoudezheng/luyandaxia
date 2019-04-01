@@ -12,9 +12,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state,
-  actions,
-  getters,
   mutations,
-  modules: {
-  }
+  actions,
+  getters
 })

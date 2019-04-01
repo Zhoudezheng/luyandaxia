@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="recommend_list" v-for="recommend in this.recommends">
-         <img :src="recommend.cover" alt="1111">
-         <a href="#" class="list_a1">{{recommend.name}}</a>
-         <a href="#" class="list_a2">{{recommend.info}}</a>
+    <div class="recommend_list" @click="projectsharing">
+         <img src="./image/kishi.jpg" alt="1111">
+         <a href="#" class="list_a1">第四期 | 如何让企业在商海…</a>
+         <a href="#" class="list_a2">第四期 | 如何让企业在商海中第四期 | 如何让企业在商海中</a>
     </div>
-   <div class="recommend_line"></div>
-      <!-- <div class="recommend_list">
+    <div class="recommend_line"></div>
+     <div class="recommend_list">
          <img src="./image/canzhao.jpg" alt="2222">
          <a href="#" class="list_a1">黑钻石投融路沙龙演第112期…</a>
          <a href="#" class="list_a2">黑钻石投融路沙龙第112期</a>
@@ -34,31 +34,23 @@
          <a href="#" class="list_a1">第四期 | 如何让企业在商海…</a>
          <a href="#" class="list_a2">第四期 | 如何让企业在商海中第四期 | 如何让企业在商海中</a>
     </div>
-    <div class="recommend_line"></div> -->
+    <div class="recommend_line"></div>
   </div>
 </template>
 
 <script>
   export default {
-    data(){
-      return{
-        
+    methods:{
+      projectsharing(){
+        this.$router.push({
+          path:'/projectsharing'
+        })
       }
-    },
-    computed: {
-    recommends: {
-          get:function () {
-              return this.$store.state.detail.recommend
-          },
-          set:function(){
-              this.url = this.$store.state.detail.recommend
-          },
-        }
-    },
+    }
   }
 </script>
 
-<style  lscoped>
+<style  scoped>
   @import '../../../../static/font/font.css';
   .recommend_list{
     height: 183px;

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="introduction_title" v-html="this.html"></div>
-    <!-- <div class="introduction_title">
-
+    <div class="introduction_title">
       <div class="title_group">路演兵法-第63期：斯玛特教育集团路演</div>
       <div class="title_time">直播时间：2017-08-15 14:00-16:00 星期五</div>
       <div class="title_address">地址：北京市朝阳区东方广场E座3012</div>
@@ -45,7 +43,7 @@
             <img src="./image/kishi.jpg" alt="222">
             <img src="./image/canzhao.jpg" alt="333">
           </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -53,51 +51,13 @@
   export default {
     data(){
       return{
-        // arr:[{friut:"时间",name:"活动",many:"嘉宾"},{friut:"13:00-14:00",name:"签到",many:"-"},{friut:"14:00-14:30",name:"现代教育新思路",many:"张德江"}] ,
-        html:'',
-      }
-    },
-    mounted:function(){
-      this.load()
-    },
-    computed: {
-    url: {
-          get:function () {
-              return this.$store.state.detail.url_content
-          },
-          set:function(){
-              this.url = this.$store.state.detail.url_content
-          },
-        }
-    },
-    watch:{
-      url(){
-        this.load()
-      },
-    },
-    methods:{
-      load () {
-        let url = this.url
-        console.log(url)
-      if (url && url.length > 0) {
-      // 加载中
-      let param = {
-        accept: 'text/html, text/plain'
-      }
-      this.$http.get(url, param).then((response) => {
-        // 处理HTML显示
-        console.log(response)
-        this.html = response.body
-      }).catch(() => {
-        this.html = '加载失败'
-      })
+      arr:[{friut:"时间",name:"活动",many:"嘉宾"},{friut:"13:00-14:00",name:"签到",many:"-"},{friut:"14:00-14:30",name:"现代教育新思路",many:"张德江"}] 
     }
     }
-  }
   }
 </script>
 
-<style  lscoped>
+<style scoped>
   @import '../../../../static/font/font.css';
   .introduction_title {
     text-align: left;
