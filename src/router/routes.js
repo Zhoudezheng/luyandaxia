@@ -13,6 +13,7 @@ import shoppingcart from '../components/ShoppingCart/ShoppingCart'
 import personalcenter from '../components/PersonalCenter/PersonalCenter'
 import account from '../components/Account/Account' 
 import membership from '../components/Membership/Membership'
+import projectsharing from '../components/ProjectSharing/projectsharing'
 
 
 export default [
@@ -94,6 +95,29 @@ export default [
     {
       path:'/membership',
       component:membership,
+    },
+    {
+      path:'/projectsharing',
+      component:projectsharing,
+      children: [
+        // 二级路由路径,不加/
+          {
+            path:'introduction',
+            component: introduction
+          },
+          {
+            path:'Interaction',
+            component:Interaction
+            },
+          {
+            path:'recommend', 
+            component:recommend
+          },
+          {
+            path:'',           //这个表示的是根目录，即一进入的页面
+            redirect:'introduction'    //设置页面一进来就显示的页面，即重定向到goods组件，这里写的内容是对应组将的component的值
+          }
+        ]
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面

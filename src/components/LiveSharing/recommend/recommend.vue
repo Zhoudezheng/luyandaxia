@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="recommend_list">
+    <div class="recommend_list" @click="projectsharing">
          <img src="./image/kishi.jpg" alt="1111">
          <a href="#" class="list_a1">第四期 | 如何让企业在商海…</a>
          <a href="#" class="list_a2">第四期 | 如何让企业在商海中第四期 | 如何让企业在商海中</a>
@@ -40,6 +40,13 @@
 
 <script>
   export default {
+    methods:{
+      projectsharing(){
+        this.$router.push({
+          path:'/projectsharing'
+        })
+      }
+    }
   }
 </script>
 

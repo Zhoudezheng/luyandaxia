@@ -8,7 +8,7 @@
           <img src="./image/kishi.jpg" alt="头像" class="head_pert">
           <div class="head_cont">
             <p class="head_name" @click="toAccount">张三</p>
-            <span class="head_vip"> 普通会员</span>
+            <span class="head_vip" @click="membership"> 普通会员</span>
           </div>
           <span class="head_adress">管理收货地址</span>
           <img src="./image/Path.png" alt="lujing" class="head_path">
@@ -67,6 +67,11 @@ export default {
         toAccount(){
             this.$router.push({
                 path:'/account'
+            })
+        },
+        membership(){
+            this.$router.push({
+                path:'/membership'
             })
         }
     }

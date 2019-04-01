@@ -151,9 +151,6 @@
             })
           }
     },
-    // destroyed () {
-    //       window.removeEventListener('scroll', this.handleScrollfoot)
-    // },
 }
 </script>
 
