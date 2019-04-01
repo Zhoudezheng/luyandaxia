@@ -1,5 +1,5 @@
 <template>
-  <div class="project" ref="wo">
+  <div class="project" ref="wo" >
     <div class="project_div">
       <img src="./image/huitui.png" alt="协议按钮" class="project_check">
       <span  class="project_mode">凯利尔</span>
@@ -24,27 +24,31 @@
     <div class="projectsharing_row" :class=" nvaBarFixed === true ? 'nva_FixedRow' :''"></div>
     <div class="projectsharing_router" id='nav_flexeded' :class=" nvaBarFixed === true ? 'nva_Fixed' :''" >
 			<span class="projectsharing_roterone">
-                <router-link to='introduction' exact>背景</router-link>
+                <router-link to='background' exact>背景</router-link>
             </span>
 			<span class="projectsharing_rotertwo">
-                <router-link to='Interaction' exact>亮点</router-link>
+                <router-link to='brightspot' exact>亮点</router-link>
             </span>
 			<span class="projectsharing_roterthree">
-                <router-link to='recommend' exact>创作团队</router-link>
+                <router-link to='creativeteam' exact>创作团队</router-link>
             </span>	
 	</div>
     <div class='projectsharing_route' :class=" nvaBarFixed === true ? 'nva_Fixeded' :''">
-            <span :class="{on: $route.path==='/projectsharing/introduction'}"></span>
-            <span :class="{ontwo: $route.path==='/projectsharing/Interaction'}"></span>
-            <span :class="{onthree: $route.path==='/projectsharing/recommend'}"></span>
+            <span :class="{on: $route.path==='/projectsharing/background'}"></span>
+            <span :class="{ontwo: $route.path==='/projectsharing/brightspot'}"></span>
+            <span :class="{onthree: $route.path==='/projectsharing/creativeteam'}"></span>
     </div>
     <div class="projectsharing_lines"></div>
     <keep-alive> <router-view></router-view> </keep-alive>
+    <div class="footfiexd">
+        <img src="./image/buy.png" alt="购买" class="fiexd">
+        <span class="fiexd_span">立即支付</span>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
+export default {
     data(){
         return {
              nvaBarFixed:false,
@@ -55,13 +59,12 @@
         this.box = this.$refs.wo;
         this.box.addEventListener('scroll', () => {
         var offsetTop = document.querySelector('#nav_flexeded').offsetTop;
-        console.log(offsetTop)
-        if (this.$refs.wo.scrollTop+180 > offsetTop) {
-            
+        console.log("offsettop",offsetTop);
+        console.log('SCROLLTOP',this.$refs.wo.scrollTop)
+        if (this.$refs.wo.scrollTop+230 > offsetTop) {
                 this.nvaBarFixed = true
         } 
-        if(  offsetTop < 380  && this.$refs.wo.scrollTop < offsetTop) {
-             console.log(offsetTop)
+        if(  this.$refs.wo.scrollTop < offsetTop-150) {
                 this.nvaBarFixed = false
         }
         },true)
@@ -96,12 +99,17 @@
 
 <style scoped>
 @import '../../../static/font/font.css';
+.project{
+      height: 100%;
+      overflow: scroll;
+}
 .project_div{
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     height: 91px;
+    z-index:20;
     background-color:rgba(243, 117, 5, 1);
 }
 .project_div .project_check{
@@ -211,13 +219,13 @@
 }
 .nva_FixedRow{
     position:fixed;
-    top:370px;
+    top:455px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
     -webkit-overflow-scrolling: touch;
     overflow: auto;
-    height: 16px;
+    height: 10px;
     background-color:#eeeeee;
 }
 .projectsharing_router{
@@ -250,9 +258,21 @@
     background-color: rgba(243,117,5,1);
     border-radius: 40px;
 }
+.nva_Fixed{
+    position:fixed;
+    top:463px;
+    z-index:20;
+    overflow-y: scroll;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+    background-color: #ffffff;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
 .nva_Fixeded{
     position:fixed;
-    top:464px;
+    top:535px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
@@ -266,7 +286,7 @@
     height: 8px;
     background-color: rgba(243,117,5,1);
     border-radius: 40px;
-    margin-left:150px;
+    margin-left:145px;
 }
 .nva_Fixeded .ontwo{
     width: 36px;
@@ -280,7 +300,7 @@
     height: 8px;
     background-color: rgba(243,117,5,1);
     border-radius: 40px;
-    margin-left: 523px;
+    margin-left: 550px;
 }
 .projectsharing_router .projectsharing_line{
    width: 20px;
@@ -298,5 +318,30 @@
 .projectsharing_lines{
     height: 6px;
     background-color: #eeeeee;
+}
+.footfiexd{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    height: 160px;
+}
+.footfiexd .fiexd{
+    height: 160px;
+}
+.footfiexd .fiexd_span{
+    z-index: 21px;
+    position: absolute;
+    width:144px;
+    height:44px;
+    font-size:36px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    line-height:44px;
+    top: 65px;
+    left: 304px;
+
 }
 </style>

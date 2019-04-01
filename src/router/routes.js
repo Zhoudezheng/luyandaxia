@@ -14,6 +14,9 @@ import personalcenter from '../components/PersonalCenter/PersonalCenter'
 import account from '../components/Account/Account' 
 import membership from '../components/Membership/Membership'
 import projectsharing from '../components/ProjectSharing/projectsharing'
+import background from '../components/ProjectSharing/BackGround/background'
+import brightspot from '../components/ProjectSharing/BrightSpot/brightspot'
+import creativeteam from '../components/ProjectSharing/CreativeTeam/creativeteam'
 
 
 export default [
@@ -102,20 +105,20 @@ export default [
       children: [
         // 二级路由路径,不加/
           {
-            path:'introduction',
-            component: introduction
+            path:'background',
+            component: background
           },
           {
-            path:'Interaction',
-            component:Interaction
-            },
+            path:'brightspot',
+            component:brightspot
+          },
           {
-            path:'recommend', 
-            component:recommend
+            path:'creativeteam', 
+            component:creativeteam
           },
           {
             path:'',           //这个表示的是根目录，即一进入的页面
-            redirect:'introduction'    //设置页面一进来就显示的页面，即重定向到goods组件，这里写的内容是对应组将的component的值
+            redirect:'background'    //设置页面一进来就显示的页面，即重定向到goods组件，这里写的内容是对应组将的component的值
           }
         ]
     },
