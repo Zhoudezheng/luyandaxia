@@ -18,7 +18,7 @@
              <img src="./image/write.png" alt="编辑" class="choice_edit">
           </div>
       </div>
-      <div class="footfiexd">
+      <div class="footfiexd"  @click="newaddress">
         <img src="./image/buy.png" alt="新增地址" class="fiexd">
         <span class="fiexd_span">新增地址</span>
       </div>
@@ -69,6 +69,11 @@ export default {
                    this.dataList[i].isdefault=false;
                }
            }
+       },
+       newaddress(){
+           this.$router.push({
+               path:'/newaddress'
+           })
        }
     }
 }

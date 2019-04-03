@@ -19,6 +19,7 @@ import brightspot from '../components/ProjectSharing/BrightSpot/brightspot'
 import creativeteam from '../components/ProjectSharing/CreativeTeam/creativeteam'
 import address from '../components/Address/address'
 import MyOrders from '../components/MyOrders/MyOrders'
+import newaddress from '../components/NewAddress/newaddress'
 
 
 export default [
@@ -75,10 +76,10 @@ export default [
       path:'/videosuccessful',
       component:videosuccessful,
     },
-  {
+    {
     path: '/MyOrders',
     component: MyOrders,
-  },
+    },
     {
 
       path:'/shoppingcart',
@@ -134,6 +135,10 @@ export default [
       path:'/address',
       component:address
     },
+    {
+      path: '/newaddress',
+      component:newaddress,
+     },
     {
       path:'/account',
       component:account,
