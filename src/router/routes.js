@@ -18,6 +18,7 @@ import background from '../components/ProjectSharing/BackGround/background'
 import brightspot from '../components/ProjectSharing/BrightSpot/brightspot'
 import creativeteam from '../components/ProjectSharing/CreativeTeam/creativeteam'
 import address from '../components/Address/address'
+import MyOrders from '../components/MyOrders/MyOrders'
 
 
 export default [
@@ -73,6 +74,40 @@ export default [
     {
       path:'/videosuccessful',
       component:videosuccessful,
+    },
+  {
+    path: '/MyOrders',
+    component: MyOrders,
+  },
+    {
+
+      path:'/shoppingcart',
+      component:shoppingcart,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/shoppingmall',
+      component:shoppingmall,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/personalcenter',
+      component:personalcenter,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/account',
+      component:account,
+    },
+    {
+      path:'/membership',
+      component:membership,
     },
     {
       path:'/shoppingcart',
