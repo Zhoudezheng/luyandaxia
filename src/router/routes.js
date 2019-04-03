@@ -16,7 +16,6 @@ import membership from '../components/Membership/Membership'
 import MyOrders from '../components/MyOrders/MyOrders'
 
 
-
 export default [
     {
       path: '/',
