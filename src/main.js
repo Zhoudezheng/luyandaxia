@@ -15,10 +15,6 @@ import 'vue-video-player/src/custom-theme.css';
 import  VueResource  from 'vue-resource'
 
 Vue.use(VueResource) 
-Vue.use('/api',proxy({
-  target:'http://47.95.224.184',
-  changeOrigin:true
-}));
 Vue.use(VueVideoPlayer);
 Vue.use(Mint)
 Vue.config.productionTip = false
