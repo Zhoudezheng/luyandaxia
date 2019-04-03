@@ -8,10 +8,10 @@
           <img src="./image/kishi.jpg" alt="头像" class="head_pert">
           <div class="head_cont">
             <p class="head_name" @click="toAccount">张三</p>
-            <span class="head_vip" @click="membership"> 普通会员</span>
+            <span class="head_vip" > 普通会员</span>
           </div>
-          <span class="head_adress">管理收货地址</span>
-          <img src="./image/Path.png" alt="lujing" class="head_path">
+          <span class="head_adress" @click="addressp">管理收货地址</span>
+          <img src="./image/Path.png" alt="lujing" class="head_path" @click="addressp">
       </div>
       <div class="footer_guide border-1px">
             <span class="guide_item"  @click="goTo('/shoppingmall')">
@@ -46,7 +46,7 @@
           <span class="content_in">我的订单</span>
           <img class="conten_to" src="./image/go.png" alt="path">
       </div>
-      <div class="admin_contented">
+      <div class="admin_contented" @click="membership">
           <span class="content_in">购买VIP</span>
           <img class="conten_to" src="./image/go.png" alt="path">
       </div>
@@ -72,6 +72,11 @@ export default {
         membership(){
             this.$router.push({
                 path:'/membership'
+            })
+        },
+        addressp(){
+            this.$router.push({
+                path:'/address'
             })
         }
     }

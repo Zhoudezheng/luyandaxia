@@ -1,7 +1,7 @@
 <template>
   <div class="account">
     <div class="account_div">
-      <img src="./image/huitui.png" alt="协议按钮" class="account_check">
+      <img src="./image/huitui.png" alt="协议按钮" class="account_check" @click="accountper">
       <span  class="account_mode">账户信息</span>
       <span  class="shopping_del" >地址管理</span>
     </div>
@@ -98,7 +98,11 @@ export default {
           window.scrollTo(0, 0);
         }, 100);
       },
-
+      accountper(){
+          this.$router.push({
+              path:'/personalcenter'
+          })
+      },
 
     //可参考 https://www.cnblogs.com/xiaocaiyuxiaoniao/p/9437013.html
       upload (e) {  
@@ -266,6 +270,7 @@ export default {
 <style  scoped>
 @import '../../../static/font/font.css';
 .account{
+    height: 1376px;
     background:rgba(249,250,251,1);
 }
 
