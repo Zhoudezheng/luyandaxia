@@ -4,7 +4,7 @@
  */
 import ajax from './ajax';
 
-const BASE = '/api'
+const BASE = '/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
