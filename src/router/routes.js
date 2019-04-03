@@ -8,6 +8,14 @@ import vipmember from '../components/VipMember/VipMember'
 import singlevideo from '../components/SingleVideo/SingleVideo'
 import vipsuccessful from '../components/VipSuccessful/VipSuccessful'
 import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
+import shoppingmall from '../components/ShoppingMall/ShoppingMall'
+import shoppingcart from '../components/ShoppingCart/ShoppingCart'
+import personalcenter from '../components/PersonalCenter/PersonalCenter'
+import account from '../components/Account/Account' 
+import membership from '../components/Membership/Membership'
+import MyOrders from '../components/MyOrders/MyOrders'
+
+
 
 export default [
     {
@@ -62,6 +70,40 @@ export default [
     {
       path:'/videosuccessful',
       component:videosuccessful,
+    },
+  {
+    path: '/MyOrders',
+    component: MyOrders,
+  },
+    {
+
+      path:'/shoppingcart',
+      component:shoppingcart,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/shoppingmall',
+      component:shoppingmall,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/personalcenter',
+      component:personalcenter,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/account',
+      component:account,
+    },
+    {
+      path:'/membership',
+      component:membership,
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面
