@@ -116,7 +116,7 @@
     },
    methods:{
      switcherClass(e){
-
+       console.log(this);
      }
    }
   }
