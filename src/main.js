@@ -50,7 +50,7 @@ Axios.interceptors.request.use(config => {
   //判断是否存在token，如果存在将每个页面header都添加token
   if(store.state.Authorization){
     config.headers.common['Authentication-Token']=store.state.Authorization
-    console.log(store.state.Authorization)
+    // console.log(store.state.Authorization)
   } 
   return config;
   }, error => {

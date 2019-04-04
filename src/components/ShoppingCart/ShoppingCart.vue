@@ -2,232 +2,222 @@
   <div class="shoppingcart_content">
     <div class="shoppingcart_div">
       <img src="./image/fanhui.png" alt="协议按钮" @click="liveSharing" class="shoppingcart_check">
-      <span  class="shoppingcart_mode">购物车</span>
+      <span class="shoppingcart_mode">购物车</span>
       <input type="button" value="删除" class="shopping_del" @click="delshopping">
     </div>
     <div class="car-list">
-			<ul>
-				<li class="car-item" v-for="(item,index) in goodLits">
-					<div class="input-block" @click.prevent="selectOne(index)">
-						<label class="input-label" :class ="{ active: item.isSelected }" :for="'car-checkbox-'+index" ></label>
-					</div>
-					<div class="car-item-content">
-						<div class="car-img">
-							<img :src="item.img" />
-						</div>
-						<div class="car-cont">
-							<h3>{{item.title}}</h3>
-							<div class="cat-desc">
-								<span v-for="spec in item.spec_item">{{spec}}</span>
-							</div>
-                            <div class="cat_mony">
-                                <span class="mony_zero">
-                                   <span class="mony_a">¥</span>
-                                   <span class="mony_b">{{item.Discount}}</span>
-                                   <span class="mony_c">00</span>
-                                </span>
-                                <span  class="mony_hua">{{item.Original}}</span>
-                            </div>
-						</div>
-						<div class="car-price">
-							<span class="car-num">X{{item.num}}</span>
-						</div>
-                        <div class="num">
-                            <div class="num_left" @click="reduce(index)">
-							  <span  class="num_reduce"></span>
-                            </div>
-							<span class="num_nu">{{item.num}}</span>
-                            <div class="num_right" @click="add(index)">
-							  <span  class="num_add"></span>
-                            </div>
-						</div>
-					</div>
-				</li>
-			</ul>
-	</div>
-	<div class="car-footer">
-			<div class="foot-car">
-				<label for="foot-check" class="input-label_s" :class="{active: selected_all}" @click="slect_all"></label>
-                <span class="foot_all">全选</span>
-			</div>
-			<div class="total-cont">
-				<span>总价：￥{{totalPrice}}</span>
-				<!-- <span>共{{totalNum}}件</span> -->
-			</div>
-			<div class="btn-box">
-			  <input type="button" value="去结算" class="buy_link">
-			</div>
-	</div>
+      <ul>
+        <li class="car-item" v-for="(item,index) in goodLits">
+          <div class="input-block" @click.prevent="selectOne(index)">
+            <label class="input-label" :class="{ active: item.isSelected }" :for="'car-checkbox-'+index"></label>
+          </div>
+          <div class="car-item-content">
+            <div class="car-img">
+              <img :src="item.cover"/>
+            </div>
+           <div class="car-cont">
+             <div class="cont">
+               <div class="shop_top">
+                 <span class="shop_name">{{item.name}}</span>
+                 <span class="car-num">X{{item.num}}</span>
+               </div>
+
+                 <div class="cat-desc">
+                   <span>Vip特惠价：￥{{item.vip_price}}</span>
+                 </div>
+                 <div class="cat_mony">
+                   <span class="mony_zero">¥{{item.price}}</span>
+                   <span class="mony_hua">¥{{item.local_price}}</span>
+                 </div>
+               <div class="num">
+                 <div class="num_left" @click="reduce(index)">
+                   <span class="num_reduce"></span>
+                 </div>
+                 <span class="num_nu">{{item.num}}</span>
+                 <div class="num_right" @click="add(index)">
+                   <span class="num_add"></span>
+                 </div>
+               </div>
+             </div>
+
+           </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="car-footer">
+      <div class="foot-car">
+        <label for="foot-check" class="input-label_s" :class="{active: selected_all}" @click="slect_all"></label>
+        <span class="foot_all">全选</span>
+      </div>
+      <div class="total-cont">
+        <span>总价：￥{{totalPrice}}</span>
+        <!-- <span>共{{totalNum}}件</span> -->
+      </div>
+      <div class="btn-box">
+        <router-link to="#">
+          <input type="button" value="去结算" class="buy_link">
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
-   data () {
-		return {
-				goodLits: [
-					{
-						title: '钻石路演工具包',
-						img: "./image/kishi.jpg",
-						num: 1,
-						price: 6070.00,
-						spec_item:[
-							'VIP特惠价：￥188.00'
-                        ],
-                        Discount:'188.',
-                        Original:'¥208.00',
-						isSelected: false
-					},{
-						title: '钻石路演工具包',
-						img: './image/kishi.jpg',
-						num: 1,
-						price: 4570.00,
-						spec_item:[
-							'VIP特惠价：￥188.00'
-                        ],
-                        Discount:'188.',
-                        Original:'¥208.00',
-						isSelected: false
-					},{
-						title: '钻石路演工具包',
-						img: './image/kishi.jpg',
-						num: 1,
-						price: 4870.00,
-						spec_item:[
-							'VIP特惠价：￥188.00'
-                        ],
-                        Discount:'188.',
-                        Original:'¥208.00',
-						isSelected: false
-					},{
-						title: '钻石路演工具包',
-						img: './image/kishi.jpg',
-						num: 1,
-						price: 10568.00,
-						spec_item:[
-							'VIP特惠价：￥188.00'
-                        ],
-                        Discount:'188.',
-                        Original:'¥208.00',
-						isSelected: false
-					},
-                ],
-				totalPrice: 0,
-				// totalNum: 0,
-				selected_all: false
-			}
-		},
-		mounted() {
-			this.getTotal();
-		},
-		watch: {
-			'goodLits': {
-				handler: function (val, oldVal) {
-                    console.log('aaa',val)
-					return val;
-				},
-				deep: true
-			}
-		},
-		methods: {
-            liveSharing(){
-                this.$router.push({  
-                 path:'/shoppingmall',
-                })
-            }, 
-			getTotal () {
-				this.totalPrice = 0
-				this.totalNum = 0
-				for (var i = 0; i < this.goodLits.length; i++) {
-					var _d = this.goodLits[i]
-					if(_d.isSelected){
-                        console.log(_d.isSelected)
-						this.totalPrice += _d['price'] * _d['num']
-						// this.totalNum +=_d['num']
-					}
-				}
-			},
-			selectOne(index){
-                    // 判断当前勾选状态
-                    var obj=this.goodLits[index];
-                    this.$set(this.goodLits,index,obj);
-                    var arraylist=[];
-                    var arraychecked=[];
-				if(this.goodLits[index].isSelected == true){
-                    var obj=this.goodLits[index];
-                    obj.isSelected = !obj.isSelected;
-                    this.$set(this.goodLits,index,obj);
-				}else{
-                    var obj=this.goodLits[index];
-                    obj.isSelected = !obj.isSelected;
-                    this.$set(this.goodLits,index,obj);
-                }
-                for (var i = 0; i < this.goodLits.length; i++) {
-						if(this.goodLits[i].isSelected == false){
-                            arraylist.push(this.goodLits[i]);
-                        }else if(this.goodLits[i].isSelected == true){
-                            arraychecked.push(this.goodLits[i]);
-                        }
-                }
-                // 判断是否全部勾选
-                if(arraylist.length !== this.goodLits.length){
-                    this.selected_all=false
-                }
-                if(arraychecked.length === this.goodLits.length){
-                    this.selected_all=true
-                }
-				this.getTotal()
-			},
-			slect_all () {
-                // 判断全选还是全不选
-				if(this.selected_all){
-					for (var i = 0; i < this.goodLits.length; i++) {
-						this.goodLits[i].isSelected = false;
-					}
-                    this.selected_all = false	
-				}else{
-					for (var i = 0; i < this.goodLits.length; i++) {
-						this.goodLits[i].isSelected = true;
-					}
-					this.selected_all = true						
-                }
-				this.getTotal()
-			},
-			reduce (index) {
-				if(this.goodLits[index].num <= 1) return;
-				this.goodLits[index].num --
-				this.getTotal()
-			},
-			add (index) {
-				this.goodLits[index].num ++
-				this.getTotal()
-            },
-            delshopping(){
-                if(this.selected_all == true){
-                    this.goodLits=[];
-                    this.getTotal();
-                }
-                // 删除时的判断
-               for (var i = 0; i < this.goodLits.length; i++) {
-					var _d = this.goodLits[i]
-					if(_d.isSelected){
-                        this.goodLits.splice(i,1);
-                        i--;
-                        this.getTotal();
-					}
-			   }
-            }
-		}
-}
+    data() {
+      return {
+        goodLits: [
+          {
+            "id": 32,
+            "num": 1,
+            "spec": "",
+            "name": "钻石沙漏（北欧风格）",
+            "product_id": 30,
+            "price": "108.00",
+            "cover": "http://cdn.kanjian2020.com/image/2018/1/27/o_1c4qp50ir1oov45n1gbh114j1iko1j",
+            "local_price": "198.00",
+            "vip_price": "99.00"
+          },
+          {
+            "id": 66,
+            "num": 1,
+            "spec": "",
+            "name": "导演心法（预售中）",
+            "product_id": 28,
+            "price": "98.00",
+            "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0j2sc3j69p1r6ndq41h5b1btt1j",
+            "local_price": "99.00",
+            "vip_price": "98.00"
+          }
+        ],
+        totalPrice: 0,
+        // totalNum: 0,
+        selected_all: false
+      }
+    },
+    mounted() {
+      this.getTotal()
+      // this.getShoppingCart()
+    },
+    watch: {
+      'goodLits': {
+        handler: function (val, oldVal) {
+          // console.log('aaa', val)
+          return val;
+        },
+        deep: true
+      }
+    },
+    computed: {
+      // ...mapState['goodLits']
+    },
+    methods: {
+      liveSharing() {
+        this.$router.push({
+          path: '/shoppingmall',
+        })
+      },
+      getTotal() {
+        this.totalPrice = 0
+        this.totalNum = 0
+        for (var i = 0; i < this.goodLits.length; i++) {
+          var _d = this.goodLits[i]
+          if (_d.isSelected) {
+            // console.log(_d.isSelected)
+            this.totalPrice += _d['price'] * _d['num']
+            // this.totalNum +=_d['num']
+          }
+        }
+      },
+      selectOne(index) {
+        // 判断当前勾选状态
+        var obj = this.goodLits[index];
+        this.$set(this.goodLits, index, obj);
+        var arraylist = [];
+        var arraychecked = [];
+        if (this.goodLits[index].isSelected == true) {
+          var obj = this.goodLits[index];
+          obj.isSelected = !obj.isSelected;
+          this.$set(this.goodLits, index, obj);
+        } else {
+          var obj = this.goodLits[index];
+          obj.isSelected = !obj.isSelected;
+          this.$set(this.goodLits, index, obj);
+        }
+        for (var i = 0; i < this.goodLits.length; i++) {
+          if (this.goodLits[i].isSelected == false) {
+            arraylist.push(this.goodLits[i]);
+          } else if (this.goodLits[i].isSelected == true) {
+            arraychecked.push(this.goodLits[i]);
+          }
+        }
+        // 判断是否全部勾选
+        if (arraylist.length !== this.goodLits.length) {
+          this.selected_all = false
+        }
+        if (arraychecked.length === this.goodLits.length) {
+          this.selected_all = true
+        }
+        this.getTotal()
+      },
+      slect_all() {
+        // 判断全选还是全不选
+        if (this.selected_all) {
+          for (var i = 0; i < this.goodLits.length; i++) {
+            this.goodLits[i].isSelected = false;
+          }
+          this.selected_all = false
+        } else {
+          for (var i = 0; i < this.goodLits.length; i++) {
+            this.goodLits[i].isSelected = true;
+          }
+          this.selected_all = true
+        }
+        this.getTotal()
+      },
+      reduce(index) {
+        if (this.goodLits[index].num <= 1) return;
+        this.goodLits[index].num--
+        this.getTotal()
+      },
+      add(index) {
+        this.goodLits[index].num++
+        this.getTotal()
+      },
+      delshopping() {
+        if (this.selected_all == true) {
+          this.goodLits = [];
+          this.getTotal();
+        }
+        // 删除时的判断
+        for (var i = 0; i < this.goodLits.length; i++) {
+          var _d = this.goodLits[i]
+          if (_d.isSelected) {
+            this.goodLits.splice(i, 1);
+            i--;
+            this.getTotal();
+          }
+        }
+      },
+      getShoppingCart() {
+        this.$store.dispatch('getShoppingCart')
+      }
+    }
+  }
 </script>
 
-<style  scoped>
-@import '../../../static/font/font.css';
-.shoppingcart_content{
-    background:rgba(249,250,251,1);
+<style scoped>
+  @import '../../../static/font/font.css';
+
+  .shoppingcart_content {
+    background: rgba(249, 250, 251, 1);
     height: 1334px;
-}
-.shoppingcart_div{
+  }
+
+  .shoppingcart_div {
     position: fixed;
     top: 0;
     left: 0;
@@ -235,84 +225,94 @@
     height: 91px;
     z-index: 10;
     background-color: #ffffff;
-}
-.shoppingcart_div .shoppingcart_check{
+  }
+
+  .shoppingcart_div .shoppingcart_check {
     background-size: 16px 28px;
     float: left;
     margin-top: 32px;
-    width:14px;
-    height:26px;
-    margin-left:30px;
-}
-.shoppingcart_div .shoppingcart_mode{
+    width: 14px;
+    height: 26px;
+    margin-left: 30px;
+  }
+
+  .shoppingcart_div .shoppingcart_mode {
     float: left;
-    width:144px;
-    height:50px;
-    font-size:36px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(74,74,74,1);
-    line-height:50px;
-    margin-top:19px;
+    width: 144px;
+    height: 50px;
+    font-size: 36px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 50px;
+    margin-top: 19px;
     margin-left: 262px;
-}
-input:focus, textarea:focus{ 
+  }
+
+  input:focus, textarea:focus {
     outline: none;
-}
+  }
+
   /* 设置输入框默认文字样式 */
-input::-webkit-input-placeholder{
-   width:191px;
-   height:40px;
-   font-size:28px;
-   font-family:PingFangSC-Regular;
-   font-weight:400;
-   color:rgba(187,187,187,1);
-   line-height:40px;
-}
-.shopping_del{
-    width:64px;
-    height:39px;
-    font-size:32px;
+  input::-webkit-input-placeholder {
+    width: 191px;
+    height: 40px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(187, 187, 187, 1);
+    line-height: 40px;
+  }
+
+  .shopping_del {
+    width: 64px;
+    height: 39px;
+    font-size: 32px;
     float: right;
     margin-top: 25px;
     margin-right: 26px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(74,74,74,1);
-    line-height:39px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 39px;
     background-color: #ffffff
-}
-.car-list {
-	background: #ffffff;
+  }
+
+  .car-list {
+    background: #ffffff;
     margin-top: 92px;
-}
-.car-item{
-	border-bottom :1px solid #ddd;
-	position :relative;
-	height :237px;
-	overflow: hidden;
-}
-.car-checkbox{
-	display: none;
-}
-.input-block{
-	width: 30px;
-	float :left;
-	height: 55px;
-	line-height: 55px
-}
-.input-label{
-	cursor: pointer;  
-	position :absolute  ;
-	width: 32px ; 
-	height :32px;  
+  }
+
+  .car-item {
+    border-bottom: 1px solid #ddd;
+    height: 237px;
+    display: flex;
+  }
+
+  .car-checkbox {
+    display: none;
+  }
+
+  .input-block {
+    width: 30px;
+    height: 55px;
+    line-height: 55px;
+    flex: 1;
+  }
+
+  .input-label {
+    cursor: pointer;
+    position: absolute;
+    width: 32px;
+    height: 32px;
     background-image: url('./image/check.png');
     background-size: 32px 32px;
-	border-radius: 50%;
+    border-radius: 50%;
     margin-top: 103px;
     margin-left: 28px;
-}
-.input-label_s{
+  }
+
+  .input-label_s {
     float: left;
     width: 32px;
     height: 32px;
@@ -320,50 +320,102 @@ input::-webkit-input-placeholder{
     background-size: 32px 32px;
     margin-top: 35px;
     margin-left: 28px;
-}
-.input-label:after {
-    opacity: 0  ;
-    content :''  ;
-    position: absolute  ;
-    width: 9px  ;
-    height: 5px  ;
-    background: transparent  ;
-    top :6px  ;
-    left: 6px  ;
-    border: 2px solid #333 ; 
-    border-top :none  ;
-    border-right :none  ;
-    -webkit-transform: rotate(-45deg) ; 
-    -moz-transform :rotate(-45deg); 
-    -o-transform: rotate(-45deg)  ;
-    -ms-transform: rotate(-45deg)  ;
-    transform: rotate(-45deg)  ;
-}
-.car-img{
-    width:184px;
+  }
+
+  .input-label:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 5px;
+    background: transparent;
+    top: 6px;
+    left: 6px;
+    border: 2px solid #333;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+
+  .car-img {
+    width: 184px;
     height: 184px;
-    float: left;
-    overflow :hidden;
+    overflow: hidden;
     margin-top: 20px;
     margin-left: 58px;
+  }
+
+  .car-item-content{
+    flex: 24;
+    display: flex;
+  }
+  .car-img{
+    flex: 3;
+  }
+  .car-cont{
+    flex: 7;
+    padding: 0 28px 0 24px;
+  }
+  .car-img img {
+    width: 100%
+  }
+  .shop_top{
+    display: flex;
+    padding: 20px 0 38px 0;
+    align-items: center;
+    justify-content: space-between;
+  }
+.shop_name{
+  font-size: 36px;
+  color: #4a4a4a;
 }
-.car-img img{
-	width: 100%
+.car-num{
+  font-size: 24px;
+  color: #bbbbbb;
 }
-.input-label.active{
-    cursor: pointer;  
-	position :absolute  ;
-	width: 32px ; 
-	height :32px;  
+.cat-desc{
+  text-align: left;
+  font-size: 28px;
+  line-height: 40px;
+}
+.cat_mony{
+  margin-top: 20px;
+  text-align: left;
+}
+.mony_zero{
+  color: #ff7e00;
+  font-weight:400;
+  line-height: 30px;
+  font-size: 22px;
+}
+.mony_hua{
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #aaaaaa;
+  text-decoration:line-through;
+  margin-left: 8px;
+}
+
+  .input-label.active {
+    cursor: pointer;
+    position: absolute;
+    width: 32px;
+    height: 32px;
     background-image: url('./image/checked.png');
     background-size: 32px 32px;
-	border-radius: 50%;
+    border-radius: 50%;
     margin-top: 103px;
     margin-left: 28px;
-	
-}
-.input-label_s.active{
-	float: left;
+
+  }
+
+  .input-label_s.active {
+    float: left;
     width: 32px;
     height: 32px;
     background-image: url('./image/checked.png');
@@ -371,149 +423,95 @@ input::-webkit-input-placeholder{
     margin-top: 35px;
     margin-left: 28px;
 
-   
-}
-.car-cont h3{
-    font-weight :normal;
-    float: left;
-    margin-top: 20px;
-    margin-left: 20px;
-    /* width:252px; */
-    height:50px;
-    font-size:36px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(74,74,74,1);
-    line-height:50px;
-}
-.car-cont .cat-desc{
-      /* width:269px; */
-    float: left;
-    margin-top: 38px;
-    margin-left: 24px;
-    height:40px;
-    font-size:28px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(102,102,102,1);
-    line-height:40px;
-}
-.cat_mony {
-    float: left;
-    margin-top: 8px;
-    margin-left: 24px;
-}
-.cat_mony .mony_zero{
-    height:50px;
-    font-size:22px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(255,126,0,1);
-    line-height:30px;
-}
-.cat_mony .mony_zero .mony_b{
-    font-size: 36px;
-}
-.cat_mony .mony_hua{
-    margin-left: 6px;
-    text-decoration: line-through;
-    height:33px;
-    font-size:20px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(170,170,170,1);
-    line-height:28px;
-}
-.car-price {
-    position : absolute;
-    right : 28px;
-    top: 36px;
-    width : 40px;
-    height : 40px;
-    text-align : right;
-}
-.car-price span{
-    height:30px;
-    font-size:24px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(187,187,187,1);
-    line-height:30px;
-}
-.car-footer {
-    height :98px;
+
+  }
+
+
+
+  .car-footer {
+    height: 98px;
     background: #ffffff;
     position: fixed;
     bottom: 101px;
-    left :0;
+    left: 0;
     right: 0;
-}
-.foot-car{
+  }
+
+  .foot-car {
     height: 60px;
-    float :left;
-}
-.foot_all{
     float: left;
-    width:56px;
-    height:40px;
-    font-size:28px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(74,74,74,1);
-    line-height:40px;
+  }
+
+  .foot_all {
+    float: left;
+    width: 56px;
+    height: 40px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(74, 74, 74, 1);
+    line-height: 40px;
     margin-top: 32px;
     margin-left: 18px;
-}
-.total-cont {
-    height:40px;
-    font-size:28px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(74,74,74,1);
-    line-height:40px;
-    float :left;
+  }
+
+  .total-cont {
+    height: 40px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(74, 74, 74, 1);
+    line-height: 40px;
+    float: left;
     margin-top: 34px;
     margin-left: 38px;
-}
-.total-cont span{
-		display :inline-block ;
-		margin-left: 12px;
-}
-.btn-box{
-		float :right;
-		height :98px;
-        width: 251px;
-		line-height: 98px;
-        border-bottom: 1px solid #eeeeee
-}
-.btn-box .buy_link{
-  width:250px;
-  height:98px;
-  background:linear-gradient(90deg,rgba(255,161,44,1) 0%,rgba(255,121,19,1) 100%);
-  font-size:36px;
-  font-family:PingFangSC-Medium;
-  font-weight:500;
-  color:rgba(255,255,255,1);
-  line-height:50px;
-}
-input::-webkit-input-placeholder{
-   width:191px;
-   height:40px;
-   font-size:28px;
-   font-family:PingFangSC-Regular;
-   font-weight:400;
-   color:rgba(187,187,187,1);
-   line-height:40px;
   }
-.num{
+
+  .total-cont span {
+    display: inline-block;
+    margin-left: 12px;
+  }
+
+  .btn-box {
+    float: right;
+    height: 98px;
+    width: 251px;
+    line-height: 98px;
+    border-bottom: 1px solid #eeeeee
+  }
+
+  .btn-box .buy_link {
+    width: 250px;
+    height: 98px;
+    background: linear-gradient(90deg, rgba(255, 161, 44, 1) 0%, rgba(255, 121, 19, 1) 100%);
+    font-size: 36px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 50px;
+  }
+
+  input::-webkit-input-placeholder {
+    width: 191px;
+    height: 40px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(187, 187, 187, 1);
+    line-height: 40px;
+  }
+
+  .num {
+    width: 200px;
     position: absolute;
-    bottom: 34px;
-    right: 28px;
-}
-.num_left{
+    right: 42px;
+  }
+
+  .num_left {
     float: left;
-}
-.num_left .num_reduce{
+  }
+
+  .num_left .num_reduce {
     margin-top: 10px;
     float: left;
     width: 44px;
@@ -522,20 +520,23 @@ input::-webkit-input-placeholder{
     background-repeat: no-repeat;
     background-position: 18px 10px;
     background-size: 16px 4px;
-    border-radius:2px;
-}
-.num .num_nu{
+    border-radius: 2px;
+  }
+
+  .num .num_nu {
     display: inline-block;
     width: 76px;
     height: 44px;
-    background:rgba(246,246,246,1);
-    text-align: center; 
+    background: rgba(246, 246, 246, 1);
+    text-align: center;
     line-height: 44px;
-}
-.num_right {
+  }
+
+  .num_right {
     float: right;
-}
-.num .num_add{
+  }
+
+  .num .num_add {
     display: inline-block;
     width: 44px;
     height: 44px;
@@ -543,7 +544,7 @@ input::-webkit-input-placeholder{
     background-repeat: no-repeat;
     background-position: 16px 11px;
     background-size: 16px 16px;
-    border-radius:2px;
-}
+    border-radius: 2px;
+  }
 
 </style>
