@@ -1,186 +1,139 @@
 <template>
   <div class="shopping">
-      <div class="shopping_head">
-           <img src="./image/Bitmap.png" alt="touxiang" class="head_tou">
-           <img src="./image/huiyuan.png" alt="huiyuan" class="head_hui">
-           <span class="head_title">文创商城</span>
-           <div class="head_car"></div>
-           <div class="head_search"></div>
+    <div class="shopping_head">
+      <img src="./image/Bitmap.png" alt="touxiang" class="head_tou">
+      <img src="./image/huiyuan.png" alt="huiyuan" class="head_hui">
+      <span class="head_title">文创商城</span>
+      <div class="head_car"></div>
+      <div class="head_search"></div>
+    </div>
+    <div class="shopping_nva">
+      <ul class="nva_ul">
+        <li v-for="(item) in shops.category" class="nva_li">
+          <img :src="item.icon" alt="新品推荐">
+          <span>{{item.name}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="shopping_line"></div>
+    <div class="shopping_more">
+      <div class="more_color"></div>
+      <span class="more_span">新品推荐</span>
+      <span class="more_p">更多</span>
+      <img src="./image/gengduo.png" alt="更多" class="more_to">
+    </div>
+    <div class="shopping_lines"></div>
+    <div class="shopping_banner">
+      <swiper :options="swiperOption">
+        <swiper-slide class="banner_content" v-for="(item) in shops.recommend" :key="item.id">
+          <img :src="item.cover" class="content_img">
+          <span class="content_span">{{item.name}}</span>
+          <p class="content_p">
+            <span class="p_span">¥</span>
+            <span class="p_sp">{{item.local_price}}</span>
+          </p>
+        </swiper-slide>
+      </swiper>
+    </div>
+    <div class="shopping_lineed"></div>
+    <div class="shopping_more">
+      <div class="more_color"></div>
+      <span class="more_span">猜你喜欢</span>
+    </div>
+    <div class="shopping_footer">
+      <div class="shopping_list" v-for="(item) in shops.like" :key="item.id">
+        <img :src="item.cover" alt="1111" class="list_img">
+        <span class="list_a1">{{item.name}}</span>
+        <span class="list_a2">￥{{item.price}}</span>
       </div>
-      <div class="shopping_nva">
-           <ul class="nva_ul">
-               <li class="nva_li">
-                   <img src="./image/a1.png" alt="新品推荐">
-                   <span>新品推荐</span>
-               </li>
-               <li class="nva_li">
-                   <img src="./image/a5.png" alt="文创商品">
-                   <span>文创商品</span>
-               </li>
-               <li class="nva_li">
-                   <img src="./image/a3.png" alt="路演工具">
-                   <span>路演工具</span>
-               </li>
-               <li class="nva_li">
-                   <img src="./image/a4.png" alt="数字商品">
-                   <span>数字商品</span>
-               </li>
-               <li class="nva_li">
-                   <img src="./image/a2.png" alt="全部">
-                   <span>全部</span>
-                </li>
-           </ul>
-      </div>
-      <div class="shopping_line"></div>
-      <div class="shopping_more">
-          <div class="more_color"></div>
-          <span class="more_span">新品推荐</span>
-          <span class="more_p">更多</span>
-          <img src="./image/gengduo.png" alt="更多" class="more_to">
-      </div>
-      <div class="shopping_lines"></div>
-      <div class="shopping_banner">
-         <swiper :options="swiperOption">
-            <swiper-slide class="banner_content">
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">【新品热售】七年时间再说…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">635.80</span>
-              </p>
-            </swiper-slide>
-            <swiper-slide class="banner_content"> 
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">《如何在路演BP中脱颖而出…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">58.00</span>
-              </p>
-            </swiper-slide>
-            <swiper-slide class="banner_content">
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">【新品热售】七年时间再说…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">635.80</span>
-              </p>
-            </swiper-slide>
-            <swiper-slide class="banner_content"> 
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">《如何在路演BP中脱颖而出…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">58.00</span>
-              </p>
-            </swiper-slide>
-            <swiper-slide class="banner_content">
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">【新品热售】七年时间再说…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">635.80</span>
-              </p>
-            </swiper-slide>
-       </swiper>
-      </div>
-      <div class="shopping_lineed"></div>
-      <div class="shopping_more">
-          <div class="more_color"></div>
-          <span class="more_span">猜你喜欢</span>
-      </div>
-      <div class="shopping_footer">
-        <div class="shopping_list">
-            <img src="./image/kishi.jpg" alt="1111" class="list_img">
-            <a href="#" class="list_a1">路演神器</a>
-            <a href="#" class="list_a2">2019-02-27 14：00：00</a>
-        </div>
-        <div class="shopping_lines"></div>
-        <div class="shopping_list">
-            <img src="./image/kishi.jpg" alt="1111" class="list_img">
-            <a href="#" class="list_a1">导演心法作者亲笔签名版</a>
-            <a href="#" class="list_a2">2019-02-27 14：00：00</a>
-        </div>
-        <div class="shopping_lines"></div>
-        <div class="shopping_list">
-            <img src="./image/kishi.jpg" alt="1111" class="list_img">
-            <a href="#" class="list_a1">路演神器</a>
-            <a href="#" class="list_a2">2019-02-27 14：00：00</a>
-        </div>
-      </div>
+    </div>
   </div>
 </template>
 
 <script>
- import 'swiper/dist/css/swiper.css'////这里注意具体看使用的版本是否需要引入样式，以及具体位置。
- import { swiper, swiperSlide } from 'vue-awesome-swiper'
- export default {
-    data(){
-        return {
-            swiperOption:{
-        loop:false,
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper
-        observeParents:true,//修改swiper的父元素时，自动初始化swiper
-        freeMode:true,
-        width:180,
-        freeModeSticky:true,
+  import 'swiper/dist/css/swiper.css' //这里注意具体看使用的版本是否需要引入样式，以及具体位置。
+  import {swiper, swiperSlide} from 'vue-awesome-swiper'
+  import {mapState} from 'vuex'
 
-
+  export default {
+    data() {
+      return {
+        swiperOption: {
+          loop: false,
+          observer: true,//修改swiper自己或子元素时，自动初始化swiper
+          observeParents: true,//修改swiper的父元素时，自动初始化swiper
+          freeMode: true,
+          width: 180,
+          freeModeSticky: true,
+        },
       }
-        }
     },
     components: {
       swiper,
       swiperSlide
     },
-    mounted(){
+    computed: {
+      ...mapState(['shops'])
+    },
+    mounted() {
+      this.getShop()
     },
     methods: {
+      getShop(){
+        this.$store.dispatch('getShop',{})
+      }
     }
-}
+  }
 </script>
 
-<style  scoped>
-@import '../../../static/font/font.css';
-.shopping_head{
+<style scoped>
+  @import '../../../static/font/font.css';
+
+  .shopping_head {
     height: 128px;
     background-color: rgba(243, 117, 5, 1);
-}
-.shopping_head .head_tou{
+  }
+
+  .shopping_head .head_tou {
     height: 60px;
     width: 60px;
     float: left;
     margin-top: 57px;
     margin-left: 28px;
-}
-.shopping_head .head_hui{
+  }
+
+  .shopping_head .head_hui {
     float: left;
     width: 31px;
-    height: 31;
+    height: 31px;
     margin-top: 87px;
     margin-left: -18px;
-}
-.shopping_head .head_title{
+  }
+
+  .shopping_head .head_title {
     float: left;
     margin-top: 58px;
     margin-left: 214px;
-    width:144px;
-    height:50px;
-    font-size:36px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(255,255,255,1);
-    line-height:50px;
-}
-.shopping_head .head_car{
+    width: 144px;
+    height: 50px;
+    font-size: 36px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    line-height: 50px;
+  }
+
+  .shopping_head .head_car {
     background-image: url('./image/gouwu.png');
     width: 40px;
     height: 40px;
     background-size: 40px 40px;
-    float:left;
+    float: left;
     margin-top: 63px;
     margin-left: 156px;
-}
-.shopping_head .head_search{
+  }
+
+  .shopping_head .head_search {
     background-image: url('./image/sousuo.png');
     width: 33px;
     height: 33px;
@@ -188,188 +141,212 @@
     float: right;
     margin-top: 68px;
     margin-right: 31px;
-}
-.shopping_nva{
+  }
+
+  .shopping_nva {
     height: 186px;
-}
-.shopping_nva .nva_ul{
+  }
+
+  .shopping_nva .nva_ul {
     height: 98px;
     margin-top: 23px;
-}
-.shopping_nva .nva_ul .nva_li{
+  }
+
+  .shopping_nva .nva_ul .nva_li {
     float: left;
-    list-style:none;
-}
-.shopping_nva .nva_ul .nva_li img{
+    list-style: none;
+  }
+
+  .shopping_nva .nva_ul .nva_li img {
     float: left;
     margin-top: 34px;
     margin-left: 60px;
     width: 60px;
     height: 60px;
-}
-.shopping_nva .nva_ul .nva_li span{
+  }
+
+  .shopping_nva .nva_ul .nva_li span {
     float: left;
-    width:96px;
+    width: 96px;
     margin-top: 105px;
     margin-left: -76px;
-    height:33px;
-    font-size:24px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(102,102,102,1);
-    line-height:33px;
-}
-.shopping_line{
+    height: 33px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+    line-height: 33px;
+  }
+
+  .shopping_line {
     height: 8px;
     background-color: #eeeeee
-}
-.shopping_more{
+  }
+
+  .shopping_more {
     height: 73px;
-}
-.shopping_more .more_color{
+  }
+
+  .shopping_more .more_color {
     float: left;
     margin-top: 32px;
     margin-left: 28px;
-    width:42px;
-    height:42px;
-    background:linear-gradient(285deg,rgba(255,181,0,0) 0%,rgba(255,126,0,1) 100%);
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(285deg, rgba(255, 181, 0, 0) 0%, rgba(255, 126, 0, 1) 100%);
     border-radius: 25px;
-}
-.shopping_more .more_span{
-    height:45px;
-    font-size:32px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(74,74,74,1);
-    line-height:45px;
+  }
+
+  .shopping_more .more_span {
+    height: 45px;
+    font-size: 32px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(74, 74, 74, 1);
+    line-height: 45px;
     float: left;
     margin-top: 30px;
     margin-left: -22px;
-}
-.shopping_more .more_p{
-    width:48px;
-    height:33px;
-    font-size:24px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(74,74,74,1);
-    line-height:33px;
+  }
+
+  .shopping_more .more_p {
+    width: 48px;
+    height: 33px;
+    font-size: 24px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 33px;
     float: left;
     margin-top: 45px;
     margin-left: 480px;
-}
-.shopping_more .more_to{
-    width:15px;
-    height:21px;
+  }
+
+  .shopping_more .more_to {
+    width: 15px;
+    height: 21px;
     float: right;
     margin-top: 50px;
     margin-right: 10px;
 
-}
-.shopping_lines{
-    height: 1.5px;
-    background-color: #eeeeee;
-}
-.shopping_banner{
+  }
+
+  .shopping_banner {
     height: 403px;
-}
-.swiper-container{
-    overflow:inherit;
-}
-.shopping_banner .banner_content{
+  }
+
+  .swiper-container {
+    overflow: inherit;
+  }
+
+  .shopping_banner .banner_content {
     /* float: left; */
     margin-top: 28px;
     margin-left: 28px;
-    width:305px;
-    height:347px;
-    background:rgba(255,255,255,1);
-    box-shadow:0px 0px 10px 0px rgba(172,166,178,0.1);
-    border-radius:12px;
-    border:1px solid rgba(240,240,240,1);
-}
-.shopping_banner .banner_head{
+    width: 305px;
+    height: 347px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px 0px rgba(172, 166, 178, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(240, 240, 240, 1);
+  }
+
+  .shopping_banner .banner_head {
     height: 347px;
     /* overflow: hidden; */
-}
-.shopping_banner .banner_content .content_img{
+  }
+
+  .shopping_banner .banner_content .content_img {
     width: 305px;
     height: 211px;
-}
-.shopping_banner .banner_content .content_span{
+  }
+
+  .shopping_banner .banner_content .content_span {
     float: left;
     margin-top: 24px;
     margin-left: 24px;
-    width:252px;
-    height:40px;
-    font-size:28px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(74,74,74,1);
-    line-height:40px;
+    width: 252px;
+    height: 40px;
+    text-align: left;
+    font-size: 28px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-.shopping_banner .banner_content .content_p{
+  }
+
+  .shopping_banner .banner_content .content_p {
     float: left;
     margin-top: 8px;
     margin-left: 26px;
-    height:40px;
-    font-size:20px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(255,126,0,1);
-    line-height:28px;
-}
-.p_sp{
-    font-size:28px;
-}
-.shopping_lineed{
+    height: 40px;
+    font-size: 20px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(255, 126, 0, 1);
+    line-height: 28px;
+  }
+
+  .p_sp {
+    font-size: 28px;
+  }
+
+  .shopping_lineed {
     height: 16px;
     background-color: #eeeeee;
-}
-.shopping_footer{
+  }
+
+  .shopping_footer {
     margin-bottom: 120px;
-}
-.shopping_list{
+  }
+
+  .shopping_list {
     height: 183px;
+    border-bottom: 1px solid #eee;
     margin-top: 10px;
-}
-.shopping .shopping_list .list_img{
-   float: left;
-   width: 170px;
-   height:127px;
-   margin: 28px 28px 0 28px ;
-}
-.shopping_list a{
-   text-decoration:none;
-}
-.shopping_list .list_a1{
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   float: left;
-   margin: 28px 0 14px 0;
-   width:434px;
-   height:45px;
-   font-size:32px;
-   font-family:PingFangSC-Medium;
-   font-weight:500;
-   color:rgba(74,74,74,1);
-   line-height:45px;
-    text-align:left
-}
-.shopping_list .list_a2{
-   float: left;
-   margin: 0  0 28px 0px ;
-   width:434px;
-   height:68px;
-   font-size:24px;
-   font-family:PingFangSC-Regular;
-   font-weight:400;
-   color:rgba(102,102,102,1);
-   line-height:33px;
-    text-align:left
- }
+  }
+
+  .shopping .shopping_list .list_img {
+    float: left;
+    width: 170px;
+    height: 127px;
+    margin: 28px 28px 0 28px;
+  }
+
+  .shopping_list a {
+    text-decoration: none;
+  }
+
+  .shopping_list .list_a1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+    margin: 28px 0 14px 0;
+    width: 434px;
+    height: 45px;
+    font-size: 32px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 45px;
+    text-align: left
+  }
+
+  .shopping_list .list_a2 {
+    float: left;
+    margin: 0 0 28px 0px;
+    width: 434px;
+    height: 68px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+    line-height: 33px;
+    text-align: left
+  }
 
 </style>

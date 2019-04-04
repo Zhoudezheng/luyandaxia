@@ -24,4 +24,7 @@ export const reqShoucang = (token, type, id) => ajax(BASE+'/collection/create', 
 export const reqOrderList = (token, status, page) => ajax(BASE+'/mine_order/list', {token, status, page}, 'POST')
 //8.项目详情
 export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token, id},'POST');
-
+// 商城首页
+export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
+// 商城首页
+export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
