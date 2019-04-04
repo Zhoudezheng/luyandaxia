@@ -2,9 +2,8 @@
   <div class="project" ref="wo" >
     <div class="project_div">
       <img src="./image/huitui.png" alt="协议按钮" class="project_check">
-      <span  class="project_mode">凯利尔</span>
-      <img src="./image/Collection.png" alt="收藏" class="div_collection">
-      <img src="./image/sharing.png" alt="分享" class="div_sharing">
+      <span  class="project_mode">{{this.proDetail.info.name}}</span>
+      <img :src="imgUrl" alt="收藏" class="div_sharing" @click="shoucang" ></span>
     </div>
     <div class="project_video">
           <div class="isFixed">
@@ -12,13 +11,13 @@
           </div>
     </div>
     <div class="project_title">
-        <span class="prj_span">天亮到天黑做一场真正的路演wwwwww</span>
+        <span class="prj_span">{{this.proDetail.info.name}}</span>
         <img src="./image/look.png" alt="查看" class="prj_ico">
-        <span class="prj_peo">5727人</span>
+        <span class="prj_peo">{{this.proDetail.info.pv}}人</span>
     </div>
     <div class="project_con">
         <span class="con_span">
-            凯利尔环境检测服务有限公司成立于2007年，是面向社会提供公正性技术服务的第三方检测、评价、咨询服务机构。是天津市人力资源和社会保障局认定的第一批…
+            {{this.proDetail.info.recommend}}
         </span>
     </div>
     <div class="projectsharing_row" :class=" nvaBarFixed === true ? 'nva_FixedRow' :''"></div>
@@ -48,14 +47,39 @@
 </template>
 
 <script>
+import { reqShoucang } from '../../api'
+import { Toast } from 'mint-ui';
 export default {
     data(){
         return {
              nvaBarFixed:false,
+             is_collection:false,
+             //imgUrl:'',
+        }
+    },
+    computed: {
+        proDetail: {
+            get:function () {
+                //console.log(this.$store.state.projectDetail)
+                return this.$store.state.projectDetail;
+            },
+            set:function(){
+                this.proDetail = this.$store.state.projectDetail
+            }
+        },
+        imgUrl:function(){
+            return this.is_collection?require('./image/Collection.png'):require('./image/Collectioned.png')
         }
     },
     mounted(){
-        this.setVideo();
+        let id = this.$route.query.id
+        this.$store.dispatch('projectData',id)
+        setTimeout(()=>{
+            this.setVideo();
+            this.is_collection = this.proDetail.inis_collectionfo
+            //this.imgUrl = this.is_collection?'./image/Collectioned.png':'./image/Collection.png'
+            //console.log("info",this.projectDetail)
+        },1000)
         this.box = this.$refs.wo;
         this.box.addEventListener('scroll', () => {
         var offsetTop = document.querySelector('#nav_flexeded').offsetTop;
@@ -72,17 +96,17 @@ export default {
     methods:{
           setVideo(){
                 const player = new TcPlayer('id_project_video', {
-                "mp4":'',
-                "rtmp":'rtmp://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4',
-                "m3u8":"http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
-                "flv":"http://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4.flv", //请替换成实际可用的播放地址
+                "mp4":this.proDetail.info.cover_video ,//'http://cdn.kanjian2020.com/image/2017/11/24/o_1bvmbc8fo1ej51mrfcja12gqjinn',
+                "rtmp":'',//'rtmp://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4',
+                "m3u8":'',//"http://2157.liveplay.myqcloud.com/2157_358535a.m3u8",
+                "flv":'',//"http://live.hzs2010.com/live/3706_3b1e0ff2786311e892905cb9018cf0d4.flv", //请替换成实际可用的播放地址
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
-                "coverpic" : {"src":"./video/Bitmap.png"},
-                "live":true,
+                "coverpic" : {"src":this.proDetail.info.cover_video_img},
+                "live":false,
                 "flash":true,
                 "h5_flv":true,
                 "x5_player":true,
-                "controls":"system",
+                "controls":"default",
                 "systemFullscreen":true,
                 // "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
                 "height" : '200px',//视频的显示高度，请尽量使用视频分辨率高度
@@ -92,6 +116,16 @@ export default {
                        13: '直播已经结束，请稍后再来'
                 }
             })
+          },
+          async shoucang(){
+              //收藏类型 1直播 2项目 3文章 4商品
+              var result = await reqShoucang(this.$store.state.Authorization,"2",this.proDetail.info.id)
+
+            if (result.code === 200) {
+                Toast(result.msg);
+                this.is_collection = !this.is_collection
+                //this.imgUrl = this.is_collection?'./image/Collectioned.png':'./image/Collection.png'
+            }
           },
     }
 }
@@ -111,26 +145,28 @@ export default {
     height: 91px;
     z-index:20;
     background-color:rgba(243, 117, 5, 1);
+        display: flex;
 }
 .project_div .project_check{
     background-size: 16px 30px;
     float: left;
     margin-top: 32px;
-    width:16px;
+    width:16px !important;
     height:30px;
     margin-left:30px;
 }
 .project_div .project_mode{
     float: left;
-    width:108px;
+    width:8.44rem;
     height:50px;
     font-size:36px;
     font-family:PingFangSC-Medium;
     font-weight:500;
     color:rgba(255,255,255,1);
     line-height:44px;
-    margin-top:23px;
-    margin-left: 262px;
+     margin-top:23px;
+     align-self: center;
+    /*margin-left: 262px; */
 }
 .project_div .div_collection{
    float: left;
@@ -143,7 +179,7 @@ export default {
     float: right;
     margin-top: 30px;
     margin-right: 38px;
-   width: 36px;
+   width: 36px !important;
    height: 35px;
 }
 .project_video{
@@ -183,7 +219,7 @@ export default {
     float: left;
     margin-top: 66px;
     margin-left: 40px;
-    width: 24px;
+    width: 24px !important;
     height: 15px;
 }
 .project_title .prj_peo{

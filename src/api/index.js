@@ -4,7 +4,7 @@
  */
 import ajax from './ajax';
 
-const BASE = '/api';
+const BASE = 'http://47.95.224.184/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
@@ -20,4 +20,5 @@ export const reqLiveData = (token, id) => ajax(BASE+'/live', {token, id}, 'POST'
 export const reqDingyue = (token, id) => ajax(BASE+'/publisher/subscribe', {token, id}, 'POST')
 //6.收藏
 export const reqShoucang = (token, type, id) => ajax(BASE+'/collection/create', {token, type, id}, 'POST')
-
+//7.项目详情
+export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token, id},'POST');

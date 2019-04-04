@@ -95,13 +95,13 @@
             deep: true,
             handler: function (val){
                 //判断是否能看，能看则播放，不能看则判断试看时间
-                // if(this.detail.can_watch === 0)
-                // {
+                if(this.detail.can_watch === 0)
+                {
                     if(val >= this.computeTime){
                         this.player.pause()
                         this.isShowLive = true
                     }
-                // }
+                }
             }
         }
     },
