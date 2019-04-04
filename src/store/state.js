@@ -7,5 +7,6 @@ export default {
     detail: {}, // 直播列表
     Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
     //url_content:'',
-    videoUrl:{}
+    videoUrl:{},
+    editadd:{},
   }

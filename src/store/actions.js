@@ -3,6 +3,7 @@ import {
     USER_TOKEN,
     DEL_TOKEN,
     VIDEO_URL,
+    EDITADD
 } from './mutation-types'
 
 import {
@@ -54,7 +55,10 @@ export default {
 
     del_token({commit}){
       commit(DEL_TOKEN)
-      
+    },
+
+    seteditadd({commit},editadd){
+      commit(EDITADD,{editadd})
     }
 
   }

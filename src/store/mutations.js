@@ -3,6 +3,7 @@ import {
     USER_TOKEN,
     DEL_TOKEN,
     VIDEO_URL,
+    EDITADD
 } from './mutation-types'
 
 
@@ -22,9 +23,12 @@ export default {
     },
     [VIDEO_URL](state,{video}){
       state.videoUrl = video
-    }
+    },
     //直播详解介绍页面
     // [URL_CONTENT] (state,{url}){
     //   state.url_content = url
     // }
+    [EDITADD](state,{editadd}){
+        state.editadd=editadd
+    }
   }

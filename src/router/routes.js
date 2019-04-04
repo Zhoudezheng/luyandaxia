@@ -20,6 +20,7 @@ import creativeteam from '../components/ProjectSharing/CreativeTeam/creativeteam
 import address from '../components/Address/address'
 import MyOrders from '../components/MyOrders/MyOrders'
 import newaddress from '../components/NewAddress/newaddress'
+import editaddress from '../components/EditAddress/editaddress'
 
 
 export default [
@@ -138,7 +139,11 @@ export default [
     {
       path: '/newaddress',
       component:newaddress,
-     },
+    },
+    {
+      path:'/editaddress',
+      component:editaddress
+    },
     {
       path:'/account',
       component:account,
