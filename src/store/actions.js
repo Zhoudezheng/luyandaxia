@@ -3,10 +3,12 @@ import {
     USER_TOKEN,
     DEL_TOKEN,
     VIDEO_URL,
+    ORDER_LIST,
 } from './mutation-types'
 
 import {
-    reqLiveData 
+    reqLiveData ,
+    reqOrderList
 } from '../api'
 
 export default {
@@ -55,6 +57,19 @@ export default {
     del_token({commit}){
       commit(DEL_TOKEN)
       
+    },
+   // 获取订单列表
+  async getOrders({commit},data){
+      let token = data.token
+      let status = data.status
+      let page = data.page
+      const result = await reqOrderList(token,status,page)
+    if(result.code === 200){
+      const detail = result.data
+      commit(ORDER_LIST,{detail})
+    } else {
+      console.log(result.msg);
     }
+  }
 
   }

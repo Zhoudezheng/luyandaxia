@@ -20,4 +20,6 @@ export const reqLiveData = (token, id) => ajax(BASE+'/live', {token, id}, 'POST'
 export const reqDingyue = (token, id) => ajax(BASE+'/publisher/subscribe', {token, id}, 'POST')
 //6.收藏
 export const reqShoucang = (token, type, id) => ajax(BASE+'/collection/create', {token, type, id}, 'POST')
+//7.订单列表
+export const reqOrderList = (token, status, page) => ajax(BASE+'/mine_order/list', {token, status, page}, 'POST')
 
