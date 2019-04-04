@@ -41,13 +41,15 @@
       <div class="shopping_lines"></div>
       <div class="shopping_banner">
          <swiper :options="swiperOption">
-            <swiper-slide class="banner_content">
-              <img src="./image/kishi.jpg" class="content_img">
-              <span class="content_span">【新品热售】七年时间再说…</span>
-              <p class="content_p">
-                  <span class="p_span">¥</span>
-                  <span class="p_sp">635.80</span>
-              </p>
+            <swiper-slide class="banner_content" >
+              <div @click="purchase">
+                <img src="./image/kishi.jpg" class="content_img">
+                <span class="content_span">【新品热售】七年时间再说…</span>
+                <p class="content_p">
+                    <span class="p_span">¥</span>
+                    <span class="p_sp">635.80</span>
+                </p>
+              </div>
             </swiper-slide>
             <swiper-slide class="banner_content"> 
               <img src="./image/kishi.jpg" class="content_img">
@@ -135,6 +137,11 @@
     mounted(){
     },
     methods: {
+        purchase(){
+            this.$router.push({
+                path:'/purchaseorder'
+            })
+        }
     }
 }
 </script>
@@ -286,6 +293,9 @@
     box-shadow:0px 0px 10px 0px rgba(172,166,178,0.1);
     border-radius:12px;
     border:1px solid rgba(240,240,240,1);
+}
+.banner_content div{
+    height: 347px;
 }
 .shopping_banner .banner_head{
     height: 347px;

@@ -21,6 +21,7 @@ import address from '../components/Address/address'
 import MyOrders from '../components/MyOrders/MyOrders'
 import newaddress from '../components/NewAddress/newaddress'
 import editaddress from '../components/EditAddress/editaddress'
+import purchaseorder from '../components/PurchaseOrder/purchaseorder'
 
 
 export default [
@@ -131,6 +132,10 @@ export default [
       meta: {
         isShow: true // 标识显示底部导航
       }
+    },
+    {
+      path:'/purchaseorder',
+      component:purchaseorder,
     },
     {
       path:'/address',

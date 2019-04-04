@@ -1,0 +1,404 @@
+<template>
+  <div class="purchase_content">
+    <div class="purchase_div">
+      <img src="./image/huitui.png" alt="协议按钮" @click="shoppingmall" class="purchase_check">
+      <span  class="purchase_mode">确定订单</span>
+    </div>
+    <div class="purchase_address">
+        <img src="./image/address.png" alt="地址" class="address_ico">
+        <div class="address_a">北京市 海淀区 嘉豪国际大厦D座二层</div>
+        <div class="address_name">郭雅文 152xxxxxxxxx</div>
+        <img src="./image/doadd.png" alt="编辑地址" class="address_go">
+    </div>
+    <div class="purchase_lines"></div>
+    <div class="purchase_list">
+      <img src="./image/kishi.jpg" alt="2222">
+      <a href="#" class="list_a1">《如何在路演BP中进行高效率呈 现》电子课件</a>
+      <a href="#" class="list_a2">¥216</a>
+      <span class="list_a3">x 3</span>
+    </div>
+    <div class="Commodity_amount">
+        <span class="amount_a1">商品总价</span>
+        <span class="amount_a2">
+            <span class="a2_un">￥</span>
+            <span class="a2_ut">232.00</span>
+        </span>
+    </div>
+    <div class="Commodity_amount">
+        <span class="amount_a3">运费</span>
+        <span class="amount_a4">
+            <span class="a2_un">￥</span>
+            <span class="a2_ut">8.00</span>
+        </span>
+    </div>
+    <div class="Commodity_amount">
+        <span class="amount_a1">订单总价</span>
+        <span class="amount_a2">
+            <span class="a2_un">￥</span>
+            <span class="a5_ut">635.80</span>
+        </span>
+    </div>
+    <div class="Commodity_amounted">
+        <span class="amount_a1">配送说明</span>
+        <input  type="tel" class="amount_a2" placeholder="选填" v-model="post"  @blur.prevent="inputLoseFocus">
+    </div>
+    <div class="Commodity_amounted" @click="showorder">
+        <span class="amount_a1">发票</span>
+        <span class="amount_in">
+            <span class="in_a2">不开发票</span>
+            <img src="./image/doadd.png" alt="发票" class="in_a">
+        </span>
+    </div>
+    <orderlist  v-show="isBuyVideo" @getcacel="getCal"></orderlist>
+    <div class="purchase_buy">
+        <div class="buy_content">
+          <span class="content_total">总计</span>
+          <span class="content_mony">¥635.80</span>
+        </div>
+        <input type="button" value="去支付" class="buy_link" @click="purchase">
+    </div>
+  </div>
+</template>
+
+<script>
+  import OrderList from './OrderList/OrderList.vue';
+  export default {
+    data(){
+        return {
+            post:'',
+            invoice:'不开发票',
+            isBuyVideo:false,
+        }
+    },
+    components:{
+        "orderlist":OrderList
+    },
+    methods: {
+        shoppingmall(){
+            this.$router.push({  
+                path:'/shoppingmall',
+            })
+        },
+        inputLoseFocus() {
+            setTimeout(() => {
+            window.scrollTo(0, 0);
+            }, 100);
+        },
+        purchase(){
+            this.$router.push({  
+                path:'/videosuccessful',
+            })
+        },
+        getCal(msg){
+            this.openTouch();
+            this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo
+        },
+        showorder(){
+            this.closeTouch();
+            this.isBuyVideo=true;
+        },
+        closeTouch(){
+         document.getElementsByTagName("body")[0].addEventListener('touchmove',
+            this.handler,{passive:false});//阻止默认事件
+        },
+        openTouch(){
+         document.getElementsByTagName("body")[0].removeEventListener('touchmove',
+            this.handler,{passive:false});//打开默认事件
+        },  
+    },
+}
+</script>
+
+<style  scoped>
+@import '../../../static/font/font.css';
+.purchase_content{
+    background-color: rgba(249, 250, 251, 1);
+    height: 1334px;
+}
+.purchase_div{
+    height:88px;
+    background:rgba(255, 121, 19, 1);
+}
+.purchase_div .purchase_check{
+    background-size: 16px 28px;
+    float: left;
+    margin-top: 32px;
+    width:14px;
+    height:26px;
+    margin-left:30px;
+}
+.purchase_div .purchase_mode{
+    float: left;
+    width:144px;
+    height:50px;
+    font-size:36px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    line-height:50px;
+    margin-top:19px;
+    margin-left: 262px;
+}
+.purchase_address{
+    height:170px;
+    background:rgba(255,255,255,1);
+}
+.purchase_address .address_ico{
+    width:28px;
+    height:33px;
+    float: left;
+    margin-top: 68px;
+    margin-left: 28px;
+}
+.purchase_address .address_a{
+    float: left;
+    height:45px;
+    font-size:32px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(74,74,74,1);
+    line-height:45px;
+    margin-top: 35px;
+    margin-left: 33px;
+}
+.purchase_address .address_name{
+    float: left;
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:40px;
+    margin-top: 16px;
+    margin-left: 33px;
+}
+.purchase_address .address_go{
+    width: 12px;
+    height: 21px;
+    float: right;
+    margin-right: 28px;
+}
+.purchase_lines{
+    height: 16px;
+}
+.purchase_list{
+    height: 190px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}
+.purchase_list img{
+   float: left;
+   width: 172px;
+   height:127px;
+   margin: 28px 16px 28px 28px ;
+}
+.purchase_list a{
+   text-decoration:none;
+}
+.purchase_list .list_a1{
+   /* white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis; */
+   float: left;
+   margin: 28px 0 14px 0;
+   width:434px;
+   /* height:45px; */
+   font-size:28px;
+   font-family:PingFangSC-Medium;
+   font-weight:500;
+   color:rgba(74,74,74,1);
+   line-height:45px;
+    text-align:left
+}
+.purchase_list .list_a2{
+   float: left;
+   width:434px;
+   /* height:68px; */
+   font-size:28px;
+   font-family:PingFangSC-Regular;
+   font-weight:400;
+   color:rgba(102,102,102,1);
+   line-height:33px;
+   text-align:left
+}
+.purchase_list .list_a3{
+    float: right;
+    margin-right: 33px;
+    margin-top: -95px;
+    height:33px;
+    font-size:24px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(187,187,187,1);
+    line-height:33px;
+}
+.purchase_list .list_a4{
+    float: left;
+    height:33px;
+    font-size:24px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,0,0,1);
+    line-height:33px;
+    margin-left: 28px;
+
+}
+.Commodity_amount{
+    height: 100px;
+    background-color: #ffffff;
+}
+.Commodity_amounted{
+    margin-top: 16px;
+    height: 100px;
+    background-color: #ffffff;
+}
+.amount_a1,.amount_a3{
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:40px;
+    float: left;
+    margin-top: 30px;
+    margin-left: 28px;
+}
+.amount_a2{
+    height:40px;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(74,74,74,1);
+    line-height:28px;
+    float: right;
+    margin-top: 35px;
+    margin-right: 28px;
+}
+.amount_in{
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(74,74,74,1);
+    line-height:28px;
+    float: right;
+    margin-top: 35px;
+    margin-right: 22px;
+}
+.amount_in .in_a2{
+    text-align: right;
+    width: 400px;
+    margin-right: 28px;
+}
+.amount_in .in_a{
+    width: 12px;
+    height: 21px;
+}
+.Commodity_amounted .amount_a2{
+    height: 40px;
+    text-align: right;
+    width: 400px;
+    margin-top: 30px;
+    margin-right: 28px;
+}
+.amount_a4{
+    height:40px;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+  
+    color:rgba(74,74,74,1);
+    line-height:28px;
+    float: right;
+    margin-top: 35px;
+    margin-right: 28px;
+}
+.a2_un{
+    font-size: 20px;
+}
+.a2_ut{
+    font-size: 28px;
+}
+.a5_ut{
+   color:rgba(243, 117, 5, 1);
+}
+input:focus, textarea:focus{ 
+    outline: none;
+}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{ 
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(187,187,187,1);
+    line-height:40px;
+}
+input:-moz-placeholder,textarea:-moz-placeholder{ 
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(187,187,187,1);
+    line-height:40px;
+}
+input::-moz-placeholder,textarea::-moz-placeholder{ 
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(187,187,187,1);
+    line-height:40px;
+} 
+input:-ms-input-placeholder,textarea:-ms-input-placeholder{ 
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(187,187,187,1);
+    line-height:40px;
+}
+.purchase_buy{
+  position: fixed;
+  height: 103px;
+  left: 0;
+  right: 0;
+  bottom: 0
+}
+.purchase_buy .buy_content{
+  float: left;
+  width:500px;
+  height:100px;
+  background:rgba(255,255,255,1);
+  text-align: left
+}
+.purchase_buy .buy_content .content_total{
+  float: left;
+  width:56px;
+  height:40px;
+  font-size:28px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:40px;
+  margin-top: 31px;
+  margin-left: 28px;
+}
+.purchase_buy .buy_content .content_mony{
+  float: left;
+  width:111px;
+  height:45px;
+  font-size:28px;
+  font-family:PingFangSC-Semibold;
+  font-weight:600;
+  color:rgba(255,126,0,1);
+  line-height:28px;
+  margin-top: 36px;
+  margin-left: 30px;
+}
+.purchase_buy .buy_link{
+  width:250px;
+  height:98px;
+  background:linear-gradient(90deg,rgba(255,161,44,1) 0%,rgba(255,121,19,1) 100%);
+  font-size:36px;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:50px;
+}
+</style>
