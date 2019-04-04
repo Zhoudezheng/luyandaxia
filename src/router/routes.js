@@ -13,7 +13,14 @@ import shoppingcart from '../components/ShoppingCart/ShoppingCart'
 import personalcenter from '../components/PersonalCenter/PersonalCenter'
 import account from '../components/Account/Account' 
 import membership from '../components/Membership/Membership'
+import projectsharing from '../components/ProjectSharing/projectsharing'
+import background from '../components/ProjectSharing/BackGround/background'
+import brightspot from '../components/ProjectSharing/BrightSpot/brightspot'
+import creativeteam from '../components/ProjectSharing/CreativeTeam/creativeteam'
+import address from '../components/Address/address'
 import MyOrders from '../components/MyOrders/MyOrders'
+import newaddress from '../components/NewAddress/newaddress'
+import editaddress from '../components/EditAddress/editaddress'
 
 
 export default [
@@ -70,10 +77,10 @@ export default [
       path:'/videosuccessful',
       component:videosuccessful,
     },
-  {
+    {
     path: '/MyOrders',
     component: MyOrders,
-  },
+    },
     {
 
       path:'/shoppingcart',
@@ -103,6 +110,70 @@ export default [
     {
       path:'/membership',
       component:membership,
+    },
+    {
+      path:'/shoppingcart',
+      component:shoppingcart,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/shoppingmall',
+      component:shoppingmall,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/personalcenter',
+      component:personalcenter,
+      meta: {
+        isShow: true // 标识显示底部导航
+      }
+    },
+    {
+      path:'/address',
+      component:address
+    },
+    {
+      path: '/newaddress',
+      component:newaddress,
+    },
+    {
+      path:'/editaddress',
+      component:editaddress
+    },
+    {
+      path:'/account',
+      component:account,
+    },
+    {
+      path:'/membership',
+      component:membership,
+    },
+    {
+      path:'/projectsharing',
+      component:projectsharing,
+      children: [
+        // 二级路由路径,不加/
+          {
+            path:'background',
+            component: background
+          },
+          {
+            path:'brightspot',
+            component:brightspot
+          },
+          {
+            path:'creativeteam', 
+            component:creativeteam
+          },
+          {
+            path:'',           //这个表示的是根目录，即一进入的页面
+            redirect:'background'    //设置页面一进来就显示的页面，即重定向到goods组件，这里写的内容是对应组将的component的值
+          }
+        ]
     },
     {
         path:'/',           //这个表示的是根目录，即一进入的页面

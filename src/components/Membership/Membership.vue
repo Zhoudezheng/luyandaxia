@@ -1,7 +1,7 @@
 <template>
   <div class="ship_content">
     <div class="ship_div">
-        <img src="./image/fanhui.png" alt="协议按钮"  class="ship_check">
+        <img src="./image/fanhui.png" alt="协议按钮"  class="ship_check" @click="shipper" >
         <span  class="ship_mode">年费VIP</span>
     </div>
     <div>
@@ -101,7 +101,13 @@
 
 <script>
   export default {
-
+    methods:{
+         shipper(){
+          this.$router.push({
+              path:'/personalcenter'
+          })
+      },
+    }
 }
 </script>
 
@@ -264,11 +270,15 @@
     margin-left: 29px;
     margin-right: 27px;
     text-align: left;
+    margin-bottom: 165px;
 }
 .footer_car{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 160px;
     margin-top: 86px;
-    position: relative;
 }
 .footer_car .car_p{
     height: 160px;

@@ -4,8 +4,9 @@
 // }
 // export default state
 export default {
-    detail: {}, // 直播列表
-    Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
-    //url_content:'',
-    videoUrl:{}
-  }
+  Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
+  detail: {}, 
+  videoUrl:{},
+  editadd:{},
+  projectDetail:{},
+}
