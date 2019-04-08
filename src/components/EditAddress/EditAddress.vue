@@ -2,7 +2,7 @@
     <div>
       <div class="address_div">
             <img src="./image/huitui.png" alt="回退"  class="address_check" @click="address">
-            <span  class="address_mode">新增地址</span>
+            <span  class="address_mode">编辑地址</span>
       </div>
       <form>
         <div class="address_user">
@@ -38,17 +38,18 @@
     </div>
 </template>
 <script>
-import Vue from 'vue'
-Vue.component(Popup.name, Popup);
-import {Popup, Picker } from 'mint-ui';
-Vue.component(Picker.name, Picker);
-import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
-export default {
+  import Vue from 'vue'
+  Vue.component(Popup.name, Popup);
+  import {Popup, Picker } from 'mint-ui';
+  Vue.component(Picker.name, Picker);
+  import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
+  import { mapState } from 'vuex'
+  export default {
     data(){
         return {
-            consignee:'',
-            phonenumber:'',
-            location:'',
+            consignee:this.$store.state.editadd.name,
+            phonenumber:this.$store.state.editadd.iphone,
+            location:this.$store.state.editadd.adress,
             detailed:'',
             arr:[],
             region:'',//三级地址
@@ -99,7 +100,11 @@ export default {
             ],
         }
     },
-    components:{},
+    computed:{
+        ...mapState({
+            editadd:state=>state.editadd
+        })
+    },
     methods:{
         address(){
             this.$router.push({

@@ -17,8 +17,7 @@ import  VueResource  from 'vue-resource'
 Vue.use(VueResource) 
 Vue.use(VueVideoPlayer);
 Vue.use(Mint)
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
 window.onresize = setHtmlFontSize;
 function setHtmlFontSize(){
     const htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;

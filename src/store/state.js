@@ -7,5 +7,6 @@ export default {
   Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
   detail: {}, 
   videoUrl:{},
+  editadd:{},
   projectDetail:{},
 }

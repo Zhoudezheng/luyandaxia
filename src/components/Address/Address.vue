@@ -14,8 +14,8 @@
              <span class="choice_ico"  :class="{active:item.isdefault}" @click="isdeful(index)"></span>
              <span class="choice_mo" v-show="item.isdefault">默认地址</span>
              <span class="choice_mo" v-show="!item.isdefault">设为默认</span>
-             <img src="./image/del.png" alt="删除" class="choice_del">
-             <img src="./image/write.png" alt="编辑" class="choice_edit">
+             <img src="./image/del.png" alt="删除" class="choice_del" @click="deladdress(index)" >
+             <img src="./image/write.png" alt="编辑" class="choice_edit" @click="choiceaddress(index)">
           </div>
       </div>
       <div class="footfiexd"  @click="newaddress">
@@ -25,6 +25,7 @@
     </div>
 </template>
 <script>
+import { Toast, MessageBox } from 'mint-ui'
 export default {
     data(){
         return {
@@ -32,19 +33,19 @@ export default {
                 {
                 name:'习大大',
                 iphone:'13683642775',
-                adress:'北京市海淀区西北旺',
+                adress:'北京市北京市海淀区西北旺',
                 isdefault:true,
                 },
                  {
                 name:'周大大',
                 iphone:'13623456789',
-                adress:'北京市朝阳区三元桥',
+                adress:'北京市北京市朝阳区三元桥',
                 isdefault:false,
                 },
                  {
                 name:'韩大大',
                 iphone:'13682374728',
-                adress:'北京市海淀区上地站',
+                adress:'北京市北京市海淀区上地站',
                 isdefault:false,
                 }
             ]
@@ -71,9 +72,20 @@ export default {
            }
        },
        newaddress(){
+         this.$router.push({
+             path:'/newaddress'
+         })
+       },
+       choiceaddress(index){
+           var editadd=this.dataList[index];
+           this.$store.dispatch('seteditadd', editadd);
            this.$router.push({
-               path:'/newaddress'
+               path:'/editaddress'
            })
+       },
+       deladdress(index){
+           this.dataList.splice(index,1);
+           Toast('删除成功');
        }
     }
 }
