@@ -138,9 +138,6 @@
             this.is_collection = this.detail.is_collection===0?false:true
             
          },1000)
-        //   setTimeout(()=>{
-        //     this.tryPlay()
-        // },1000)
          this.box = this.$refs.wo;
          this.box.addEventListener('scroll', () => {
          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
@@ -155,33 +152,9 @@
     },
     
     methods: {
-        // 直播时试看
-        // tryPlay() {
-        // // 开始倒计时
-        // // 启动循环定时器
-        
-        // //this.computeTime = this.$store.state.detail.preview_at
-        // if(this.$store.state.status === 1)
-        // {
-        //     const intervalId = setInterval(() => {
-        //     // 时间减1
-        //     this.computeTime--
-        //     // 一旦时间到了0, 停止计时
-        //     if(this.computeTime <= 0 ) {
-        //         this.isShowLive = true
-        //         this.computeTime = 0
-        //         this.player.pause();
-        //         clearInterval(intervalId)
-        //     }
-        //     }, 1000)
-        // }else{
-        //     var current = this.player.currentTime()
-        // }
-        // },
           setVideo(){
                this.video = this.$store.state.videoUrl
                this.computeTime = this.$store.state.detail.preview_at
-               console.log(this.video)
                 this.player =new TcPlayer('id_test_video', {
                  "mp4":this.video.mp4,
                 "rtmp":this.video.rtmp,
@@ -203,9 +176,7 @@
                        13: '直播已经结束，请稍后再来'
                 },
                 "listener":(msg)=>{
-                    console.log(msg.src.el.currentTime)
                     this.currentTime = msg.src.el.currentTime
-                    console.log("time:"+this.currentTime)
                 }
             })
           },
@@ -233,11 +204,7 @@
           },
           reWatch(){
               this.player.play();
-            //   if(this.$store.state.detail.status != 1)
-            //   {
-                  this.player.currentTime(0)
-            //   }
-              
+              this.player.currentTime(0)
               this.isShowLive = false;
           },
           handleScrollfoot () {

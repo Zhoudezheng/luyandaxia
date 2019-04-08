@@ -65,8 +65,6 @@ export default {
     const result = await reqProjectData(token,id)
     if (result.code === 200) {
       const prodetail = result.data
-      console.log("result",prodetail)
-      console.log("info",prodetail.info)
       commit(PROJECT_DETAIL, prodetail) //提交给mutation
     }else{
       console.log(result.msg)
