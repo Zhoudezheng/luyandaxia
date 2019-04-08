@@ -41,7 +41,7 @@
     <keep-alive> <router-view></router-view> </keep-alive>
     <div class="footfiexd">
         <img src="./image/buy.png" alt="购买" class="fiexd">
-        <span class="fiexd_span">立即支付</span>
+        <span class="fiexd_span" @click="payment">立即支付</span>
     </div>
   </div>
 </template>
@@ -127,6 +127,11 @@ export default {
                 //this.imgUrl = this.is_collection?'./image/Collectioned.png':'./image/Collection.png'
             }
           },
+          payment(){
+              this.$router.push({  
+                path:'/VipMember',
+            })
+          }
     }
 }
 </script>
