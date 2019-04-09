@@ -9,7 +9,7 @@
     </div>
     <div class="shopping_nva">
       <ul class="nva_ul">
-        <li v-for="(item) in shops.category" class="nva_li">
+        <li v-for="(item) in shops&&shops.category" class="nva_li">
           <img :src="item.icon" alt="新品推荐">
           <span>{{item.name}}</span>
         </li>
@@ -25,7 +25,7 @@
     <div class="shopping_lines"></div>
     <div class="shopping_banner">
       <swiper :options="swiperOption">
-        <swiper-slide class="banner_content" v-for="(item) in shops.recommend" :key="item.id">
+        <swiper-slide class="banner_content" v-for="(item) in shops&&shops.recommend" :key="item.id">
           <img :src="item.cover" class="content_img">
           <span class="content_span">{{item.name}}</span>
           <p class="content_p">
@@ -41,7 +41,7 @@
       <span class="more_span">猜你喜欢</span>
     </div>
     <div class="shopping_footer">
-      <div class="shopping_list" v-for="(item) in shops.like" :key="item.id">
+      <div class="shopping_list" v-for="(item) in shops&&shops.like" :key="item.id">
         <img :src="item.cover" alt="1111" class="list_img">
         <span class="list_a1">{{item.name}}</span>
         <span class="list_a2">￥{{item.price}}</span>

@@ -6,6 +6,8 @@ export const ORDER_LIST = 'order_list'
 export const EDITADD = 'editadd'
 export const PROJECT_DETAIL = 'project_detail'
 export const SHOP_INDEX = 'shop_index'
-export const SHOPPING_CART = 'SHOPPING_CART'
+export const SHOPPING_CART = 'shopping_cart'
+export const CREATE_ORDER = 'create_order'
+export const CONFIRM_ORDER = 'confirm_order'
 
 
