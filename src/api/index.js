@@ -30,8 +30,14 @@ export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
 //获取用户地址
 export const addressListed = (token) => ajax(BASE+'/address/list',{token},'POST');
-//更新收获地址
+//更新收货地址
 export const saveAddressList = (token,id,name,phone,address,info,type) =>ajax(BASE+'/address/update',{token,id,name,phone,address,info,type},'POST');
+//新增收货地址
+export const addAddressList = (token,name,phone,address,info,type) =>ajax(BASE+'/address/create',{token,name,phone,address,info,type},'POST');
+//删除收货地址
+export const delAddressList = (token,id) =>ajax(BASE+'/address/delete',{token,id},'POST');
+//设置默认地址
+export const defaultAddressList = (token,id) =>ajax(BASE+'/address/set_default',{token,id},'POST');
 // 创建订单
 export const reqCreateOrder = (token,product_info) => ajax(BASE+'/order/create',{token,product_info},'POST');
 // 预览订单

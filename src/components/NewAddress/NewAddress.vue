@@ -43,7 +43,7 @@ Vue.component(Popup.name, Popup);
 import {Popup, Picker } from 'mint-ui';
 Vue.component(Picker.name, Picker);
 import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
-import { saveAddressList } from '../../api'
+import { addAddressList } from '../../api'
 export default {
     data(){
         return {
@@ -133,8 +133,7 @@ export default {
            var address =this. location;
            var info=this.detailed;
            var type=0;
-           var id=110;
-           let result= await saveAddressList(token,id,name,phone,address,info,type);
+           let result= await addAddressList(token,name,phone,address,info,type);
            this.$router.push({
               path:'/address'
            })

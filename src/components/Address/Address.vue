@@ -26,7 +26,7 @@
 </template>
 <script>
 import { Toast, MessageBox } from 'mint-ui'
-import { addressListed } from '../../api'
+import { addressListed, delAddressList, defaultAddressList } from '../../api'
 export default {
     data(){
         return {
@@ -52,10 +52,14 @@ export default {
            for(var i=0; i<this.dataList.length;i++){
                if(this.dataList[i]=== obj){
                    //方法：设为默认地址并置顶
+                    var token=this.$store.state.Authorization;
+                    var id=obj.id;
                     this.dataList[i].type=1;
+                    defaultAddressList(token,id);
                     this.dataList.unshift(this.dataList[index]);
                     this.dataList.splice(index+1,1);
                     return this.dataList;
+
                }else{
                    this.dataList[i].type=0;
                }
@@ -73,9 +77,12 @@ export default {
                path:'/editaddress'
            })
        },
-       deladdress(index){
+       async deladdress(index){
+           var token=this.$store.state.Authorization;
+           var list=this.dataList[index];
+           var id=list.id;
+           let dellist = await delAddressList(token,id)
            this.dataList.splice(index,1);
-        //    this.$store.dispatch('')
            Toast('删除成功');
        }
     }
