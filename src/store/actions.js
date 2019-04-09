@@ -8,6 +8,8 @@ import {
   PROJECT_DETAIL,
   SHOP_INDEX,
   SHOPPING_CART,
+  CREATE_ORDER,
+  CONFIRM_ORDER,
 } from './mutation-types'
 
 import {
@@ -15,7 +17,9 @@ import {
   reqProjectData,
   reqOrderList,
   reqShopIndex,
-  reqShoppingCart
+  reqShoppingCart,
+  reqCreateOrder,
+  reqConfirmOrder,
 } from '../api'
 
 export default {
@@ -71,7 +75,7 @@ export default {
     const result = await reqOrderList(token, status, page)
     if (result.code === 200) {
       const detail = result.data
-      commit(ORDER_LIST, {detail})
+      commit(ORDER_LIST, detail)
     } else {
       console.log(result.msg);
       commit(ORDER_LIST, {})
@@ -101,7 +105,7 @@ export default {
     const result = await reqShopIndex()
     if(result.code === 200){
       let data = result.data
-      commit(SHOP_INDEX,{data})
+      commit(SHOP_INDEX,data)
     } else {
       console.log(result.msg);
       commit(SHOP_INDEX,{})
@@ -109,16 +113,41 @@ export default {
   },
 
   // 获取购物车列表
-
   async getShoppingCart ({commit, state}){
     const token = state.Authorization
     let result = await reqShoppingCart(token)
     if(result.code === 200){
-      let data = result.data.list
+      let data = result.data
       commit(SHOPPING_CART,data)
     } else {
       commit(SHOPPING_CART,{})
     }
 
-  }
+  },
+  // 创建商城订单
+  async createOrder ({commit, state},data){
+    const token = state.Authorization
+    let result = await reqCreateOrder(token,data)
+    if(result.code === 200){
+      let data = result.data
+      commit(CREATE_ORDER,data)
+    } else {
+      commit(CREATE_ORDER,{data})
+    }
+
+  },
+
+  // 预览订单
+  async previewOrder ({commit, state},data){
+    const token = state.Authorization
+    let result = await reqConfirmOrder(token,data)
+    if(result.code === 200){
+      let data = result.data
+      commit(CONFIRM_ORDER,data)
+    } else {
+      commit(CONFIRM_ORDER,result.data)
+    }
+
+  },
 }
+

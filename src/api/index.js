@@ -28,3 +28,8 @@ export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token,
 export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
 // 商城首页
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
+// 创建订单
+export const reqCreateOrder = (token,product_info) => ajax(BASE+'/order/create',{token,product_info},'POST');
+// 预览订单
+export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm',{token,product_info},'POST');
+

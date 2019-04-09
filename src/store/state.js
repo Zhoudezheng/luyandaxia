@@ -8,5 +8,9 @@ export default {
   detail: {}, 
   videoUrl:{},
   editadd:{},
+  orders:{},
   projectDetail:{},
+  shops:{},
+  goods:{},
+  orderDetails:{}
 }
