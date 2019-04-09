@@ -128,7 +128,7 @@
   }
 </script>
 
-<style  lscoped>
+<style  scoped>
   @import '../../../static/font/font.css';
   .login_header img{
     width: 160px;

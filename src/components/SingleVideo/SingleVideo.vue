@@ -80,11 +80,30 @@
                 path:'/liveSharing',
             })
         },
-        singlevideo(){
-            this.$router.push({  
-                path:'/videosuccessful',
-            })
-        },
+        async singlevideo(){
+            // this.$router.push({  
+            //     path:'/videosuccessful',
+            // })
+                const that =this;
+               //先请求后台获取到需要跳转用到的form数据
+               var result = await resAlipaybuy(1,)
+
+
+//                     if(res.data.code==0){
+//                         const form=res.data.form;  
+//                         const div = document.createElement('div');
+//                         div.innerHTML = form; //此处form就是后台返回接收到的数据
+//                         document.body.appendChild(div);
+//                         document.forms[0].submit();
+// // document.body.appendChild(div); document.forms[0].submit();这两步是关键，此时只要后台返回form正确，就可以直接跳转到支付宝页面
+//                     }else{
+//                       alert(res.data.msg);
+//                     }
+//                   },function(res){
+//                     //               alert("请求失败")
+//                   });
+ 
+              },
         showactive(){
            this.activeClass=1
         },

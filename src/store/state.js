@@ -9,4 +9,5 @@ export default {
   videoUrl:{},
   editadd:{},
   projectDetail:{},
+  addressList:[]
 }

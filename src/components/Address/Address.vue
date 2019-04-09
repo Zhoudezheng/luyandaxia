@@ -7,11 +7,11 @@
       <div class="address_content" v-for="(item ,index) in dataList">
           <div class="content_a">
               <span class="content_name">{{item.name}}</span>
-              <span class="content_iphone">{{item.iphone}}</span>
+              <span class="content_iphone">{{item.phone}}</span>
           </div>
-          <span class="content_add">{{item.adress}}</span>
+          <span class="content_add">{{item.address}}{{item.info}}</span>
           <div class="content_choice">
-             <span class="choice_ico"  :class="{active:item.isdefault}" @click="isdeful(index)"></span>
+             <span class="choice_ico"  :class="{active:item.type}" @click="isdeful(index)"></span>
              <span class="choice_mo" v-show="item.isdefault">默认地址</span>
              <span class="choice_mo" v-show="!item.isdefault">设为默认</span>
              <img src="./image/del.png" alt="删除" class="choice_del" @click="deladdress(index)" >
@@ -30,26 +30,12 @@ export default {
     data(){
         return {
             dataList:[
-                {
-                name:'习大大',
-                iphone:'13683642775',
-                adress:'北京市北京市海淀区西北旺',
-                isdefault:true,
-                },
-                 {
-                name:'周大大',
-                iphone:'13623456789',
-                adress:'北京市北京市朝阳区三元桥',
-                isdefault:false,
-                },
-                 {
-                name:'韩大大',
-                iphone:'13682374728',
-                adress:'北京市北京市海淀区上地站',
-                isdefault:false,
-                }
             ]
         }
+    },
+    mounted(){
+        this.$store.dispatch("resaddressList");
+        this.dataList=this.$store.state.addressList;
     },
     methods:{
        presonal(){
@@ -62,12 +48,12 @@ export default {
            for(var i=0; i<this.dataList.length;i++){
                if(this.dataList[i]=== obj){
                    //方法：设为默认地址并置顶
-                    this.dataList[i].isdefault=true;
+                    this.dataList[i].type=1;
                     this.dataList.unshift(this.dataList[index]);
                     this.dataList.splice(index+1,1);
                     return this.dataList;
                }else{
-                   this.dataList[i].isdefault=false;
+                   this.dataList[i].type=0;
                }
            }
        },
@@ -85,6 +71,7 @@ export default {
        },
        deladdress(index){
            this.dataList.splice(index,1);
+        //    this.$store.dispatch('')
            Toast('删除成功');
        }
     }

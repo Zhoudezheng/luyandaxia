@@ -23,7 +23,7 @@
             <input  type="tel" maxlength="16" class="user_input" placeholder="请输入小区/楼号/门牌号" v-model="detailed"  @blur.prevent="inputLoseFocus">
          </div>
       </form>
-      <div class="footfiexd" >
+      <div class="footfiexd" @click="saveaddress">
         <img src="./image/buy.png" alt="保存地址" class="fiexd">
         <span class="fiexd_span">保存</span>
       </div>
@@ -48,9 +48,11 @@
     data(){
         return {
             consignee:this.$store.state.editadd.name,
-            phonenumber:this.$store.state.editadd.iphone,
-            location:this.$store.state.editadd.adress,
-            detailed:'',
+            phonenumber:this.$store.state.editadd.phone,
+            location:this.$store.state.editadd.address,
+            detailed:this.$store.state.editadd.info,
+            id:this.$store.state.editadd.id,
+            type:this.$store.state.editadd.type,
             arr:[],
             region:'',//三级地址
             province:'',//省
@@ -121,6 +123,26 @@
         },
         cancelpo(){
             this.regionVisible = false;
+        },
+        saveaddress(){
+            var name=this.consignee;
+            var phone=this.phonenumber;
+            var address=this.location;
+            var info = this.detailed;
+            var id=this.id;
+            var type =this.type;
+            let addList=Object.assign({},{name,phone,address,info,id,type});
+            let addressList=this.$store.state.addressList;
+            for(var i=0; i<addressList.length;i++){
+                if(addressList[i].id === addList.id){
+                    addressList[i] = addList
+                     
+                }
+            }
+            this.$router.push({
+              path:'/address'
+            })
+         
         },
         okloc(){
             this.regionVisible = false;
@@ -251,7 +273,7 @@
     float: right;
     width:20px;
     height: 30px;
-    margin-top: 42px;
+    margin-top: 47px;
     margin-right: 20px;
 }
 span:after{

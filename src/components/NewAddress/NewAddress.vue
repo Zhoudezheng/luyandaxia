@@ -11,7 +11,7 @@
          </div>
          <div class="address_user">
             <span class="ico_head">手机号码:</span>
-            <input  type="tel" maxlength="16" class="user_input" placeholder="请输入手机号码" v-model="phonenumber"  @blur.prevent="inputLoseFocus">
+            <input  type="tel" maxlength="12" class="user_input" placeholder="请输入手机号码" v-model="phonenumber"  @blur.prevent="inputLoseFocus">
          </div>
          <div class="address_user">
             <span class="ico_head">所在地区:</span>
@@ -23,7 +23,7 @@
             <input  type="tel" maxlength="16" class="user_input" placeholder="请输入小区/楼号/门牌号" v-model="detailed"  @blur.prevent="inputLoseFocus">
          </div>
       </form>
-      <div class="footfiexd" >
+      <div class="footfiexd" @click="saveNewaddress">
         <img src="./image/buy.png" alt="保存地址" class="fiexd">
         <span class="fiexd_span">保存</span>
       </div>
@@ -43,6 +43,7 @@ Vue.component(Popup.name, Popup);
 import {Popup, Picker } from 'mint-ui';
 Vue.component(Picker.name, Picker);
 import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
+import { saveAddressList } from '../../api'
 export default {
     data(){
         return {
@@ -124,6 +125,17 @@ export default {
                  a+=`${this.arr[i].name}`;
             }
             this.location=a;
+        },
+        async saveNewaddress(){
+           var token=this.$store.state.Authorization;
+           var name= this.consignee;
+           var phone= this.phonenumber;
+           var address =this. location;
+           var info=this.detailed;
+           var type=0;
+           var id=1;
+           let result= await saveAddressList(token,id,name,phone,address,info,type);
+        //    console.log(result)
         },
       //picker组件的change事件，进行取值赋值
         addressChange(picker, values){

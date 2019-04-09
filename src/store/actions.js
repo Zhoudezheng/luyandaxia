@@ -8,6 +8,7 @@ import {
   PROJECT_DETAIL,
   SHOP_INDEX,
   SHOPPING_CART,
+  ADDRESS_LIST,
 } from './mutation-types'
 
 import {
@@ -15,7 +16,8 @@ import {
   reqProjectData,
   reqOrderList,
   reqShopIndex,
-  reqShoppingCart
+  reqShoppingCart,
+  addressListed,
 } from '../api'
 
 export default {
@@ -122,5 +124,16 @@ export default {
       commit(SHOPPING_CART,{})
     }
 
-  }
+  },
+  //获取收获地址
+  async resaddressList({commit, state}){
+    const tonken= state.Authorization;
+    let result = await addressListed(tonken);
+    if(result.code === 200){
+      let data = result.data;
+      commit(ADDRESS_LIST ,data)
+    }else{
+      commit(ADDRESS_LIST,[])
+    }
+  },
 }

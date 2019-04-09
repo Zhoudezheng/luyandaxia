@@ -7,8 +7,10 @@ import {
   EDITADD,
   PROJECT_DETAIL,
   SHOP_INDEX,
-  SHOPPING_CART
+  SHOPPING_CART,
+  ADDRESS_LIST
 } from './mutation-types'
+import { stat } from 'fs';
 
 
 export default {
@@ -48,5 +50,8 @@ export default {
   },
   [SHOPPING_CART](state, {data}){
     state.goodLits = data.list
+  },
+  [ADDRESS_LIST](state , data){
+    state.addressList = data
   }
 }

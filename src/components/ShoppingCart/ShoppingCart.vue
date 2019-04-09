@@ -55,7 +55,7 @@
         <!-- <span>共{{totalNum}}件</span> -->
       </div>
       <div class="btn-box">
-        <router-link to="#">
+        <router-link to="/singlevideo">
           <input type="button" value="去结算" class="buy_link">
         </router-link>
       </div>

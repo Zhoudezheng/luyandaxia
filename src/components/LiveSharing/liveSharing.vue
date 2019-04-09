@@ -203,9 +203,9 @@
                        13: '直播已经结束，请稍后再来'
                 },
                 "listener":(msg)=>{
-                    console.log(msg.src.el.currentTime)
+                    // console.log(msg.src.el.currentTime)
                     this.currentTime = msg.src.el.currentTime
-                    console.log("time:"+this.currentTime)
+                    // console.log("time:"+this.currentTime)
                 }
             })
           },

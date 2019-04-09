@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { resaddressList } from '../../api'
 export default {
     methods:{
         toAccount(){
@@ -75,9 +76,13 @@ export default {
             })
         },
         addressp(){
-            this.$router.push({
-                path:'/address'
-            })
+            this.$store.dispatch("resaddressList");
+            if(this.$store.state.addressList.length>0){
+               this.$router.push({
+                 path:'/address'
+               })
+            }
+            
         }
     }
 }

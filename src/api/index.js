@@ -28,3 +28,7 @@ export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token,
 export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
 // 商城首页
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
+//获取用户地址
+export const addressListed = (token) => ajax(BASE+'/address/list',{token},'POST');
+//更新收获地址
+export const saveAddressList = (token,id,name,phone,address,info,type) =>ajax(BASE+'/address/update',{token,id,name,phone,address,info,type},'POST');
