@@ -34,7 +34,6 @@ export default {
         }
     },
     mounted(){
-        this.$store.dispatch("resaddressList");
         this.dataList=this.$store.state.addressList;
     },
     methods:{

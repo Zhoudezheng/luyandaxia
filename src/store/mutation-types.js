@@ -9,5 +9,7 @@ export const SHOP_INDEX = 'shop_index'
 export const SHOPPING_CART = 'SHOPPING_CART'
 export const ADDRESS_LIST = 'address_list'
 export const SAVE_ADDRESS = 'svae_address'
+export const CREATE_ORDER = 'create_order'
+export const CONFIRM_ORDER = 'confirm_order'
 
 

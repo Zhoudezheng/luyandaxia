@@ -8,6 +8,10 @@ export default {
   detail: {}, 
   videoUrl:{},
   editadd:{},
+  orders:{},
   projectDetail:{},
-  addressList:[]
+  addressList:[],
+  shops:{},
+  goods:{},
+  orderDetails:{}
 }

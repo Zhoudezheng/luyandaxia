@@ -21,7 +21,7 @@ export default function ajax(url, data={}, method='GET') {
         queryStr = queryStr.substring(0, queryStr.length-1) // username=tom&password=123
         url += '?' + queryStr  // /login/?username=tom&password=123
       }
-      console.log(url)
+      //console.log(url)
     if(method==='GET') {
       
       promise = axios.get(url) // url?username=tom&password=123

@@ -32,3 +32,8 @@ export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token
 export const addressListed = (token) => ajax(BASE+'/address/list',{token},'POST');
 //更新收获地址
 export const saveAddressList = (token,id,name,phone,address,info,type) =>ajax(BASE+'/address/update',{token,id,name,phone,address,info,type},'POST');
+// 创建订单
+export const reqCreateOrder = (token,product_info) => ajax(BASE+'/order/create',{token,product_info},'POST');
+// 预览订单
+export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm',{token,product_info},'POST');
+

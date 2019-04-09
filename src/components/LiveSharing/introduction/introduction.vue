@@ -53,7 +53,6 @@
   export default {
     data(){
       return{
-        // arr:[{friut:"时间",name:"活动",many:"嘉宾"},{friut:"13:00-14:00",name:"签到",many:"-"},{friut:"14:00-14:30",name:"现代教育新思路",many:"张德江"}] ,
         html:'',
       }
     },
@@ -78,7 +77,6 @@
     methods:{
       load () {
         let url = this.url
-        console.log(url)
       if (url && url.length > 0) {
       // 加载中
       let param = {
@@ -86,7 +84,7 @@
       }
       this.$http.get(url, param).then((response) => {
         // 处理HTML显示
-        console.log(response)
+        //console.log(response)
         this.html = response.body
       }).catch(() => {
         this.html = '加载失败'

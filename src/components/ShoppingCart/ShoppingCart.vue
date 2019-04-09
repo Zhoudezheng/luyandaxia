@@ -15,32 +15,32 @@
             <div class="car-img">
               <img :src="item.cover"/>
             </div>
-           <div class="car-cont">
-             <div class="cont">
-               <div class="shop_top">
-                 <span class="shop_name">{{item.name}}</span>
-                 <span class="car-num">X{{item.num}}</span>
-               </div>
+            <div class="car-cont">
+              <div class="cont">
+                <div class="shop_top">
+                  <span class="shop_name">{{item.name}}</span>
+                  <span class="car-num">X{{item.num}}</span>
+                </div>
 
-                 <div class="cat-desc">
-                   <span>Vip特惠价：￥{{item.vip_price}}</span>
-                 </div>
-                 <div class="cat_mony">
-                   <span class="mony_zero">¥{{item.price}}</span>
-                   <span class="mony_hua">¥{{item.local_price}}</span>
-                 </div>
-               <div class="num">
-                 <div class="num_left" @click="reduce(index)">
-                   <span class="num_reduce"></span>
-                 </div>
-                 <span class="num_nu">{{item.num}}</span>
-                 <div class="num_right" @click="add(index)">
-                   <span class="num_add"></span>
-                 </div>
-               </div>
-             </div>
+                <div class="cat-desc">
+                  <span>Vip特惠价：￥{{item.vip_price}}</span>
+                </div>
+                <div class="cat_mony">
+                  <span class="mony_zero">¥{{item.price}}</span>
+                  <span class="mony_hua">¥{{item.local_price}}</span>
+                </div>
+                <div class="num">
+                  <div class="num_left" @click="reduce(index)">
+                    <span class="num_reduce"></span>
+                  </div>
+                  <span class="num_nu">{{item.num}}</span>
+                  <div class="num_right" @click="add(index)">
+                    <span class="num_add"></span>
+                  </div>
+                </div>
+              </div>
 
-           </div>
+            </div>
           </div>
         </li>
       </ul>
@@ -55,9 +55,7 @@
         <!-- <span>共{{totalNum}}件</span> -->
       </div>
       <div class="btn-box">
-        <router-link to="/singlevideo">
-          <input type="button" value="去结算" class="buy_link">
-        </router-link>
+        <input type="button" @click="createOrder()" value="去结算" class="buy_link">
       </div>
     </div>
   </div>
@@ -65,6 +63,7 @@
 
 <script>
   import {mapState} from 'vuex'
+
 
   export default {
     data() {
@@ -95,12 +94,14 @@
         ],
         totalPrice: 0,
         // totalNum: 0,
-        selected_all: false
+        selected_all: false,
+        arraychecked: []
+
       }
     },
     mounted() {
       this.getTotal()
-      // this.getShoppingCart()
+      this.getShoppingCart()
     },
     watch: {
       'goodLits': {
@@ -112,9 +113,10 @@
       }
     },
     computed: {
-      // ...mapState['goodLits']
+      ...mapState['goods']
     },
     methods: {
+
       liveSharing() {
         this.$router.push({
           path: '/shoppingmall',
@@ -161,6 +163,7 @@
         if (arraychecked.length === this.goodLits.length) {
           this.selected_all = true
         }
+        this.arraychecked = arraychecked
         this.getTotal()
       },
       slect_all() {
@@ -204,8 +207,53 @@
       },
       getShoppingCart() {
         this.$store.dispatch('getShoppingCart')
-      }
-    }
+      },
+      createOrder() {
+        const the = this
+        let arrayChecked = this.arraychecked
+        let data = []
+        let cartId = []
+        for (let i = 0; i < arrayChecked.length; i++) {
+          let id = arrayChecked[i].id
+          let product_id = arrayChecked[i].product_id
+          let num = arrayChecked[i].num
+          let spec = arrayChecked[i].spec
+          let name = arrayChecked[i].name
+          let cover = arrayChecked[i].cover
+          let local_price = arrayChecked[i].price
+          let vip_price = arrayChecked[i].vip_price
+          let price = 0
+          let is_vip = the.$store.state.goods.is_vip
+          is_vip == 0 ? price = local_price : price = vip_price
+          let shopDetails = {
+            id,
+            num,
+            spec,
+            name,
+            cover,
+            price,
+            product_id
+          }
+          cartId.push(arrayChecked[i].product_id)
+          data.push(shopDetails)
+        }
+
+       if(this.arraychecked.length > 0){
+         this.$router.push({
+           path: '/PurchaseOrder',
+           query: {
+             orderData: {
+               data,
+               cartId
+             }
+           }
+         })
+       }
+
+      },
+    },
+
+
   }
 </script>
 
@@ -287,6 +335,7 @@
     border-bottom: 1px solid #ddd;
     height: 237px;
     display: flex;
+    position: relative;
   }
 
   .car-checkbox {
@@ -349,57 +398,67 @@
     margin-left: 58px;
   }
 
-  .car-item-content{
+  .car-item-content {
     flex: 24;
     display: flex;
   }
-  .car-img{
+
+  .car-img {
     flex: 3;
   }
-  .car-cont{
+
+  .car-cont {
     flex: 7;
     padding: 0 28px 0 24px;
   }
+
   .car-img img {
     width: 100%
   }
-  .shop_top{
+
+  .shop_top {
     display: flex;
     padding: 20px 0 38px 0;
     align-items: center;
     justify-content: space-between;
   }
-.shop_name{
-  font-size: 36px;
-  color: #4a4a4a;
-}
-.car-num{
-  font-size: 24px;
-  color: #bbbbbb;
-}
-.cat-desc{
-  text-align: left;
-  font-size: 28px;
-  line-height: 40px;
-}
-.cat_mony{
-  margin-top: 20px;
-  text-align: left;
-}
-.mony_zero{
-  color: #ff7e00;
-  font-weight:400;
-  line-height: 30px;
-  font-size: 22px;
-}
-.mony_hua{
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 28px;
-  color: #aaaaaa;
-  text-decoration:line-through;
-  margin-left: 8px;
-}
+
+  .shop_name {
+    font-size: 36px;
+    color: #4a4a4a;
+  }
+
+  .car-num {
+    font-size: 24px;
+    color: #bbbbbb;
+  }
+
+  .cat-desc {
+    text-align: left;
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  .cat_mony {
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .mony_zero {
+    color: #ff7e00;
+    font-weight: 400;
+    line-height: 30px;
+    font-size: 22px;
+  }
+
+  .mony_hua {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #aaaaaa;
+    text-decoration: line-through;
+    margin-left: 8px;
+  }
 
   .input-label.active {
     cursor: pointer;
@@ -425,7 +484,6 @@
 
 
   }
-
 
 
   .car-footer {

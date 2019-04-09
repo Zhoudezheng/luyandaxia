@@ -8,7 +8,9 @@ import {
   PROJECT_DETAIL,
   SHOP_INDEX,
   SHOPPING_CART,
-  ADDRESS_LIST
+  ADDRESS_LIST,
+  CREATE_ORDER,
+  CONFIRM_ORDER
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -45,7 +47,7 @@ export default {
   [PROJECT_DETAIL](state, proDetail) {
     state.projectDetail = proDetail
   },
-  [SHOP_INDEX](state, {data}) {
+  [SHOP_INDEX](state, data) {
     state.shops = data
   },
   [SHOPPING_CART](state, {data}){
@@ -53,5 +55,14 @@ export default {
   },
   [ADDRESS_LIST](state , data){
     state.addressList = data
+  },
+  [SHOPPING_CART](state, data){
+    state.goods = data
+  },
+  [CREATE_ORDER](state, data){
+    state.createOrderId = data
+  },
+  [CONFIRM_ORDER](state, data){
+    state.orderDetails = data
   }
 }
