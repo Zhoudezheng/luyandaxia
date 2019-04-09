@@ -13,5 +13,7 @@ export default {
   addressList:[],
   shops:{},
   goods:{},
-  orderDetails:{}
+  orderDetails:{},
+  orderId:'',
+
 }

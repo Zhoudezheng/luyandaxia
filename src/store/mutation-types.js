@@ -11,5 +11,8 @@ export const ADDRESS_LIST = 'address_list'
 export const SAVE_ADDRESS = 'svae_address'
 export const CREATE_ORDER = 'create_order'
 export const CONFIRM_ORDER = 'confirm_order'
+export const WECHAT_PAYMENT = 'wechat_payment'
+export const ALIPAY_PAYMENT = 'alipay_payment'
+
 
 
