@@ -133,9 +133,11 @@ export default {
            var address =this. location;
            var info=this.detailed;
            var type=0;
-           var id=1;
+           var id=110;
            let result= await saveAddressList(token,id,name,phone,address,info,type);
-        //    console.log(result)
+           this.$router.push({
+              path:'/address'
+           })
         },
       //picker组件的change事件，进行取值赋值
         addressChange(picker, values){

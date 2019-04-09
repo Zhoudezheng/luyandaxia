@@ -26,6 +26,7 @@
 </template>
 <script>
 import { Toast, MessageBox } from 'mint-ui'
+import { addressListed } from '../../api'
 export default {
     data(){
         return {
@@ -33,8 +34,12 @@ export default {
             ]
         }
     },
-    mounted(){
-        this.dataList=this.$store.state.addressList;
+    async mounted(){
+        var token=this.$store.state.Authorization;
+         var list =await addressListed(token);
+         if(list.code === 200){
+            this.dataList=list.data;
+         }
     },
     methods:{
        presonal(){

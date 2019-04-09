@@ -44,6 +44,7 @@
   Vue.component(Picker.name, Picker);
   import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
   import { mapState } from 'vuex'
+  import { saveAddressList } from '../../api'
   export default {
     data(){
         return {
@@ -124,21 +125,15 @@
         cancelpo(){
             this.regionVisible = false;
         },
-        saveaddress(){
+        async saveaddress(){
             var name=this.consignee;
             var phone=this.phonenumber;
             var address=this.location;
             var info = this.detailed;
             var id=this.id;
             var type =this.type;
-            let addList=Object.assign({},{name,phone,address,info,id,type});
-            let addressList=this.$store.state.addressList;
-            for(var i=0; i<addressList.length;i++){
-                if(addressList[i].id === addList.id){
-                    addressList[i] = addList
-                     
-                }
-            }
+            var token=this.$store.state.Authorization;
+            var savelist= await saveAddressList(token,id,name,phone,address,info,type);
             this.$router.push({
               path:'/address'
             })

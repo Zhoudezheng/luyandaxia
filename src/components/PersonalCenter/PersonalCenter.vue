@@ -76,13 +76,9 @@ export default {
             })
         },
         addressp(){
-            this.$store.dispatch("resaddressList");
-            if(this.$store.state.addressList.length>0){
-               this.$router.push({
+            this.$router.push({
                  path:'/address'
-               })
-            }
-            
+            })
         }
     }
 }
