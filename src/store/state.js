@@ -12,5 +12,7 @@ export default {
   projectDetail:{},
   shops:{},
   goods:{},
-  orderDetails:{}
+  orderDetails:{},
+  orderId:'',
+
 }

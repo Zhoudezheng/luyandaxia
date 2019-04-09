@@ -9,5 +9,8 @@ export const SHOP_INDEX = 'shop_index'
 export const SHOPPING_CART = 'shopping_cart'
 export const CREATE_ORDER = 'create_order'
 export const CONFIRM_ORDER = 'confirm_order'
+export const WECHAT_PAYMENT = 'wechat_payment'
+export const ALIPAY_PAYMENT = 'alipay_payment'
+
 
 

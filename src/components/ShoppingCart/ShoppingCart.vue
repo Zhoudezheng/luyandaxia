@@ -113,7 +113,7 @@
       }
     },
     computed: {
-      ...mapState['goods']
+      ...mapState(['goods'])
     },
     methods: {
 
@@ -237,14 +237,15 @@
           cartId.push(arrayChecked[i].product_id)
           data.push(shopDetails)
         }
-
+        localStorage.setItem('type', '1');
        if(this.arraychecked.length > 0){
          this.$router.push({
            path: '/PurchaseOrder',
            query: {
              orderData: {
                data,
-               cartId
+               cartId,
+               totalPrice:this.totalPrice,
              }
            }
          })

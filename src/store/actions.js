@@ -10,6 +10,8 @@ import {
   SHOPPING_CART,
   CREATE_ORDER,
   CONFIRM_ORDER,
+  WECHAT_PAYMENT,
+  ALIPAY_PAYMENT
 } from './mutation-types'
 
 import {
@@ -20,6 +22,8 @@ import {
   reqShoppingCart,
   reqCreateOrder,
   reqConfirmOrder,
+  reqWechatPayment,
+  reqAlipayPayment
 } from '../api'
 
 export default {
@@ -127,9 +131,10 @@ export default {
 
   },
   // 创建商城订单
-  async createOrder ({commit, state},data){
+  async createOrder ({commit, state},{remark,cart_list,product_info,address_id}){
+    console.log(remark,cart_list,product_info,address_id)
     const token = state.Authorization
-    let result = await reqCreateOrder(token,data)
+    let result = await reqCreateOrder(token,remark,cart_list,product_info,address_id)
     if(result.code === 200){
       let data = result.data
       commit(CREATE_ORDER,data)
@@ -148,6 +153,29 @@ export default {
       commit(CONFIRM_ORDER,data)
     } else {
       commit(CONFIRM_ORDER,result.data)
+    }
+
+  },
+  // 微信支付
+  async wechatPayment ({commit, state},{order_sn,device_type,type}){
+    let result = await reqWechatPayment(order_sn,device_type,type)
+    if(result.code === 200){
+      let data = result.data
+      commit(WECHAT_PAYMENT,data)
+    } else {
+      commit(WECHAT_PAYMENT,result.data)
+    }
+
+  },
+  // 支付宝支付
+  async alipayPayment ({commit, state},{order_sn,device_type,type}){
+    let token = state.Authorization
+    let result = await reqAlipayPayment(token,order_sn,device_type,type)
+    if(result.code === 200){
+      let data = result.data
+      commit(ALIPAY_PAYMENT,data)
+    } else {
+      commit(ALIPAY_PAYMENT,result.data)
     }
 
   },
