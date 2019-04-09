@@ -10,7 +10,10 @@ import {
   SHOPPING_CART,
   ADDRESS_LIST,
   CREATE_ORDER,
-  CONFIRM_ORDER
+  CONFIRM_ORDER,
+  WECHAT_PAYMENT,
+  ALIPAY_PAYMENT
+
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -60,9 +63,17 @@ export default {
     state.goods = data
   },
   [CREATE_ORDER](state, data){
-    state.createOrderId = data
+    state.orderId = data.order_sn
+    localStorage.setItem('orderId', data.order_sn);
   },
   [CONFIRM_ORDER](state, data){
     state.orderDetails = data
+  },
+  [WECHAT_PAYMENT](state, data){
+    state.wechatPayment = data
+  },
+  [ALIPAY_PAYMENT](state, data){
+    console.log(data)
+    state.alipayPayment = data
   }
 }

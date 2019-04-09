@@ -6,12 +6,12 @@
     </div>
     <div class="purchase_address">
       <img src="./image/address.png" alt="地址" class="address_ico">
-      <div class="address_a">北京市 海淀区 嘉豪国际大厦D座二层</div>
-      <div class="address_name">郭雅文 152xxxxxxxxx</div>
+      <div class="address_a">{{datas.address.address}}</div>
+      <div class="address_name">{{datas.address.name}} &nbsp {{datas.address.phone}}</div>
       <img src="./image/doadd.png" alt="编辑地址" class="address_go">
     </div>
     <div class="purchase_lines"></div>
-    <div class="purchase_list" v-for="(item) in product_info">
+    <div class="purchase_list" v-for="(item) in orderDetails.product">
       <img :src="item.cover" alt="2222">
       <span class="list_a1">{{item.name}}</span>
       <span class="list_a2">¥{{item.price}}</span>
@@ -21,21 +21,21 @@
       <span class="amount_a1">商品总价</span>
       <span class="amount_a2">
             <span class="a2_un">￥</span>
-            <span class="a2_ut">{{total}}</span>
+            <span class="a2_ut">{{totalPrice}}</span>
         </span>
     </div>
     <div class="Commodity_amount">
       <span class="amount_a3">运费</span>
       <span class="amount_a4">
             <span class="a2_un">￥</span>
-            <span class="a2_ut">8.00</span>
+            <span class="a2_ut">{{orderDetails.freight}}</span>
         </span>
     </div>
     <div class="Commodity_amount">
       <span class="amount_a1">订单总价</span>
       <span class="amount_a2">
             <span class="a2_un">￥</span>
-            <span class="a5_ut">635.80</span>
+            <span class="a5_ut">{{orderDetails.total}}</span>
         </span>
     </div>
     <div class="Commodity_amounted">
@@ -53,7 +53,7 @@
     <div class="purchase_buy">
       <div class="buy_content">
         <span class="content_total">总计</span>
-        <span class="content_mony">¥635.80</span>
+        <span class="content_mony">¥{{orderDetails.total}}</span>
       </div>
       <input type="button" value="去支付" class="buy_link" @click="purchase">
     </div>
@@ -73,14 +73,45 @@
         isBuyVideo: false,
         product_info: [],
         cart_list: [],
-        total:0
+        totalPrice: 0,
+        datas: {
+          "address": {
+            "id": 19,
+            "phone": "13333333333",
+            "name": "大大",
+            "address": "北京 北京市 东城区",
+            "info": "都会觉得"
+          },
+          "product": [
+            {
+              "id": 28,
+              "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0j2sc3j69p1r6ndq41h5b1btt1j",
+              "price": "98.00",
+              "name": "导演心法（预售中）",
+              "vip_price": "98.00",
+              "num": 2,
+              "spec": "XXL,G,X"
+            },
+            {
+              "id": 30,
+              "cover": "http://cdn.kanjian2020.com/image/2018/1/27/o_1c4qp50ir1oov45n1gbh114j1iko1j",
+              "price": "108.00",
+              "name": "钻石沙漏（北欧风格）",
+              "vip_price": "99.00",
+              "num": 1,
+              "spec": "XXL,G,X"
+            }
+          ],
+          "total": 316,
+          "freight": "12.00"
+        }
       }
     },
     components: {
       "orderlist": OrderList
     },
-    computed:{
-      ...mapState['orderDetails']
+    computed: {
+      ...mapState(['orderDetails'])
     },
     mounted() {
       // 获取传过来的参数
@@ -99,8 +130,20 @@
         }, 100);
       },
       purchase() {
+        let product_info = this.product_info
+        let remark = this.post
+        let cart_list = this.cart_list
+        let address_id = this.orderDetails.address.id || this.datas.address.id
+        product_info = Base64.encode(JSON.stringify(product_info))
+
+        this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id})
+        let orderDetail = {
+          total: this.orderDetails.total || this.datas.total
+        }
+        console.log(orderDetail)
+        localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
         this.$router.push({
-          path: '/videosuccessful',
+          path: '/VipMember',
         })
       },
       getCal(msg) {
@@ -123,8 +166,9 @@
         let product_info = this.$route.query.orderData.data
         this.product_info = product_info
         this.cart_list = this.$route.query.orderData.cartId
+        this.totalPrice = this.$route.query.orderData.totalPrice
         product_info = Base64.encode(JSON.stringify(product_info))
-        this.$store.dispatch('previewOrder',product_info)
+        this.$store.dispatch('previewOrder', product_info)
       },
     },
   }
@@ -192,6 +236,9 @@
 
   .purchase_address .address_name {
     float: left;
+    width: 90%;
+    text-align: left;
+    padding-left: 56px;
     height: 40px;
     font-size: 28px;
     font-family: PingFangSC-Regular;
