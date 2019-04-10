@@ -12,8 +12,8 @@ import {
   CREATE_ORDER,
   CONFIRM_ORDER,
   WECHAT_PAYMENT,
-  ALIPAY_PAYMENT
-
+  ALIPAY_PAYMENT,
+  PRODUCT_LIST,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -73,7 +73,9 @@ export default {
     state.wechatPayment = data
   },
   [ALIPAY_PAYMENT](state, data){
-    console.log(data)
     state.alipayPayment = data
-  }
+  },
+  [PRODUCT_LIST](state, data){
+    state.productList = data
+  },
 }

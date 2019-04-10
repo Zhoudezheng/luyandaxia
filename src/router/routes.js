@@ -22,6 +22,7 @@ import MyOrders from '../components/MyOrders/MyOrders'
 import newaddress from '../components/NewAddress/newaddress'
 import editaddress from '../components/EditAddress/editaddress'
 import purchaseorder from '../components/PurchaseOrder/purchaseorder'
+import Classification from '../components/Classification/Classification'
 
 
 export default [
@@ -83,7 +84,6 @@ export default [
     component: MyOrders,
     },
     {
-
       path:'/shoppingcart',
       component:shoppingcart,
       meta: {
@@ -152,6 +152,10 @@ export default [
     {
       path:'/account',
       component:account,
+    },
+    {
+      path:'/Classification',
+      component:Classification,
     },
     {
       path:'/membership',

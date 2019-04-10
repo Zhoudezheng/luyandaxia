@@ -37,7 +37,9 @@ export const reqCreateOrder = (token,remark,cart_list,product_info,address_id) =
 // 预览订单
 export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm',{token,product_info},'POST');
 // 微信支付
-export const reqWechatPayment = (order_sn,device_type,type) => ajax(BASE+'/wechat/payment',{order_sn,device_type,type},'POST');
+export const reqWechatPayment = (token,order_sn,device_type,type) => ajax(BASE+'/wechat/payment',{token,order_sn,device_type,type},'POST');
 // 支付宝支付
-export const reqAlipayPayment = (token,order_sn,device_type,type) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type},'POST');
+export const reqAlipayPayment = (token,order_sn,device_type,type,return_url) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type,return_url},'POST');
+// 获取分类列表
+export const reqProductList = (token,category_id,type) => ajax(BASE+'/product/list',{token,category_id,type},'POST');
 
