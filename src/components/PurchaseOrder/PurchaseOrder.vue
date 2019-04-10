@@ -212,6 +212,7 @@
   .purchase_address {
     height: 170px;
     background: rgba(255, 255, 255, 1);
+    position: absolute;
   }
 
   .purchase_address .address_ico {
@@ -252,8 +253,11 @@
   .purchase_address .address_go {
     width: 12px;
     height: 21px;
-    float: right;
-    margin-right: 28px;
+    position: relative;
+    right: 28px;
+    bottom: 10px;
+    /*float: right;*/
+    /*margin-right: 28px;*/
   }
 
   .purchase_lines {

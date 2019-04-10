@@ -1,15 +1,12 @@
 <template>
   <div class="shopping">
     <div class="shopping_head">
-      <img src="./image/Bitmap.png" alt="touxiang" class="head_tou">
-      <img src="./image/huiyuan.png" alt="huiyuan" class="head_hui">
       <span class="head_title">文创商城</span>
-      <div class="head_car"></div>
       <div class="head_search"></div>
     </div>
     <div class="shopping_nva">
       <ul class="nva_ul">
-        <li v-for="(item) in shops && shops.category" class="nva_li">
+        <li v-for="(item) in shops && shops.category" class="nva_li" @click="toClass(item.id,item.name)">
           <img :src="item.icon" alt="新品推荐">
           <span>{{item.name}}</span>
         </li>
@@ -87,15 +84,35 @@
       getShop(){
         this.$store.dispatch('getShop',{})
       },
-      async todetail(index){
-        var token=this.$store.state.Authorization;
-        var det = await reqcommondeta(token,index);
-        if(det.code === 200){
-          this.$store.dispatch('setproduct',det.data)
+      async todetail(index) {
+        var token = this.$store.state.Authorization;
+        var det = await reqcommondeta(token, index);
+        if (det.code === 200) {
+          this.$store.dispatch('setproduct', det.data)
           this.$router.push({
-            path:'/commoditydetails'
+            path: '/commoditydetails'
           })
         }
+      },
+
+      purchase() {
+        this.$router.push({
+          path: '/purchaseorder'
+        })
+      },
+      getShop() {
+        this.$store.dispatch('getShop', {})
+      },
+      toClass(id,name){
+        this.$router.push({
+          path:'Classification',
+          query:{
+            classData:{
+              id,
+              name
+            }
+          }
+        })
       }
     }
   }
@@ -106,6 +123,7 @@
 
   .shopping_head {
     height: 128px;
+    text-align: center;
     background-color: rgba(243, 117, 5, 1);
   }
 
@@ -126,16 +144,17 @@
   }
 
   .shopping_head .head_title {
-    float: left;
-    margin-top: 58px;
-    margin-left: 214px;
+    /*float: left;*/
+    /*margin-top: 58px;*/
+    /*margin-left: 214px;*/
+    line-height: 144px;
     width: 144px;
     height: 50px;
     font-size: 36px;
     font-family: PingFangSC-Medium;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
-    line-height: 50px;
+    /*line-height: 50px;*/
   }
 
   .shopping_head .head_car {
@@ -149,12 +168,12 @@
   }
 
   .shopping_head .head_search {
-    background-image: url('./image/sousuo.png');
+    background: url('./image/sousuo.png') no-repeat;
     width: 33px;
     height: 33px;
     background-size: 33px 33px;
     float: right;
-    margin-top: 68px;
+    margin-top: 52px;
     margin-right: 31px;
   }
 

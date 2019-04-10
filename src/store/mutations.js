@@ -13,7 +13,8 @@ import {
   CONFIRM_ORDER,
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
-  COMMON_PRODUCT
+  COMMON_PRODUCT,
+  PRODUCT_LIST,
 
 } from './mutation-types'
 import { stat } from 'fs';
@@ -78,5 +79,8 @@ export default {
   },
   [COMMON_PRODUCT](state, data){
     state.productdata=data
-  }
+  },
+  [PRODUCT_LIST](state, data){
+    state.productList = data
+  },
 }

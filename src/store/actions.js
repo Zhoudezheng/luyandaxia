@@ -13,7 +13,8 @@ import {
   CONFIRM_ORDER,
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
-  COMMON_PRODUCT
+  COMMON_PRODUCT,
+  PRODUCT_LIST,
 } from './mutation-types'
 
 import {
@@ -26,7 +27,8 @@ import {
   reqCreateOrder,
   reqConfirmOrder,
   reqWechatPayment,
-  reqAlipayPayment
+  reqAlipayPayment,
+  reqProductList
 } from '../api'
 
 export default {
@@ -107,92 +109,106 @@ export default {
   },
 
   // 商城首页
-  async getShop ({commit}){
+  async getShop({commit}) {
 
     const result = await reqShopIndex()
-    if(result.code === 200){
+    if (result.code === 200) {
       let data = result.data
-      commit(SHOP_INDEX,data)
+      commit(SHOP_INDEX, data)
     } else {
       console.log(result.msg);
-      commit(SHOP_INDEX,{})
+      commit(SHOP_INDEX, {})
     }
   },
 
   // 获取购物车列表
-  async getShoppingCart ({commit, state}){
+  async getShoppingCart({commit, state}) {
     const token = state.Authorization
     let result = await reqShoppingCart(token)
-    if(result.code === 200){
+    if (result.code === 200) {
       let data = result.data
-      commit(SHOPPING_CART,data)
+      commit(SHOPPING_CART, data)
     } else {
-      commit(SHOPPING_CART,{})
+      commit(SHOPPING_CART, {})
     }
 
   },
   //获取收获地址
-  async resaddressList({commit, state}){
-    const tonken= state.Authorization;
+  async resaddressList({commit, state}) {
+    const tonken = state.Authorization;
     let result = await addressListed(tonken);
-    if(result.code === 200){
+    if (result.code === 200) {
       let data = result.data;
-      commit(ADDRESS_LIST ,data)
-    }else{
-      commit(ADDRESS_LIST,[])
+      commit(ADDRESS_LIST, data)
+    } else {
+      commit(ADDRESS_LIST, [])
     }
   },
   // 创建商城订单
-  async createOrder ({commit, state},{remark,cart_list,product_info,address_id}){
-    console.log(remark,cart_list,product_info,address_id)
+  async createOrder({commit, state}, {remark, cart_list, product_info, address_id}) {
+    console.log(remark, cart_list, product_info, address_id)
     const token = state.Authorization
-    let result = await reqCreateOrder(token,remark,cart_list,product_info,address_id)
-    if(result.code === 200){
+    let result = await reqCreateOrder(token, remark, cart_list, product_info, address_id)
+    if (result.code === 200) {
       let data = result.data
-      commit(CREATE_ORDER,data)
+      commit(CREATE_ORDER, data)
     } else {
-      commit(CREATE_ORDER,{data})
+      commit(CREATE_ORDER, {data})
     }
 
   },
 
   // 预览订单
-  async previewOrder ({commit, state},data){
+  async previewOrder({commit, state}, data) {
     const token = state.Authorization
-    let result = await reqConfirmOrder(token,data)
-    if(result.code === 200){
+    let result = await reqConfirmOrder(token, data)
+    if (result.code === 200) {
       let data = result.data
-      commit(CONFIRM_ORDER,data)
+      commit(CONFIRM_ORDER, data)
     } else {
-      commit(CONFIRM_ORDER,result.data)
+      commit(CONFIRM_ORDER, result.data)
     }
 
   },
   // 微信支付
-  async wechatPayment ({commit, state},{order_sn,device_type,type}){
-    let result = await reqWechatPayment(order_sn,device_type,type)
-    if(result.code === 200){
+  async wechatPayment({commit, state}, {order_sn, device_type, type}) {
+    let token = state.Authorization
+    let result = await reqWechatPayment(token, order_sn, device_type, type)
+    if (result.code === 200) {
       let data = result.data
-      commit(WECHAT_PAYMENT,data)
+      commit(WECHAT_PAYMENT, data)
     } else {
-      commit(WECHAT_PAYMENT,result.data)
+      commit(WECHAT_PAYMENT, result.data)
     }
 
   },
   // 支付宝支付
-  async alipayPayment ({commit, state},{order_sn,device_type,type}){
+  async alipayPayment({commit, state}, {order_sn, device_type, type, return_url}) {
     let token = state.Authorization
-    let result = await reqAlipayPayment(token,order_sn,device_type,type)
-    if(result.code === 200){
+    let result = await reqAlipayPayment(token, order_sn, device_type, type, return_url)
+    if (result.code === 200) {
       let data = result.data
-      commit(ALIPAY_PAYMENT,data)
+      commit(ALIPAY_PAYMENT, data)
     } else {
-      commit(ALIPAY_PAYMENT,result.data)
+      commit(ALIPAY_PAYMENT, result.data)
     }
 
   },
   setproduct({commit}, data) {
     commit(COMMON_PRODUCT, data)
+  },
+
+  // 获取分类列表
+  async getProductList({commit, state}, {category_id, type}) {
+    let token = state.Authorization
+    let result = await reqProductList(token, category_id, type)
+    if (result.code === 200) {
+      let data = result.data
+      commit(PRODUCT_LIST, data)
+    } else {
+      commit(PRODUCT_LIST, result.data)
+    }
+
   },
 }
 
