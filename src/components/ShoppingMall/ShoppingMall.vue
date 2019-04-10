@@ -25,10 +25,10 @@
     <div class="shopping_lines"></div>
     <div class="shopping_banner">
       <swiper :options="swiperOption">
-        <swiper-slide class="banner_content" v-for="(item) in shops && shops.recommend" :key="item.id">
-          <img :src="item.cover" class="content_img">
-          <span class="content_span">{{item.name}}</span>
-          <p class="content_p">
+        <swiper-slide class="banner_content" v-for="(item) in shops && shops.recommend" :key="item.id"  >
+          <img :src="item.cover" class="content_img" @click="todetail(item.id)">
+          <span class="content_span" @click="todetail(item.id)">{{item.name}}</span>
+          <p class="content_p" @click="todetail(item.id)">
             <span class="p_span">¥</span>
             <span class="p_sp">{{item.local_price}}</span>
           </p>
@@ -54,7 +54,7 @@
   import 'swiper/dist/css/swiper.css' //这里注意具体看使用的版本是否需要引入样式，以及具体位置。
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import {mapState} from 'vuex'
-
+  import { reqcommondeta } from '../../api'
   export default {
     data() {
       return {
@@ -86,6 +86,16 @@
         },
       getShop(){
         this.$store.dispatch('getShop',{})
+      },
+      async todetail(index){
+        var token=this.$store.state.Authorization;
+        var det = await reqcommondeta(token,index);
+        if(det.code === 200){
+          this.$store.dispatch('setproduct',det.data)
+          this.$router.push({
+            path:'/commoditydetails'
+          })
+        }
       }
     }
   }

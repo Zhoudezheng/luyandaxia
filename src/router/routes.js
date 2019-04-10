@@ -22,6 +22,7 @@ import MyOrders from '../components/MyOrders/MyOrders'
 import newaddress from '../components/NewAddress/newaddress'
 import editaddress from '../components/EditAddress/editaddress'
 import purchaseorder from '../components/PurchaseOrder/purchaseorder'
+import commoditydetails from '../components/CommodityDetails/commoditydetails'
 
 
 export default [
@@ -69,6 +70,10 @@ export default [
     {
       path:'/singlevideo',
       component:singlevideo,
+    },
+    {
+      path:'/commoditydetails',
+      component:commoditydetails,
     },
     {
       path:'/vipsuccessful',

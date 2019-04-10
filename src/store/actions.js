@@ -12,7 +12,8 @@ import {
   CREATE_ORDER,
   CONFIRM_ORDER,
   WECHAT_PAYMENT,
-  ALIPAY_PAYMENT
+  ALIPAY_PAYMENT,
+  COMMON_PRODUCT
 } from './mutation-types'
 
 import {
@@ -189,6 +190,9 @@ export default {
       commit(ALIPAY_PAYMENT,result.data)
     }
 
+  },
+  setproduct({commit}, data) {
+    commit(COMMON_PRODUCT, data)
   },
 }
 

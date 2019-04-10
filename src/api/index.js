@@ -46,4 +46,6 @@ export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm
 export const reqWechatPayment = (order_sn,device_type,type) => ajax(BASE+'/wechat/payment',{order_sn,device_type,type},'POST');
 // 支付宝支付
 export const reqAlipayPayment = (token,order_sn,device_type,type) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type},'POST');
+//获取商品详情
+export const reqcommondeta = (token,product_id) => ajax(BASE+'/product/detail',{token,product_id},'POST');
 

@@ -15,5 +15,6 @@ export default {
   goods:{},
   orderDetails:{},
   orderId:'',
+  productdata:{},
 
 }
