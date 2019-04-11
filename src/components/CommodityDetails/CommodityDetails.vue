@@ -23,9 +23,15 @@
         <span class="a3_b">¥{{productdata.price}}</span>
       </div>
       <div class="title_a4">
-        <span class="a4_a">快递:¥{{productdata.freight}}</span>
-        <span class="a4_b">月售{{productdata.sale_num}}件</span>
-        <span class="a4_c">库存{{productdata.stock}}件</span>
+        <div class="a4_a">
+          <span> 快递:¥{{productdata.freight}}</span>
+        </div>
+        <div class="a4_b">
+          <span>月售{{productdata.sale_num}}件</span> 
+        </div>
+        <div class="a4_c">
+          <span>库存{{productdata.stock}}件</span>
+        </div>
       </div>
     </div>
     <div class="details_footer">
@@ -65,7 +71,7 @@
   export default {
     data() {
       return {
-        productdata:'',
+        // productdata:'',
         nvaBarFixed:false,
         headFixed:false,
         list:[],
@@ -108,10 +114,9 @@
       }
     },
     mounted(){
-        this.productdata=this.$store.state.productdata;
-        console.log(this.productdata);
-        this.is_collection=this.$store.state.productdata.is_collection;
-        this.list = this.productdata.slider.split(',');
+        // this.productdata=this.productdata;
+        // this.is_collection=this.$store.state.productdata.is_collection;
+        // this.list = this.productdata.slider.split(',');
         this.box = this.$refs.wo;
         this.getList()
         this.box.addEventListener('scroll', () => {
@@ -136,7 +141,10 @@
       },
       getList() {
         let id = this.$route.query.data.id
-        this.$store.dispatch('getDetail', id)
+        this.$store.dispatch('getDetail', id).then(()=>{
+           this.is_collection=this.productdata.is_collection;
+        this.list = this.productdata.slider.split(',');
+        })
       },
       goto(index) {
         let shopData = this.productdata
