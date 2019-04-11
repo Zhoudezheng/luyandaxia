@@ -17,5 +17,7 @@ export default {
   orderId:'',
   productdata:{},
   commonlist:{},
-
+  wechatPayment:{},
+  alipayPayment:{},
+  productList:{},
 }

@@ -209,6 +209,7 @@
         this.$store.dispatch('getShoppingCart')
       },
       createOrder() {
+        console.log(this.arraychecked.length)
         const the = this
         let arrayChecked = this.arraychecked
         let data = []
@@ -238,6 +239,7 @@
           data.push(shopDetails)
         }
         localStorage.setItem('type', '1');
+        console.log(this.arraychecked.length)
        if(this.arraychecked.length > 0){
          this.$router.push({
            path: '/PurchaseOrder',

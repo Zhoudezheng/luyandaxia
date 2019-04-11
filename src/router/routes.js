@@ -26,6 +26,8 @@ import commoditydetails from '../components/CommodityDetails/commoditydetails'
 import commodity from '../components/CommodityDetails/Commodity/commodity'
 import evaluation from '../components/CommodityDetails/Evaluation/evaluation'
 import instructions from '../components/CommodityDetails/Instructions/instructions'
+import Classification from '../components/Classification/Classification'
+
 
 export default [
     {
@@ -112,7 +114,6 @@ export default [
     component: MyOrders,
     },
     {
-
       path:'/shoppingcart',
       component:shoppingcart,
       meta: {
@@ -181,6 +182,10 @@ export default [
     {
       path:'/account',
       component:account,
+    },
+    {
+      path:'/Classification',
+      component:Classification,
     },
     {
       path:'/membership',

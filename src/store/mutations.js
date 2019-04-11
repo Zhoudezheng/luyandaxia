@@ -14,7 +14,8 @@ import {
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
   COMMON_PRODUCT,
-  COMMON_LIST
+  COMMON_LIST,
+  PRODUCT_LIST,
 
 } from './mutation-types'
 import { stat } from 'fs';
@@ -82,5 +83,8 @@ export default {
   },
   [COMMON_LIST](state,data){
     state.commonlist = data
-  }
+  },
+  [PRODUCT_LIST](state, data){
+    state.productList = data
+  },
 }

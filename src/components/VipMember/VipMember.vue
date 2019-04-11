@@ -31,16 +31,18 @@
 
 <script>
   import {mapState} from 'vuex'
+
+
   export default {
     data() {
       return {
         activeClass: 1,// 支付方式 1 微信 2 支付宝
-        os:'',
+        os: '',
         price: "0.00"
       }
     },
-    computed:{
-      ...mapState(['orderId'])
+    computed: {
+      ...mapState(['orderId', 'alipayPayment', 'wechatPayment'])
     },
     mounted() {
       this.price = this.$route.query.cost
@@ -48,20 +50,34 @@
     },
     methods: {
       liveSharing() {
-        this.$router.push({
-          path: '/liveSharing',
-        })
+        console.log(this.$router)
+        // this.$router.push({
+        //   path: '/liveSharing',
+        // })
       },
       vipsuccessful() {
+        const the = this
         let way = this.activeClass
         let type = localStorage.getItem('type')
         let order_sn = this.orderId
-        let os = '3'
-        console.log(type,order_sn,os,way);
-        if(way == 1){
-          this.$store.dispatch('wechatPayment',{type,order_sn,device_type:os})
-        } else if(way == 2) {
-          this.$store.dispatch('alipayPayment',{type,order_sn,device_type:os})
+        let os = this.os
+        let return_url = '/VipSuccessful'
+        console.log(type, order_sn, os, way);
+        if (way == 1) {
+          this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+            let wechat = this.wechatPayment
+            the.wxInitPay(wechat)
+          })
+        } else if (way == 2) {
+          os = '3'
+          this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            let form = this.alipayPayment.key
+            const div = document.createElement('div');
+            div.innerHTML = form; //此处form就是后台返回接收到的数据
+            document.body.appendChild(div);
+            document.forms[0].submit()
+            console.log(data);
+          })
         }
         // this.$router.push({
         //   path: '/vipsuccessful',
@@ -78,11 +94,17 @@
         let os = navigator.userAgent
         let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
         let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        if(isAndroid){
+        if (isAndroid) {
           this.os = '1'
-        } else if(isiOS) {
+        } else if (isiOS) {
           this.os = '2'
         }
+      },
+      wxInitPay(data) {
+        const the = this
+        let {appid, noncestr, partnerid, prepayid, sign, timestamp} = data
+        let packages = data.package
+        console.log(packages);
       }
     },
     destroyed() {
