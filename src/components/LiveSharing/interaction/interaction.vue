@@ -32,7 +32,9 @@
        </div>
     </div>
     <div class="mask" v-show="!isShow">
-      <input type="button" class="app_download" value="立即下载" @click="11111">
+      <!-- <input type="button" class="app_download" value="立即下载" @click="11111"> -->
+      <div class="mask_a1">打开app参与互动</div>
+      <div class="mask_a2">立即下载</div>
     </div>
     <div class="interaction_line"></div>
   </div>
@@ -78,7 +80,7 @@
     right: 0;
     z-index: 20;
     height: 100%;
-    background-color: black;
+    background-color: rgba(74,74,74,1);
     opacity: 0.7;
     text-align: center;
     
@@ -89,6 +91,23 @@
    margin-top: 10%;
    /* margin-left: 290px; */
    font-size: 32px;
+  }
+  .mask .mask_a1{
+    text-align: center;
+    color: #ff0909;
+    margin-top: 40px;
+    font-size: 38px;
+    text-decoration:underline ;
+  }
+  .mask .mask_a2{
+    text-align: center;
+    height: 60px;
+    margin: auto;
+    width: 200px;
+    margin-top: 40px;
+    background-color: rgba(243, 117, 5, 1);
+    line-height: 60px;
+    border-radius: 45px;
   }
   .interaction_list{
     /* 未来遮罩层高度 */

@@ -127,11 +127,6 @@
         const {phone, code, password, isRightPhone} = this
         let result
          // 短信
-          // if(!isRightPhone) {
-          //   return MessageBox.alert('手机号不正确')
-          // } else if (!/^\d{6}$/.test(code)) {
-          //   return MessageBox.alert('验证码必须是6位数字')
-          // }
           // 2. 发送登陆的请求
           result = await reqSmsLogin('小路',phone, code,password)
           if(result.code!==0) {
@@ -145,6 +140,7 @@
           const user = result.data
           // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
+          console.log(user)
           this.$router.replace('/liveSharing')
         } else { // 失败
           MessageBox.alert(result.msg)

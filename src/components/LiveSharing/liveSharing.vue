@@ -53,11 +53,11 @@
     </div>
     <keep-alive> <router-view></router-view> </keep-alive>
     <purchase  v-show="isBuyVideo" @getcacel="getCal"></purchase>
-    <div class="footer_flxed" id='isfootflxed'>
+    <div class="footer_flxed" id='isfootflxed' v-show=" $route.path != '/liveSharing/Interaction'">
            <div class= 'footFixed'>
            <img src="./video/Bitmap.png" alt="商标">
            <span class="footer_app"> 路演文化传播与价值的提升第一平台</span>
-           <input type="button" class="app_download" value="立即下载" @click="11111">
+           <input type="button" class="app_download" value="打开APP" @click="11111">
            </div>
     </div>
   </div>
@@ -156,10 +156,10 @@
                this.video = this.$store.state.videoUrl
                this.computeTime = this.$store.state.detail.preview_at
                 this.player =new TcPlayer('id_test_video', {
-                 "mp4":this.video.mp4,
+                "mp4":this.video.mp4,
                 "rtmp":this.video.rtmp,
-                 "m3u8":this.video.m3u8,
-                 "flv":this.video.flv, //请替换成实际可用的播放地址
+                "m3u8":this.video.m3u8,
+                "flv":this.video.flv, //请替换成实际可用的播放地址
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
                 "coverpic" : {"style": "cover", "src":this.detail.cover},
                 "live":this.$store.state.detail.status === 1?true:false,
@@ -169,7 +169,7 @@
                 "controls":"default",
                 "systemFullscreen":true,
                 // "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
-                "height" : '200px',//视频的显示高度，请尽量使用视频分辨率高度
+                "height" : '400px',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
@@ -263,7 +263,7 @@
 }
 .videoLess .isFixed{
     position:fixed;
-    top:6px;
+    top:0px;
     z-index:20;
     height: 375px;
     overflow-y: scroll;
@@ -499,7 +499,7 @@
 
 .nva_Fixeded{
     position:fixed;
-    top:464px;
+    top:460px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
@@ -544,7 +544,7 @@
 }
 .liveSharing_lines{
     height: 1px;
-    border-top:1px solid  rgba(187,187,187,1)
+    border-top:1px solid #eeeeee;
 }
 .footFixed {
     width: 100%;

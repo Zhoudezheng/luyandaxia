@@ -99,8 +99,10 @@
   @import '../../../../static/font/font.css';
   .introduction_title {
     text-align: left;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-top: 20px;
+    padding-right: 20px;
+
   }
   .introduction_title .title_group{
     height:40px;

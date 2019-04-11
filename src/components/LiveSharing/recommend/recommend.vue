@@ -1,40 +1,15 @@
 <template>
   <div>
-    <div class="recommend_list" v-for="recommend in this.recommends">
+    <div class="recommend_list" v-for="recommend in this.recommends" v-show="this.$store.state.detail.recommend.length>0">
          <img :src="recommend.cover" alt="1111">
          <a href="#" class="list_a1">{{recommend.name}}</a>
          <a href="#" class="list_a2">{{recommend.info}}</a>
     </div>
+    <div  class="recommend_listed" v-show="this.$store.state.detail.recommend.length == 0">
+      <img src="./image/nosou.png" alt="信息" class="listed_img">
+      <div class="list_div">暂无数据</div>
+    </div>
    <div class="recommend_line"></div>
-      <!-- <div class="recommend_list">
-         <img src="./image/canzhao.jpg" alt="2222">
-         <a href="#" class="list_a1">黑钻石投融路沙龙演第112期…</a>
-         <a href="#" class="list_a2">黑钻石投融路沙龙第112期</a>
-    </div>
-      <div class="recommend_line1"></div>
-     <div class="recommend_list">
-         <img src="./image/kishi.jpg" alt="3333">
-         <a href="#" class="list_a1">第三期 | 学习是一种生命力</a>
-         <a href="#" class="list_a2">第三期 | 学习是一种生命力</a>
-    </div>
-     <div class="recommend_line2"></div>
-     <div class="recommend_list">
-         <img src="./image/canzhao.jpg" alt="4444">
-         <a href="#" class="list_a1">黑钻石年中总结会述职路演</a>
-         <a href="#" class="list_a2">黑钻石年中总结会述职路演</a>
-    </div>
-      <div class="recommend_list">
-         <img src="./image/kishi.jpg" alt="1111">
-         <a href="#" class="list_a1">第四期 | 如何让企业在商海…</a>
-         <a href="#" class="list_a2">第四期 | 如何让企业在商海中第四期 | 如何让企业在商海中</a>
-    </div>
-    <div class="recommend_line"></div>
-      <div class="recommend_list">
-         <img src="./image/kishi.jpg" alt="1111">
-         <a href="#" class="list_a1">第四期 | 如何让企业在商海…</a>
-         <a href="#" class="list_a2">第四期 | 如何让企业在商海中第四期 | 如何让企业在商海中</a>
-    </div>
-    <div class="recommend_line"></div> -->
   </div>
 </template>
 
@@ -45,9 +20,13 @@
         
       }
     },
+    mounted(){
+    
+    },
     computed: {
     recommends: {
           get:function () {
+             console.log(this.$store.state.detail.recommend)
               return this.$store.state.detail.recommend
           },
           set:function(){
@@ -102,5 +81,9 @@
  .recommend_line,.recommend_line1,.recommend_line2{
    height: 0.8px;
    background-color: #eeeeee
+ }
+ .listed_img{
+   width: 300px;
+   height: 300px;
  }
 </style>

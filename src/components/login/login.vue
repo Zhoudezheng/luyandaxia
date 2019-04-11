@@ -113,8 +113,16 @@
           console.log(userToken)
           this.$store.dispatch('setUserData', userToken)
           // 跳转到个人中心
-          //console.log(this.$store.state.path)
-          this.$router.replace(this.$route.query.redirect);
+          if(this.$route.query.redirect){
+            this.$router.replace(this.$route.query.redirect);
+          }else{
+            this.$router.push({
+              path:'/shoppingmall'
+            })
+
+          }
+        
+          
           // 测试页面专用
           // this.$router.push({
           //   path:'/shoppingmall'
