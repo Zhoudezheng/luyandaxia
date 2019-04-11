@@ -31,7 +31,6 @@
 
 <script>
   import {mapState} from 'vuex'
-  import wx from 'weixin-js-sdk'
 
   export default {
     data() {
