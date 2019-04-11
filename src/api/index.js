@@ -48,9 +48,9 @@ export const reqWechatPayment = (token,order_sn,device_type,type) => ajax(BASE+'
 export const reqAlipayPayment = (token,order_sn,device_type,type) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type},'POST');
 //获取商品详情
 export const reqcommondeta = (token,product_id) => ajax(BASE+'/product/detail',{token,product_id},'POST');
-
-export const reqAlipayPayment = (token,order_sn,device_type,type,return_url) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type,return_url},'POST');
 // 获取分类列表
 export const reqProductList = (token,category_id,type) => ajax(BASE+'/product/list',{token,category_id,type},'POST');
+// 获取分类列表
+export const reqIsVip = (token,) => ajax(BASE+'/mine_vip/info',{token,},'POST');
 
 

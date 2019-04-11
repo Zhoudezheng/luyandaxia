@@ -57,7 +57,7 @@
       },
       toDetails(id){
         this.$router.push({
-          path:'/',
+          path:'/CommodityDetails',
           query:{
             data:{
               id

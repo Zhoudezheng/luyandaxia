@@ -6,16 +6,18 @@
     </div>
     <div class="purchase_address">
       <img src="./image/address.png" alt="地址" class="address_ico">
-      <div class="address_a">{{datas.address.address}}</div>
-      <div class="address_name">{{datas.address.name}} &nbsp {{datas.address.phone}}</div>
+      <div class="address_a">{{orderDetails.address.address}}</div>
+      <div class="address_name">{{orderDetails.address.name}} &nbsp {{orderDetails.address.phone}}</div>
       <img src="./image/doadd.png" alt="编辑地址" class="address_go">
     </div>
     <div class="purchase_lines"></div>
-    <div class="purchase_list" v-for="(item) in orderDetails.product">
-      <img :src="item.cover" alt="2222">
-      <span class="list_a1">{{item.name}}</span>
-      <span class="list_a2">¥{{item.price}}</span>
-      <span class="list_a3">x {{item.num}}</span>
+    <div>
+      <div class="purchase_list" v-for="(item) in orderDetails.product">
+        <img :src="item.cover" alt="2222">
+        <span class="list_a1">{{item.name}}</span>
+        <span class="list_a2">¥{{item.price}}</span>
+        <span class="list_a3">x {{item.num}}</span>
+      </div>
     </div>
     <div class="Commodity_amount">
       <span class="amount_a1">商品总价</span>
@@ -73,38 +75,7 @@
         isBuyVideo: false,
         product_info: [],
         cart_list: [],
-        totalPrice: 0,
-        datas: {
-          "address": {
-            "id": 19,
-            "phone": "13333333333",
-            "name": "大大",
-            "address": "北京 北京市 东城区",
-            "info": "都会觉得"
-          },
-          "product": [
-            {
-              "id": 28,
-              "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0j2sc3j69p1r6ndq41h5b1btt1j",
-              "price": "98.00",
-              "name": "导演心法（预售中）",
-              "vip_price": "98.00",
-              "num": 2,
-              "spec": "XXL,G,X"
-            },
-            {
-              "id": 30,
-              "cover": "http://cdn.kanjian2020.com/image/2018/1/27/o_1c4qp50ir1oov45n1gbh114j1iko1j",
-              "price": "108.00",
-              "name": "钻石沙漏（北欧风格）",
-              "vip_price": "99.00",
-              "num": 1,
-              "spec": "XXL,G,X"
-            }
-          ],
-          "total": 316,
-          "freight": "12.00"
-        }
+        totalPrice: 0
       }
     },
     components: {
@@ -133,14 +104,12 @@
         let product_info = this.product_info
         let remark = this.post
         let cart_list = this.cart_list
-        let address_id = this.orderDetails.address.id || this.datas.address.id
+        let address_id = this.orderDetails.address.id
         product_info = Base64.encode(JSON.stringify(product_info))
-
         this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id})
         let orderDetail = {
-          total: this.orderDetails.total || this.datas.total
+          total: this.orderDetails.total
         }
-        console.log(orderDetail)
         localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
         this.$router.push({
           path: '/VipMember',
@@ -212,7 +181,7 @@
   .purchase_address {
     height: 170px;
     background: rgba(255, 255, 255, 1);
-    position: absolute;
+    position: relative;
   }
 
   .purchase_address .address_ico {
@@ -253,9 +222,9 @@
   .purchase_address .address_go {
     width: 12px;
     height: 21px;
-    position: relative;
-    right: 28px;
-    bottom: 10px;
+    position: absolute;
+    right: 30px;
+    top: 80px;
     /*float: right;*/
     /*margin-right: 28px;*/
   }

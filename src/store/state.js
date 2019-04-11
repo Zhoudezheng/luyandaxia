@@ -9,6 +9,7 @@ export default {
   videoUrl:{},
   editadd:{},
   orders:{},
+  isVip:{},
   projectDetail:{},
   addressList:[],
   shops:{},
