@@ -22,11 +22,8 @@ import MyOrders from '../components/MyOrders/MyOrders'
 import newaddress from '../components/NewAddress/newaddress'
 import editaddress from '../components/EditAddress/editaddress'
 import purchaseorder from '../components/PurchaseOrder/purchaseorder'
-<<<<<<< HEAD
 import commoditydetails from '../components/CommodityDetails/commoditydetails'
-=======
 import Classification from '../components/Classification/Classification'
->>>>>>> guopan
 
 
 export default [
