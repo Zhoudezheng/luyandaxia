@@ -16,6 +16,7 @@ import {
   COMMON_PRODUCT,
   COMMON_LIST,
   PRODUCT_LIST,
+  IS_VIP
 } from './mutation-types'
 
 import {
@@ -30,7 +31,9 @@ import {
   reqWechatPayment,
   reqAlipayPayment,
   reqShopdetail,
-  reqProductList
+  reqProductList,
+  reqcommondeta,
+  reqIsVip,
 } from '../api'
 
 export default {
@@ -146,6 +149,7 @@ export default {
       commit(ADDRESS_LIST, [])
     }
   },
+
   // 创建商城订单
   async createOrder({commit, state}, {remark, cart_list, product_info, address_id}) {
     console.log(remark, cart_list, product_info, address_id)
@@ -196,9 +200,7 @@ export default {
     }
 
   },
-  setproduct({commit}, data) {
-    commit(COMMON_PRODUCT, data)
-  },
+
 
   // 获取分类列表
   async getProductList({commit, state}, {category_id, type}) {
@@ -211,6 +213,28 @@ export default {
       commit(PRODUCT_LIST, result.data)
     }
 
+  },
+  // 获取商品详情
+  async getDetail({commit, state}, index) {
+    let token = state.Authorization
+    let result = await reqcommondeta(token,index)
+    if (result.code === 200) {
+      let data = result.data
+      commit(COMMON_PRODUCT, data)
+    } else {
+      commit(COMMON_PRODUCT, result.data)
+    }
+  },
+  // 是否为vip
+  async getIsVip({commit, state}) {
+    let token = state.Authorization
+    let result = await reqIsVip(token)
+    if (result.code === 200) {
+      let data = result.data
+      commit(IS_VIP, data)
+    } else {
+      commit(IS_VIP, result.data)
+    }
   },
 }
 

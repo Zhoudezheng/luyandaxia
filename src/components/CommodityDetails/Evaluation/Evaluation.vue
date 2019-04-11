@@ -19,7 +19,7 @@
       }
     },
     mounted(){
-        this.productdata=this.$store.state.productdata.detail;
+        this.productdata=this.$store.state.productdata;
     },
   }
 </script>

@@ -56,5 +56,7 @@ export const reqInstruction = (token,product_id) => ajax(BASE+'/product/evaluate
 // export const reqAlipayPayment = (token,order_sn,device_type,type,return_url) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type,return_url},'POST');
 // 获取分类列表
 export const reqProductList = (token,category_id,type) => ajax(BASE+'/product/list',{token,category_id,type},'POST');
+// 获取分类列表
+export const reqIsVip = (token,) => ajax(BASE+'/mine_vip/info',{token,},'POST');
 
 

@@ -1,9 +1,9 @@
 <template>
   <div class="shoppingcart_content">
     <div class="shoppingcart_div">
-      <img src="./image/fanhui.png" alt="协议按钮" @click="liveSharing" class="shoppingcart_check">
+      <!--<img src="./image/fanhui.png" alt="协议按钮" @click="liveSharing" class="shoppingcart_check">-->
       <span class="shoppingcart_mode">购物车</span>
-      <input type="button" value="删除" class="shopping_del" @click="delshopping">
+      <!--<input type="button" value="删除" class="shopping_del" @click="delshopping">-->
     </div>
     <div class="car-list">
       <ul>
@@ -239,7 +239,7 @@
           data.push(shopDetails)
         }
         localStorage.setItem('type', '1');
-        console.log(this.arraychecked.length)
+        console.log(data)
        if(this.arraychecked.length > 0){
          this.$router.push({
            path: '/PurchaseOrder',
@@ -273,7 +273,8 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 91px;
+    height: 90px;
+    line-height: 90px;
     z-index: 10;
     background-color: #ffffff;
   }
@@ -288,7 +289,7 @@
   }
 
   .shoppingcart_div .shoppingcart_mode {
-    float: left;
+    /*float: left;*/
     width: 144px;
     height: 50px;
     font-size: 36px;
@@ -296,8 +297,8 @@
     font-weight: 500;
     color: rgba(74, 74, 74, 1);
     line-height: 50px;
-    margin-top: 19px;
-    margin-left: 262px;
+    /*margin-top: 19px;*/
+    /*margin-left: 262px;*/
   }
 
   input:focus, textarea:focus {

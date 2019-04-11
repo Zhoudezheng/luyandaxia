@@ -16,7 +16,7 @@ import {
   COMMON_PRODUCT,
   COMMON_LIST,
   PRODUCT_LIST,
-
+  IS_VIP,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -44,8 +44,8 @@ export default {
   // }
 
   // 获取订单列表
-  [ORDER_LIST](state, {detail}) {
-    state.orders = detail.list
+  [ORDER_LIST](state, detail) {
+    state.orders = detail
   },
   [EDITADD](state, {editadd}) {
     state.editadd = editadd
@@ -79,12 +79,15 @@ export default {
     state.alipayPayment = data
   },
   [COMMON_PRODUCT](state, data){
-    state.productdata=data
+    state.productdata=data.detail
   },
   [COMMON_LIST](state,data){
     state.commonlist = data
   },
   [PRODUCT_LIST](state, data){
     state.productList = data
+  },
+  [IS_VIP](state, data){
+    state.isVip = data
   },
 }

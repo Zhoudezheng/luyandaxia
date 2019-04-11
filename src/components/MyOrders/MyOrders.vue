@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="orderTop">
-      <div class="backtrack"></div>
+      <div class="backtrack" @click="backtrack"></div>
       <span class="">我的订单</span>
       <div class="search"></div>
     </div>
@@ -12,7 +12,7 @@
       <div :class="{checked:shows==3}" @click="goTou(3)">待收货</div>
       <div :class="{checked:shows==4}" @click="goTou(4)">已完成</div>
     </div>
-    <div class="orderList" v-for="(item) in orderList" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
+    <div class="orderList" v-for="(item) in orders && orders.list" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
       <div class="orderFirst">
         <span class="orderID">订单编号：{{item.order_sn}}</span>
         <span v-if="item.status == 0">待付款</span>
@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="mark" ref="mark">没有更多了~</div>
+    <div class="mark" v-show="isShow">没有更多了~</div>
     <div v-show="popup" class="popup"></div>
     <div v-show="popup" class="invoice">
       <div class="padlockWrap">
@@ -98,209 +98,44 @@
     data() {
       return {
         shows: 100,
-        popup:false,
-        orderList: [
-          {
-            "id": 527,
-            "order_sn": "NO817201903282025196280",
-            "service": 0,
-            "total_price": "0.01",
-            "freight": "3.03",
-            "product_count": 1,
-            "pay_type": 2,
-            "status": 0,
-            "is_notice": 0,
-            "is_review": 0,
-            "invoice_id": 13,
-            "product_list": [
-              {
-                "id": 6,
-                "name": "路演兵法（马强导演亲笔签名版）",
-                "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0isns731lrc1v4v3qqd5v66n1j",
-                "price": "0",
-                "num": 1,
-                "spec": "",
-                "is_review": 1
-              }
-            ],
-            "end_time": "19小时19分钟",
-            "invoice": {
-              "id": 13,
-              "type": 1,
-              "title_type": 1,
-              "company": "lyz",
-              "company_id": "",
-              "content": "商品明细",
-              "status": 0,
-              "create_at": "2019-03-28 20:25:19"
-            }
-          },
-          {
-            "id": 527,
-            "order_sn": "NO817201903282025196280",
-            "service": 0,
-            "total_price": "0.01",
-            "freight": "3.03",
-            "product_count": 1,
-            "pay_type": 2,
-            "status": 0,
-            "is_notice": 0,
-            "is_review": 0,
-            "invoice_id": 13,
-            "product_list": [
-              {
-                "id": 6,
-                "name": "路演兵法（马强导演亲笔签名版）",
-                "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0isns731lrc1v4v3qqd5v66n1j",
-                "price": "0",
-                "num": 1,
-                "spec": "",
-                "is_review": 1
-              }
-            ],
-            "end_time": "19小时19分钟",
-            "invoice": {
-              "id": 13,
-              "type": 1,
-              "title_type": 1,
-              "company": "lyz",
-              "company_id": "",
-              "content": "商品明细",
-              "status": 0,
-              "create_at": "2019-03-28 20:25:19"
-            }
-          },
-          {
-            "id": 527,
-            "order_sn": "NO817201903282025196280",
-            "service": 0,
-            "total_price": "0.01",
-            "freight": "3.03",
-            "product_count": 1,
-            "pay_type": 2,
-            "status": 0,
-            "is_notice": 0,
-            "is_review": 0,
-            "invoice_id": 13,
-            "product_list": [
-              {
-                "id": 6,
-                "name": "路演兵法（马强导演亲笔签名版）",
-                "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0isns731lrc1v4v3qqd5v66n1j",
-                "price": "0",
-                "num": 1,
-                "spec": "",
-                "is_review": 1
-              }
-            ],
-            "end_time": "19小时19分钟",
-            "invoice": {
-              "id": 13,
-              "type": 1,
-              "title_type": 1,
-              "company": "lyz",
-              "company_id": "",
-              "content": "商品明细",
-              "status": 0,
-              "create_at": "2019-03-28 20:25:19"
-            }
-          },
-          {
-            "id": 527,
-            "order_sn": "NO817201903282025196280",
-            "service": 0,
-            "total_price": "0.01",
-            "freight": "3.03",
-            "product_count": 1,
-            "pay_type": 2,
-            "status": 0,
-            "is_notice": 0,
-            "is_review": 0,
-            "invoice_id": 13,
-            "product_list": [
-              {
-                "id": 6,
-                "name": "路演兵法（马强导演亲笔签名版）",
-                "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0isns731lrc1v4v3qqd5v66n1j",
-                "price": "0",
-                "num": 1,
-                "spec": "",
-                "is_review": 1
-              }
-            ],
-            "end_time": "19小时19分钟",
-            "invoice": {
-              "id": 13,
-              "type": 1,
-              "title_type": 1,
-              "company": "lyz",
-              "company_id": "",
-              "content": "商品明细",
-              "status": 0,
-              "create_at": "2019-03-28 20:25:19"
-            }
-          },
-          {
-            "id": 527,
-            "order_sn": "NO817201903282025196280",
-            "service": 0,
-            "total_price": "0.01",
-            "freight": "3.03",
-            "product_count": 1,
-            "pay_type": 2,
-            "status": 0,
-            "is_notice": 0,
-            "is_review": 0,
-            "invoice_id": 13,
-            "product_list": [
-              {
-                "id": 6,
-                "name": "路演兵法（马强导演亲笔签名版）",
-                "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0isns731lrc1v4v3qqd5v66n1j",
-                "price": "0",
-                "num": 1,
-                "spec": "",
-                "is_review": 1
-              }
-            ],
-            "end_time": "19小时19分钟",
-            "invoice": {
-              "id": 13,
-              "type": 1,
-              "title_type": 1,
-              "company": "lyz",
-              "company_id": "",
-              "content": "商品明细",
-              "status": 0,
-              "create_at": "2019-03-28 20:25:19"
-            }
-          },
-        ]
+        popup: false,
+        isShow: false
       }
     },
     mounted() {
-      this.getOrders(100, 1)
+      this.queryData()
 
     },
     computed: {
       ...mapState(['orders'])
     },
     methods: {
+      queryData() {
+        let status = this.$route.query.status
+        this.shows = status
+        this.getOrders(status,1)
+      },
       getOrders(status, page) {
         let token = localStorage.getItem('Authorization')
-        this.$store.dispatch('getOrders', {token, status, page})
+        this.$store.dispatch('getOrders', {token, status, page}).then(() => {
+          let orders = this.orders.list
+          this.isShow = orders.length >= 3;
+        })
+      },
+      backtrack(){
+        this.$router.go(-1)
       },
       // 切换导航
       goTou(val) {
         this.shows = val
         this.getOrders(val, 1)
       },
-     // 打开弹窗
-      unfold(){
+      // 打开弹窗
+      unfold() {
         this.popup = true
       },
       // 关闭弹窗
-      occlude(){
+      occlude() {
         this.popup = false
       }
 
@@ -558,8 +393,8 @@
     flex: 1;
     height: 80px;
     line-height: 52px;
-    font-weight:500;
-    font-size:28px;
+    font-weight: 500;
+    font-size: 28px;
   }
 
   .left {

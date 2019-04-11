@@ -16,23 +16,29 @@
       </swiper>
     </div>
     <div class="deta_title">
-       <div class="title_a1">{{productdata.name}}</div>
-       <div class="title_a2">VIP会员价:¥{{productdata.vip_price}}</div>
-       <div class="title_a3">
-           <span class="a3_a">¥{{productdata.local_price}}</span>
-           <span class="a3_b">¥{{productdata.price}}</span>
-       </div>
-       <div class="title_a4">
-           <div class="a4_a">
-             <span> 快递:¥{{productdata.freight}}</span>
-           </div>
-           <div class="a4_b">
-             <span>月售{{productdata.sale_num}}件</span>
-            </div>
-           <div class="a4_c">
-              <span>库存{{productdata.stock}}件</span> 
-           </div>
-       </div>
+      <div class="title_a1">{{productdata.name}}</div>
+      <div class="title_a2">VIP会员价:¥{{productdata.vip_price}}</div>
+      <div class="title_a3">
+        <span class="a3_a">¥{{productdata.local_price}}</span>
+        <span class="a3_b">¥{{productdata.price}}</span>
+      </div>
+      <div class="title_a4">
+        <span class="a4_a">快递:¥{{productdata.freight}}</span>
+        <span class="a4_b">月售{{productdata.sale_num}}件</span>
+        <span class="a4_c">库存{{productdata.stock}}件</span>
+      </div>
+    </div>
+    <div class="details_footer">
+      <div class="footer_warp " @click="goto(1)">
+        <img class="cart_img" src="./image/cart.png" alt="cart">
+        <div>购物车</div>
+      </div>
+      <div class="footer_warp" @click="goto(2)">
+        <div class="add_cart footer_item">加入购物车</div>
+      </div>
+      <div class="footer_warp" @click="goto(3)">
+        <div class="promptly footer_item">立即购买</div>
+      </div>
     </div>
     <div class="dete_line"></div>
     <div class="commodity_router" id='nav_flexed' :class=" nvaBarFixed === true ? 'nva_Fixed' :''" >
@@ -87,7 +93,7 @@
       swiperSlide
     },
     computed: {
-      ...mapState(['shops']),
+      ...mapState(['shops', 'productdata','isVip']),
       swiperOption(){
         var len = this.list.length
         if(len == 1){
@@ -102,10 +108,12 @@
       }
     },
     mounted(){
-        this.productdata=this.$store.state.productdata.detail;
+        this.productdata=this.$store.state.productdata;
+        console.log(this.productdata);
         this.is_collection=this.$store.state.productdata.is_collection;
         this.list = this.productdata.slider.split(',');
         this.box = this.$refs.wo;
+        this.getList()
         this.box.addEventListener('scroll', () => {
         var offsetTop = document.querySelector('#nav_flexed').offsetTop;
           if (this.$refs.wo.scrollTop > offsetTop) {
@@ -126,6 +134,49 @@
       address(){
         this.$router.go(-1)
       },
+      getList() {
+        let id = this.$route.query.data.id
+        this.$store.dispatch('getDetail', id)
+      },
+      goto(index) {
+        let shopData = this.productdata
+        if (index == 1) {
+          this.$router.push({
+            path: '/shoppingcart'
+          })
+        } else if (index == 2) {
+
+        } else if (index == 3) {
+          let {id,name,cover,price,spec} = shopData
+          let num = 1
+          let product_id = shopData.id
+          let totalPrice = 0
+         let ifVip = localStorage.getItem('ifVip');
+          if(ifVip == 0){
+            totalPrice = shopData.price
+          } else {
+            totalPrice = shopData.vip_price
+          }
+          this.$router.push({
+            path: '/purchaseorder',
+            query:{
+              orderData:{
+                data:[
+                  {
+                    id,
+                    name,
+                    cover,
+                    price,
+                    spec,
+                    num,
+                    product_id,
+                  }
+                ],
+                totalPrice
+              }
+            }
+          })
+        }},
       async shoucang(){
               var result = await reqShoucang(this.$store.state.Authorization,"4",this.productdata.id)
 
@@ -137,8 +188,9 @@
       evaluateList(){
           // var instruclist=reqInstruction(this.$store.state.Authorization,this.productdata.id);
           // var commoditylist =reqShopdetail(this.$store.state.Authorization,this.productdata.id);
-          this.$store.dispatch('reqShopdetailed',this.productdata.id);
-      }
+          this.$store.dispatch('reqShopdetailed',this.productdata.id)
+     
+    },
     }
   }
 </script>
@@ -210,21 +262,26 @@
 .head_Fixed{
   background-color: #ffffff;
 }
+
   .shopping_banner {
     height: 500px;
   }
+
   .swiper-container {
     overflow: inherit;
   }
+
   .shopping_banner .banner_content {
     width: 100%;
     height: 500px;
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 0px 10px 0px rgba(172, 166, 178, 0.1);
   }
+
   .shopping_banner .banner_head {
     height: 347px;
   }
+
   .shopping_banner .banner_content .content_img {
     width: 100%;
     height: 500px;
@@ -233,8 +290,9 @@
       margin-top: 40px;
       text-align: left;
   }
-  .deta_title .title_a1{
-    margin-left:20px;
+
+  .deta_title .title_a1 {
+    margin-left: 20px;
     height: 33px;
     font-size: 32px;
     font-family: PingFangSC-Regular;
@@ -242,7 +300,8 @@
     color: #000000;
     line-height: 33px;
   }
-  .deta_title .title_a2{
+
+  .deta_title .title_a2 {
     margin-left: 20px;
     margin-top: 15px;
     height: 33px;
@@ -252,19 +311,22 @@
     color: red;
     line-height: 33px;
   }
-  .deta_title .title_a3{
+
+  .deta_title .title_a3 {
     margin-left: 20px;
     margin-top: 15px;
   }
-  .title_a3 .a3_a{
-     height: 33px;
+
+  .title_a3 .a3_a {
+    height: 33px;
     font-size: 28px;
     font-family: PingFangSC-Regular;
     font-weight: 500;
     color: orange;
     line-height: 33px;
   }
-  .title_a3 .a3_b{
+
+  .title_a3 .a3_b {
     display: inline-block;
     margin-left: 50px;
     height: 33px;
@@ -273,14 +335,18 @@
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     line-height: 33px;
-    text-decoration:line-through;
+    text-decoration: line-through;
   }
-  .deta_title .title_a4{
+
+  .deta_title .title_a4 {
     color: rgba(102, 102, 102, 1);
     margin-top: 15px;
   }
   .deta_title .title_a4 div{
     /* display: flex;
+
+  .deta_title .title_a4 span {
+    display: flex;
     flex: 1;
     align-items: center;
     justify-content: space-between; */
@@ -337,4 +403,41 @@
      color:rgba(243,117,5,1);
      line-height:45px;
 }
+
+  .details_footer {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .footer_warp {
+    flex: 1;
+    height: 100px;
+    text-align: center;
+  }
+
+  .footer_item {
+    width: 160px;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 20px;
+    margin-left: 40px;
+    color: #ffffff;
+  }
+
+  .add_cart {
+    background-color: #FE9A1C;
+  }
+
+  .promptly {
+    background-color: #C00D18;
+  }
+
+  .cart_img {
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+  }
 </style>

@@ -70,7 +70,7 @@
       swiperSlide
     },
     computed: {
-      ...mapState(['shops'])
+      ...mapState(['shops','isVip'])
     },
     mounted() {
       this.getShop()
@@ -82,27 +82,29 @@
             })
         },
       getShop(){
-        this.$store.dispatch('getShop',{})
-      },
-      async todetail(index) {
-        var token = this.$store.state.Authorization;
-        var det = await reqcommondeta(token, index);
-        if (det.code === 200) {
-          this.$store.dispatch('setproduct', det.data)
-          this.$router.push({
-            path: '/commoditydetails'
-          })
-        }
-      },
-
-      purchase() {
-        this.$router.push({
-          path: '/purchaseorder'
+        this.$store.dispatch('getShop')
+        this.$store.dispatch('getIsVip').then(()=>{
+          let vipEnd = this.isVip.vip_end
+          let date = (new Date()).getTime()
+          let is_vip = 1
+          if(vipEnd > date){
+            is_vip = 1
+          } else {
+            is_vip = 0
+          }
+          localStorage.setItem('ifVip', is_vip);
         })
       },
-      getShop() {
-        this.$store.dispatch('getShop', {})
-      },
+      // async todetail(index) {
+      //   var token = this.$store.state.Authorization;
+      //   var det = await reqcommondeta(token, index);
+      //   if (det.code === 200) {
+      //     this.$store.dispatch('setproduct', det.data)
+      //     this.$router.push({
+      //       path: '/commoditydetails'
+      //     })
+      //   }
+      // },
       toClass(id,name){
         this.$router.push({
           path:'Classification',
@@ -110,6 +112,16 @@
             classData:{
               id,
               name
+            }
+          }
+        })
+      },
+      todetail(id){
+        this.$router.push({
+          path: '/commoditydetails',
+          query:{
+            data:{
+              id
             }
           }
         })
