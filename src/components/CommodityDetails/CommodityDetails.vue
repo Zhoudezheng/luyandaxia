@@ -196,7 +196,7 @@
       evaluateList(){
           // var instruclist=reqInstruction(this.$store.state.Authorization,this.productdata.id);
           // var commoditylist =reqShopdetail(this.$store.state.Authorization,this.productdata.id);
-          this.$store.dispatch('reqShopdetailed',this.productdata.id)
+          // this.$store.dispatch('reqShopdetailed',this.productdata.id)
      
     },
     }
