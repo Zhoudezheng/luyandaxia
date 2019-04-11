@@ -13,7 +13,8 @@ import {
   CONFIRM_ORDER,
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
-  COMMON_PRODUCT
+  COMMON_PRODUCT,
+  COMMON_LIST
 } from './mutation-types'
 
 import {
@@ -26,7 +27,8 @@ import {
   reqCreateOrder,
   reqConfirmOrder,
   reqWechatPayment,
-  reqAlipayPayment
+  reqAlipayPayment,
+  reqShopdetail,
 } from '../api'
 
 export default {
@@ -194,5 +196,14 @@ export default {
   setproduct({commit}, data) {
     commit(COMMON_PRODUCT, data)
   },
+
+  async reqShopdetailed({commit, state},data){
+    let token = state.Authorization;
+    let result = await reqShopdetail(token,data)
+    console.log(result)
+  },
+  setcommoditylist({commit},data){
+    commit(COMMON_LIST,data)
+  }
 }
 

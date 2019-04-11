@@ -23,7 +23,9 @@ import newaddress from '../components/NewAddress/newaddress'
 import editaddress from '../components/EditAddress/editaddress'
 import purchaseorder from '../components/PurchaseOrder/purchaseorder'
 import commoditydetails from '../components/CommodityDetails/commoditydetails'
-
+import commodity from '../components/CommodityDetails/Commodity/commodity'
+import evaluation from '../components/CommodityDetails/Evaluation/evaluation'
+import instructions from '../components/CommodityDetails/Instructions/instructions'
 
 export default [
     {
@@ -74,6 +76,28 @@ export default [
     {
       path:'/commoditydetails',
       component:commoditydetails,
+      children: [
+        // 二级路由路径,不加/
+          {
+            path:'commodity',
+            name:'commodity',
+            component: commodity
+          },
+          {
+            path:'evaluation',
+            name:'evaluation',
+            component:evaluation
+            },
+          {
+            path:'instructions', 
+            name:'instructions', 
+            component:instructions
+          },
+          {
+            path:'',           //这个表示的是根目录，即一进入的页面
+            redirect:'commodity'    //设置页面一进来就显示的页面，即重定向到goods组件，这里写的内容是对应组将的component的值
+          }
+        ]
     },
     {
       path:'/vipsuccessful',

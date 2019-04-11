@@ -16,5 +16,6 @@ export default {
   orderDetails:{},
   orderId:'',
   productdata:{},
+  commonlist:{},
 
 }

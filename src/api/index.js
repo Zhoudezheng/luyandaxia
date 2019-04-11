@@ -48,4 +48,7 @@ export const reqWechatPayment = (order_sn,device_type,type) => ajax(BASE+'/wecha
 export const reqAlipayPayment = (token,order_sn,device_type,type) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type},'POST');
 //获取商品详情
 export const reqcommondeta = (token,product_id) => ajax(BASE+'/product/detail',{token,product_id},'POST');
-
+//获取商品详情详情数据
+export const reqShopdetail = (token,product_id) => ajax(BASE+'/product/detail_h5',{token,product_id},'POST')
+//获取商品评价列表
+export const reqInstruction = (token,product_id) => ajax(BASE+'/product/evaluate_list',{token,product_id},'POST')
