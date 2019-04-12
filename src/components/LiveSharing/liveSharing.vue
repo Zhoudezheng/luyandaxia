@@ -57,7 +57,7 @@
            <div class= 'footFixed'>
            <img src="./video/Bitmap.png" alt="商标">
            <span class="footer_app"> 路演文化传播与价值的提升第一平台</span>
-           <input type="button" class="app_download" value="打开APP" @click="11111">
+           <input type="button" class="app_download" value="打开APP" @click="downApp">
            </div>
     </div>
   </div>
@@ -241,7 +241,21 @@
           openTouch(){
             document.getElementsByTagName("body")[0].removeEventListener('touchmove',
                this.handler,{passive:false});//打开默认事件
-          },  
+          },
+          downApp() {
+                let ua = navigator.userAgent.toLowerCase();
+                //Android终端
+                let isAndroid = ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1;  
+        　   //Ios终端
+                let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+                if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                    //Ios
+                    window.location.href="https://itunes.apple.com/cn/app/%E8%B7%AF%E6%BC%94%E5%A4%A7%E4%BE%A0-%E5%95%86%E4%B8%9A%E8%B7%AF%E6%BC%94%E9%A6%96%E9%80%89%E5%B9%B3%E5%8F%B0/id1313105520?mt=8";
+                } else if (/(Android)/i.test(navigator.userAgent)) {
+                    //Android终端
+                    window.location ='https://android.myapp.com/myapp/detail.htm?apkName=com.BlackDiamond2010.hzs&ADTAG=mobile'
+                }
+        }, 
     },
     destroyed () {
           window.removeEventListener('scroll', this.handleScrollfoot)

@@ -33,8 +33,8 @@
     </div>
     <div class="mask" v-show="!isShow">
       <!-- <input type="button" class="app_download" value="立即下载" @click="11111"> -->
-      <div class="mask_a1">打开app参与互动</div>
-      <div class="mask_a2">立即下载</div>
+      <div class="mask_a1" @click="downApp">打开app参与互动</div>
+      <div class="mask_a2" @click="downApp">立即下载</div>
     </div>
     <div class="interaction_line"></div>
   </div>
@@ -62,6 +62,20 @@
         // }, {passive: false}); 
       },
       /***取消滑动限制***/
+       downApp() {
+                let ua = navigator.userAgent.toLowerCase();
+                //Android终端
+                let isAndroid = ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1;  
+        　   //Ios终端
+                let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+                if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                    //Ios
+                    window.location.href="https://itunes.apple.com/cn/app/%E8%B7%AF%E6%BC%94%E5%A4%A7%E4%BE%A0-%E5%95%86%E4%B8%9A%E8%B7%AF%E6%BC%94%E9%A6%96%E9%80%89%E5%B9%B3%E5%8F%B0/id1313105520?mt=8";
+                } else if (/(Android)/i.test(navigator.userAgent)) {
+                    //Android终端
+                    window.location ='https://android.myapp.com/myapp/detail.htm?apkName=com.BlackDiamond2010.hzs&ADTAG=mobile'
+                }
+      }, 
     },
      destroyed () {
         document.body.removeEventListener('touchmove',mo, { passive: false });
