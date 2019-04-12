@@ -16,7 +16,7 @@
     <div class="shopping_more">
       <div class="more_color"></div>
       <span class="more_span">新品推荐</span>
-      <span class="more_p">更多</span>
+      <span class="more_p" @click="toClass(3,'新品推荐')">更多</span>
       <img src="./image/gengduo.png" alt="更多" class="more_to">
     </div>
     <div class="shopping_lines"></div>
@@ -38,7 +38,7 @@
       <span class="more_span">猜你喜欢</span>
     </div>
     <div class="shopping_footer">
-      <div class="shopping_list" v-for="(item) in shops && shops.like" :key="item.id">
+      <div class="shopping_list" v-for="(item) in shops && shops.like" :key="item.id" @click="todetail(item.id)">
         <img :src="item.cover" alt="1111" class="list_img">
         <span class="list_a1">{{item.name}}</span>
         <span class="list_a2">￥{{item.price}}</span>
@@ -74,6 +74,7 @@
     },
     mounted() {
       this.getShop()
+      console.log(this.$store.state.shops);
     },
     methods: {
         purchase(){
@@ -134,7 +135,7 @@
   @import '../../../static/font/font.css';
 
   .shopping_head {
-    height: 128px;
+    height: 91px;
     text-align: center;
     background-color: rgba(243, 117, 5, 1);
   }
@@ -159,7 +160,7 @@
     /*float: left;*/
     /*margin-top: 58px;*/
     /*margin-left: 214px;*/
-    line-height: 144px;
+    line-height: 91px;
     width: 144px;
     height: 50px;
     font-size: 36px;
@@ -185,7 +186,7 @@
     height: 33px;
     background-size: 33px 33px;
     float: right;
-    margin-top: 52px;
+    margin-top: 32px;
     margin-right: 31px;
   }
 

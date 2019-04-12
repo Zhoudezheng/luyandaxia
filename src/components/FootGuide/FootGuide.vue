@@ -38,7 +38,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 99px;
+    height: 91px;
     background-color: #ffffff;
     display :flex;
 }
@@ -97,8 +97,9 @@
     color: rgba(243, 117, 5, 1);
 }
 .guide_item .span_a{
-     font-size :12px;
-     margin-top :10px;
+     font-size :28px;
+     margin-top :3px;
      margin-bottom: 2px;
+     margin-left: 4px;
 }
 </style>

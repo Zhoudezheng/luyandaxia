@@ -48,10 +48,11 @@
     },
     methods: {
       liveSharing() {
-        console.log(this.$router)
+        // console.log(this.$router)
         // this.$router.push({
         //   path: '/liveSharing',
         // })
+          this.$router.go(-1)
       },
       vipsuccessful() {
         const the = this
@@ -60,7 +61,7 @@
         let order_sn = this.orderId
         let os = this.os
         let return_url = '/VipSuccessful'
-        console.log(type, order_sn, os, way);
+        // console.log(type, order_sn, os, way);
         if (way == 1) {
           this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
             let wechat = this.wechatPayment
@@ -74,7 +75,7 @@
             div.innerHTML = form; //此处form就是后台返回接收到的数据
             document.body.appendChild(div);
             document.forms[0].submit()
-            console.log(data);
+            // console.log(data);
           })
         }
         // this.$router.push({
@@ -102,7 +103,7 @@
         const the = this
         let {appid, noncestr, partnerid, prepayid, sign, timestamp} = data
         let packages = data.package
-        console.log(packages);
+        // console.log(packages);
       }
     },
     destroyed() {

@@ -4,10 +4,10 @@
       <img src="./image/huitui.png" alt="协议按钮" @click="shoppingmall" class="purchase_check">
       <span class="purchase_mode">确定订单</span>
     </div>
-    <div class="purchase_address">
+    <div class="purchase_address" @click="toadress">
       <img src="./image/address.png" alt="地址" class="address_ico">
       <div class="address_a">{{orderDetails.address.address}}</div>
-      <div class="address_name">{{orderDetails.address.name}} &nbsp {{orderDetails.address.phone}}</div>
+      <div class="address_name">{{orderDetails.address.name}}  {{orderDetails.address.phone}}</div>
       <img src="./image/doadd.png" alt="编辑地址" class="address_go">
     </div>
     <div class="purchase_lines"></div>
@@ -47,11 +47,11 @@
     <div class="Commodity_amounted" @click="showorder">
       <span class="amount_a1">发票</span>
       <span class="amount_in">
-            <span class="in_a2">不开发票</span>
+            <span class="in_a2">{{invoice}}</span>
             <img src="./image/doadd.png" alt="发票" class="in_a">
         </span>
     </div>
-    <orderlist v-show="isBuyVideo" @getcacel="getCal"></orderlist>
+    <orderlist v-show="isBuyVideo" @getcacel="getCal" @gettypelist='gettype'></orderlist>
     <div class="purchase_buy">
       <div class="buy_content">
         <span class="content_total">总计</span>
@@ -86,13 +86,19 @@
     },
     mounted() {
       // 获取传过来的参数
-      this.getOrderDetails()
+      this.getOrderDetails();
+      console.log(this.$store.state.orderDetails);
     }
     ,
     methods: {
       shoppingmall() {
         this.$router.push({
           path: '/shoppingmall',
+        })
+      },
+      toadress(){
+        this.$router.push({
+          path:'/address'
         })
       },
       inputLoseFocus() {
@@ -118,6 +124,10 @@
       getCal(msg) {
         this.openTouch();
         this.isBuyVideo = msg;//然后将数据赋值给isBuyVideo
+      },
+      gettype(type) {
+        this.openTouch();
+        this.invoice = type;//然后将数据赋值给isBuyVideo
       },
       showorder() {
         this.closeTouch();

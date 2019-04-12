@@ -34,6 +34,8 @@ import {
   reqProductList,
   reqcommondeta,
   reqIsVip,
+  reqaddshopping,
+  reqdelshopping
 } from '../api'
 
 export default {
@@ -236,5 +238,17 @@ export default {
       commit(IS_VIP, result.data)
     }
   },
+  //加入购物车
+  async addshoppingcart({commit, state},{type,id}){
+     let token = state.Authorization;
+     if(type==1){
+      console.log(type,id)
+      let result =await  reqaddshopping(token,type,id)
+     }else{
+      console.log(type,id)
+      let result =await  reqdelshopping(token,type,id)
+     }
+     
+  }
 }
 

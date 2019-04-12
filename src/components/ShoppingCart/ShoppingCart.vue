@@ -1,9 +1,9 @@
 <template>
   <div class="shoppingcart_content">
     <div class="shoppingcart_div">
-      <!--<img src="./image/fanhui.png" alt="协议按钮" @click="liveSharing" class="shoppingcart_check">-->
+      <img src="./image/fanhui.png" alt="协议按钮" @click="liveSharing" class="shoppingcart_check">
       <span class="shoppingcart_mode">购物车</span>
-      <!--<input type="button" value="删除" class="shopping_del" @click="delshopping">-->
+      <input type="button" value="删除" class="shopping_del" @click="delshopping">
     </div>
     <div class="car-list">
       <ul>
@@ -68,30 +68,7 @@
   export default {
     data() {
       return {
-        goodLits: [
-          {
-            "id": 32,
-            "num": 1,
-            "spec": "",
-            "name": "钻石沙漏（北欧风格）",
-            "product_id": 30,
-            "price": "108.00",
-            "cover": "http://cdn.kanjian2020.com/image/2018/1/27/o_1c4qp50ir1oov45n1gbh114j1iko1j",
-            "local_price": "198.00",
-            "vip_price": "99.00"
-          },
-          {
-            "id": 66,
-            "num": 1,
-            "spec": "",
-            "name": "导演心法（预售中）",
-            "product_id": 28,
-            "price": "98.00",
-            "cover": "http://cdn.kanjian2020.com/image/2017/12/5/o_1c0j2sc3j69p1r6ndq41h5b1btt1j",
-            "local_price": "99.00",
-            "vip_price": "98.00"
-          }
-        ],
+        goodLits: [ ],
         totalPrice: 0,
         // totalNum: 0,
         selected_all: false,
@@ -101,7 +78,7 @@
     },
     mounted() {
       this.getTotal()
-      this.getShoppingCart()
+      this.getShoppingCart();
     },
     watch: {
       'goodLits': {
@@ -199,14 +176,20 @@
         for (var i = 0; i < this.goodLits.length; i++) {
           var _d = this.goodLits[i]
           if (_d.isSelected) {
+            console.log(_d)
             this.goodLits.splice(i, 1);
             i--;
+            let type=2;
+            let id=_d.id;
+            this.$store.dispatch('addshoppingcart',{type,id})
             this.getTotal();
           }
         }
       },
       getShoppingCart() {
-        this.$store.dispatch('getShoppingCart')
+        this.$store.dispatch('getShoppingCart').then(()=>{
+          this.goodLits= this.goods.list
+        })
       },
       createOrder() {
         console.log(this.arraychecked.length)
@@ -494,7 +477,7 @@
     height: 98px;
     background: #ffffff;
     position: fixed;
-    bottom: 101px;
+    bottom: 91px;
     left: 0;
     right: 0;
   }
