@@ -2,7 +2,7 @@
   <div class="shopping">
     <div class="shopping_head">
       <span class="head_title">文创商城</span>
-      <div class="head_search"></div>
+      <div class="head_search" @click="inputmodel"></div>
     </div>
     <div class="shopping_nva">
       <ul class="nva_ul">
@@ -44,6 +44,8 @@
         <span class="list_a2">￥{{item.price}}</span>
       </div>
     </div>
+     <!-- 搜索框 -->
+    <searchdata v-show="serchdata" @searchlist="listsearch"/>
   </div>
 </template>
 
@@ -52,6 +54,9 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import {mapState} from 'vuex'
   import { reqcommondeta } from '../../api'
+  import { truncate } from 'fs';
+  import searchdata from './SearchData/SearchData.vue'
+
   export default {
     data() {
       return {
@@ -63,24 +68,32 @@
           width: 180,
           freeModeSticky: true,
         },
+        serchdata:false,
       }
     },
     components: {
       swiper,
-      swiperSlide
+      swiperSlide,
+      searchdata
     },
     computed: {
       ...mapState(['shops','isVip'])
     },
     mounted() {
       this.getShop()
-      console.log(this.$store.state.shops);
+      // console.log(this.$store.state.shops);
     },
     methods: {
         purchase(){
             this.$router.push({
                 path:'/purchaseorder'
             })
+        },
+        inputmodel(){
+           this.serchdata=true
+        },
+        listsearch(msg){
+          this.serchdata=msg;
         },
       getShop(){
         this.$store.dispatch('getShop')

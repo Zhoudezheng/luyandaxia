@@ -176,7 +176,7 @@
         for (var i = 0; i < this.goodLits.length; i++) {
           var _d = this.goodLits[i]
           if (_d.isSelected) {
-            console.log(_d)
+            // console.log(_d)
             this.goodLits.splice(i, 1);
             i--;
             let type=2;
@@ -192,7 +192,7 @@
         })
       },
       createOrder() {
-        console.log(this.arraychecked.length)
+        // console.log(this.arraychecked.length)
         const the = this
         let arrayChecked = this.arraychecked
         let data = []
@@ -222,7 +222,7 @@
           data.push(shopDetails)
         }
         localStorage.setItem('type', '1');
-        console.log(data)
+        // console.log(data)
        if(this.arraychecked.length > 0){
          this.$router.push({
            path: '/PurchaseOrder',

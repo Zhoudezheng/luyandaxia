@@ -31,7 +31,7 @@ import Classification from '../components/Classification/Classification'
 
 export default [
     {
-      path: '/',
+      path: '/login',
       component: Login,
     },
     {

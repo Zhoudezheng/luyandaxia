@@ -17,6 +17,7 @@ import {
   COMMON_LIST,
   PRODUCT_LIST,
   IS_VIP,
+  SEARCH_DATA,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -90,4 +91,7 @@ export default {
   [IS_VIP](state, data){
     state.isVip = data
   },
+  [SEARCH_DATA](state, data){
+    state.searchlist=data.list
+  }
 }

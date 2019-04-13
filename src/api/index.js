@@ -62,3 +62,5 @@ export const reqIsVip = (token,) => ajax(BASE+'/mine_vip/info',{token,},'POST');
 export const reqaddshopping = (token,type,product_id)=>ajax(BASE+'/shopping_cart/action',{token,type,product_id},'POST')
 //删除购物车
 export const reqdelshopping = (token,type,car_id)=>ajax(BASE+'/shopping_cart/action',{token,type,car_id},'POST')
+//获取搜索商品
+export const  reqSearchData= (token,page,keyword)=>ajax(BASE+'/search/product',{token,page,keyword},'POST')

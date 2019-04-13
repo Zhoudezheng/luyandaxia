@@ -92,9 +92,7 @@
     ,
     methods: {
       shoppingmall() {
-        this.$router.push({
-          path: '/shoppingmall',
-        })
+        this.$router.go(-1)
       },
       toadress(){
         this.$router.push({

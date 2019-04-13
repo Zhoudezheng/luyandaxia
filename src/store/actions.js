@@ -16,7 +16,8 @@ import {
   COMMON_PRODUCT,
   COMMON_LIST,
   PRODUCT_LIST,
-  IS_VIP
+  IS_VIP,
+  SEARCH_DATA
 } from './mutation-types'
 
 import {
@@ -35,7 +36,8 @@ import {
   reqcommondeta,
   reqIsVip,
   reqaddshopping,
-  reqdelshopping
+  reqdelshopping,
+  reqSearchData
 } from '../api'
 
 export default {
@@ -248,7 +250,13 @@ export default {
       console.log(type,id)
       let result =await  reqdelshopping(token,type,id)
      }
-     
+  },
+  async getsearchShopping({commit,state},data){
+     let token =state.Authorization;
+     let result =await reqSearchData(token,1,data) ;
+     if(result.code === 200){
+       commit(SEARCH_DATA,result.data)
+     }
   }
 }
 

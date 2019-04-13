@@ -228,14 +228,14 @@
     height:30px;
     margin-left:30px;
 }
-/* .address_div .collection{
+.address_div .collection{
    background-size: 16px 28px;
     float: right;
     margin-top: 32px;
     width:40px;
     height:40px;
     margin-right:40px;
-} */
+} 
 .address_div .liveSharing_nvastart{
     float:right;
     /* display: inline-block; */
