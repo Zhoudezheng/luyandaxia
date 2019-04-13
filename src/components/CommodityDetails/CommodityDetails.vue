@@ -57,7 +57,7 @@
 			<span class="liveSharing_roterthree">
                 <router-link :to="{path:'instructions',query:{data:{id:productdata.id}}}" exact>商品评价</router-link>
             </span>	
-	</div>
+	</div class='liveSharing_bottom'>
     <keep-alive> <router-view></router-view> </keep-alive>
   </div>
 </template>
@@ -134,7 +134,7 @@
           }
         },true)
         this.evaluateList();
-    },
+        },
     methods: {
       address(){
         this.$router.go(-1)
@@ -187,7 +187,8 @@
               }
             }
           })
-        }},
+        }
+      },
       async shoucang(){
               var result = await reqShoucang(this.$store.state.Authorization,"4",this.productdata.id)
 
@@ -206,11 +207,11 @@
   }
 </script>
 
-<style scoped>
+<style scoped >
   @import '../../../static/font/font.css';
   .shopping{
-      height: 100%;
-      overflow-x: hidden;
+    height: 100%;
+    overflow-x: hidden;
 }
   .address_div{
     position: fixed;
@@ -421,6 +422,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    background-color: #ffffff;
   }
 
   .footer_warp {
@@ -450,5 +452,8 @@
     width: 40px;
     height: 40px;
     margin-top: 20px;
+  }
+  .liveSharing_bottom{
+    margin-bottom: 50px;
   }
 </style>
