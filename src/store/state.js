@@ -23,4 +23,5 @@ export default {
   productList:{},
   searchlist:[],
   evaluateList:{},
+  userinfo:{},
 }

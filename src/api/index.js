@@ -64,3 +64,7 @@ export const reqaddshopping = (token,type,product_id)=>ajax(BASE+'/shopping_cart
 export const reqdelshopping = (token,type,car_id)=>ajax(BASE+'/shopping_cart/action',{token,type,car_id},'POST')
 //获取搜索商品
 export const  reqSearchData= (token,page,keyword)=>ajax(BASE+'/search/product',{token,page,keyword},'POST')
+//获取用户详情
+export const reqUserInfo = (token) => ajax(BASE+'/member/detail',{token},'POST');
+//修改用户信息
+export const setUserList = (token,avatar,nickname,mobile,realname,company,job,email) => ajax(BASE+'/member/modify_detail',{token,avatar,nickname,mobile,realname,company,job,email},'POST');

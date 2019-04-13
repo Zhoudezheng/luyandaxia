@@ -18,7 +18,8 @@ import {
   PRODUCT_LIST,
   IS_VIP,
   SEARCH_DATA,
-  EVALUATE_LIST
+  EVALUATE_LIST,
+  USER_INFO
 } from './mutation-types'
 
 import {
@@ -39,7 +40,8 @@ import {
   reqInstruction,
   reqaddshopping,
   reqdelshopping,
-  reqSearchData
+  reqSearchData,
+  reqUserInfo
 } from '../api'
 
 export default {
@@ -271,6 +273,13 @@ export default {
      if(result.code === 200){
        commit(SEARCH_DATA,result.data)
      }
+  },
+  async getUserData({commit,state}){
+    let token =state.Authorization;
+    let result = await reqUserInfo(token);
+    if(result.code === 200){
+      commit(USER_INFO,result.data)
+    }
   }
 }
 

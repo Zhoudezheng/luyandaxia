@@ -19,6 +19,7 @@ import {
   IS_VIP,
   SEARCH_DATA,
   EVALUATE_LIST,
+  USER_INFO,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -97,5 +98,8 @@ export default {
   },
   [EVALUATE_LIST](state, data){
     state.evaluateList = data
-  }
+  },
+  [USER_INFO](state,data){
+    state.userinfo=data
+  },
 }

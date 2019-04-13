@@ -5,10 +5,11 @@
       <span class="personalcenter_mode">个人中心</span>
     </div>
     <div class="personal_head">
-      <img src="./image/kishi.jpg" alt="头像" class="head_pert">
+      <img :src="isVip.avatar" alt="头像" class="head_pert">
       <div class="head_cont">
-        <p class="head_name" @click="toAccount">张三</p>
-        <span class="head_vip"> 普通会员</span>
+        <p class="head_name" @click="toAccount">{{isVip.nickname}}</p>
+        <span class="head_vip" v-show="isVip.vip_end == 1"> 普通会员</span>
+        <span class="head_vip" v-show="isVip.vip_end == 0"> 普通用户</span>
       </div>
       <span class="head_adress" @click="addressp">管理收货地址</span>
       <img src="./image/Path.png" alt="lujing" class="head_path" @click="addressp">
@@ -61,8 +62,15 @@
 
 <script>
   import {resaddressList} from '../../api'
+ import {mapState} from 'vuex'
 
   export default {
+     computed: {
+      ...mapState(['isVip']),
+     },
+    mounted(){
+      this.getuserinfo()
+    },
     methods: {
       toAccount() {
         this.$router.push({
@@ -85,6 +93,11 @@
           query:{
             status
           }
+        })
+      },
+      getuserinfo(){
+        this.$store.dispatch('getIsVip').then(()=>{
+          this.isVip.avatar=this.isVip.avatar || 'http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/090d6947f49ac44342fc6c84c25e744aefa7bcc00'
         })
       }
 

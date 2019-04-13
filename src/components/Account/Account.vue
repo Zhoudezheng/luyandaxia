@@ -16,7 +16,7 @@
              <!-- 用来真实展示头像图片 -->
              <!-- <div class="picture" :style="'backgroundImage:url('+headerImage+')'"></div> -->
              <!-- 图片测试 -->
-             <img src="./image/kishi.jpg" alt="头像" class="ico_img">  
+             <img preview :src="userinfo.avatar" alt="头像" class="ico_img">  
              <input type="file" id="upload" accept="image" @change="upload" class="to_img">  
              <label for="upload" class="ico_to"></label>
         </div>  
@@ -49,7 +49,7 @@
             <input  type="tel" maxlength="18" class="user_input" placeholder="未绑定（点击绑定）" v-model="bankcard"  @blur.prevent="inputLoseFocus">
          </div>
          <div class="user_submit">
-               <input style='-webkit-appearance:none,appearance:none' class="user_buttoned" type="button" value="保存" :disabled="!isallwrite" :class="{user_button:isallwrite}">
+               <input style='-webkit-appearance:none,appearance:none' class="user_buttoned" type="button" value="保存" :disabled="!isallwrite" :class="{user_button:isallwrite}" @click="saveUserinfo">
          </div>
     </form>
   </div>
@@ -57,10 +57,15 @@
 
 <script>
 import Exif from 'exif-js';
+import {mapState} from 'vuex'
+import { userInfo } from 'os';
+import {setUserList} from '../../api';
+import { Toast } from 'mint-ui';
 export default {
     data(){
         return{
             username:'',
+            avatar:'',
             name:'',
             iphone:'',
             company:'',
@@ -73,11 +78,11 @@ export default {
     },
     computed:{
         isallwrite(){
-            if(this.username && this.name && this.iphone && this.company && this.post
-            && this.email && this.bankcard){
+            if(this.username && this.avatar ){
                 return true
             }
-        }
+        },
+        ...mapState(['userinfo'])
     },
     mounted () {
       // 处理安卓手机输入法遮挡输入框问题（摘自WEUI）
@@ -90,7 +95,8 @@ export default {
                 }, 0);
             }
         });
-      } 
+      };
+      this.getuserdata()
     },
     methods:{
       inputLoseFocus() {
@@ -102,6 +108,18 @@ export default {
           this.$router.push({
               path:'/personalcenter'
           })
+      },
+      getuserdata(){
+          this.$store.dispatch('getUserData').then(()=>{
+            this.userinfo.avatar=this.userinfo.avatar || 'http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/090d6947f49ac44342fc6c84c25e744aefa7bcc00'
+            this.username=this.userinfo.nickname;
+            this.avatar=this.userinfo.avatar || 'http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/090d6947f49ac44342fc6c84c25e744aefa7bcc00'
+            this.name=this.userinfo.realname;
+            this.iphone=this.userinfo.phone;
+            this.company=this.userinfo.company;
+            this.post=this.userinfo.job;
+            console.log(this.avatar)
+          });
       },
 
     //可参考 https://www.cnblogs.com/xiaocaiyuxiaoniao/p/9437013.html
@@ -134,20 +152,39 @@ export default {
                 //判断图片是否大于100K,是就直接上传，反之压缩图片  
                 if (this.result.length <= (100 * 1024)) {  
                 self.headerImage = this.result;  
-                self.postImg();  
+                self.postImg(self.headerImage);  
                 }else {  
                 img.onload = function () {  
                     let data = self.compress(img,Orientation);  
                     self.headerImage = data;  
-                    self.postImg();  
+                    self.postImg(self.headerImage);  
                 }  
                 }  
             }   
             }  
       },  
-      postImg () {  
+      postImg (result) {  
             //这里写接口  
-      },  
+            this.userinfo.avatar=result;
+            this.avatar=result;
+      }, 
+      async saveUserinfo(){
+          var token =this.$store.state.Authorization;
+          var avatar=this.avatar;
+          var nickname=this.username;
+          var mobile=this.iphone;
+          var realname=this.name;
+          var company=this.company;
+          var job =this.post;
+          var email =this.email;
+          let result =await setUserList(token,avatar,nickname,mobile,realname,company,job,email);
+          if(result.code ===200){
+              Toast(result.msg)
+          }else{
+              Toast(result.msg)
+          }
+          
+      }, 
       rotateImg (img, direction,canvas) {  
             //最小与最大旋转方向，图片旋转4次后回到原方向      
             const min_step = 0;      
@@ -262,8 +299,8 @@ export default {
         console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");  
         tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;  
         return ndata;  
-    },     
-  }
+        },     
+    },
 }
 </script>
 
