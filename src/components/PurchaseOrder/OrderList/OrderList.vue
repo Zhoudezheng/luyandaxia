@@ -58,6 +58,11 @@
         this.$emit('getcacel',false)
       },
       showoff(){
+        if(this.activeClass == 1){
+            this.$emit('gettypelist',"不开发票")
+        }else{
+             this.$emit('gettypelist',"普通纸质发票")
+        }
         this.$emit('getcacel',false)
       },
       ifshow(){
@@ -65,6 +70,7 @@
       },
       ifshows(){
           this.activeClass = 2;
+          
       },
       iftype(){
           this.typeactive =1;

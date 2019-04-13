@@ -147,13 +147,16 @@
         })
       },
       goto(index) {
-        let shopData = this.productdata
+        let shopData = this.productdata;
+        console.log(shopData);
         if (index == 1) {
           this.$router.push({
             path: '/shoppingcart'
           })
         } else if (index == 2) {
-
+          let type=1;
+          let id=shopData.id;
+          this.$store.dispatch('addshoppingcart',{type,id})
         } else if (index == 3) {
           let {id,name,cover,price,spec} = shopData
           let num = 1
