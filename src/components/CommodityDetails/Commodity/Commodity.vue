@@ -1,17 +1,21 @@
 <template>
-  <div class="commodity">
-      <p v-html="code"></p>
+  <div class="commodity" >
+      <p id="detail" v-html="commonlist.info"></p>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     data(){
       return {
-        productdata:{},
-        code:this.$store.state.commonlist.info
+        //productdata:{},
+        //code:this.$store.state.commonlist.info
       }
     },
+     computed: {
+      ...mapState(['commonlist']),
+     }
   }
 </script>
 
@@ -20,9 +24,10 @@
 .commodity{
     text-align: left;
     margin-bottom: 100px;
+    width: 100% !important;
 }
-.commodity img{
-    width: 100%;
-}
+#detail /deep/ img {
+  width: 100% ;
+} 
 
 </style>

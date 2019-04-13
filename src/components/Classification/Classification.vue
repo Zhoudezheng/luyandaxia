@@ -49,6 +49,7 @@
       },
       back() {
         this.$router.go(-1)
+        this.productList.list = {}
       },
       getProductList(){
         let category_id = this.id

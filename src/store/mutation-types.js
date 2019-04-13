@@ -18,6 +18,7 @@ export const COMMON_LIST = 'common_list'
 export const PRODUCT_LIST = 'product_list'
 export const IS_VIP = 'is_vip'
 export const SEARCH_DATA = 'search_data'
+export const EVALUATE_LIST = 'evaluate_list' //商品评价列表
 
 
 

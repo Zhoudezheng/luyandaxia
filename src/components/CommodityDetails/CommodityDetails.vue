@@ -55,7 +55,7 @@
                 <router-link to='evaluation'  exact>购买须知</router-link>
             </span>
 			<span class="liveSharing_roterthree">
-                <router-link to='instructions'  exact>商品评价</router-link>
+                <router-link :to="{path:'instructions',query:{data:{id:productdata.id}}}" exact>商品评价</router-link>
             </span>	
 	</div>
     <keep-alive> <router-view></router-view> </keep-alive>

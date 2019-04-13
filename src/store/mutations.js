@@ -18,6 +18,7 @@ import {
   PRODUCT_LIST,
   IS_VIP,
   SEARCH_DATA,
+  EVALUATE_LIST,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -93,5 +94,8 @@ export default {
   },
   [SEARCH_DATA](state, data){
     state.searchlist=data.list
+  },
+  [EVALUATE_LIST](state, data){
+    state.evaluateList = data
   }
 }
