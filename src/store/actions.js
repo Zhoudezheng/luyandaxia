@@ -16,7 +16,8 @@ import {
   COMMON_PRODUCT,
   COMMON_LIST,
   PRODUCT_LIST,
-  IS_VIP
+  IS_VIP,
+  EVALUATE_LIST
 } from './mutation-types'
 
 import {
@@ -34,6 +35,7 @@ import {
   reqProductList,
   reqcommondeta,
   reqIsVip,
+  reqInstruction,
 } from '../api'
 
 export default {
@@ -217,10 +219,11 @@ export default {
   // 获取商品详情
   async getDetail({commit, state}, index) {
     let token = state.Authorization
-    let result = await reqcommondeta(token,index)
+    let result = await reqShopdetail(token,index)
     if (result.code === 200) {
       let data = result.data
       commit(COMMON_PRODUCT, data)
+      commit(COMMON_LIST,data.detail)
     } else {
       commit(COMMON_PRODUCT, result.data)
     }
@@ -234,6 +237,17 @@ export default {
       commit(IS_VIP, data)
     } else {
       commit(IS_VIP, result.data)
+    }
+  },
+  //获取商品评价
+  async getEvaluate_list({commit, state}, index) {
+    let token = state.Authorization
+    let result = await reqInstruction(token,index)
+    if (result.code === 200) {
+      let data = result.data
+      commit(EVALUATE_LIST,data)
+    } else {
+      commit(EVALUATE_LIST,result.data)
     }
   },
 }

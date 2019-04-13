@@ -21,4 +21,5 @@ export default {
   wechatPayment:{},
   alipayPayment:{},
   productList:{},
+  evaluateList:{},
 }

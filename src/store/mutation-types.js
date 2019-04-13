@@ -16,7 +16,8 @@ export const ALIPAY_PAYMENT = 'alipay_payment'
 export const COMMON_PRODUCT = 'common_product'
 export const COMMON_LIST = 'common_list'
 export const PRODUCT_LIST = 'product_list'
-export const IS_VIP = 'is_vip'
+export const IS_VIP = 'is_vip' 
+export const EVALUATE_LIST = 'evaluate_list' //商品评价列表
 
 
 
