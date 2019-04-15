@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="instruction_part">
     <div class="instructions" v-for="(item) in evaluateList && evaluateList.list">
         <img class="user_avatar" :src="item.avatar" alt="">
         <div class="user_info">
@@ -8,7 +8,7 @@
         </div>
         <div class="content">
           <div class="user_content">{{item.review_content}}</div>
-          <img class="image_content" v-for="(img) in item.image && item.image.split(',')" :src="img" alt="">
+          <img :preview="index" class="image_content" v-for="(img,index) in item.image && item.image.split(',')" :src="img" alt="" >
         </div>
     </div>
   </div>
@@ -19,7 +19,6 @@
   export default {
     data(){
       return {
-        imglist:{},
       }
     },
      computed: {
@@ -36,7 +35,6 @@
            if(typeof(this.evaluateList.image)!='undefined')
            {
              console.log('imglist',this.evaluateList.image)
-              this.imglist = this.evaluateList.image.split(',');
               
            }
         })
@@ -47,6 +45,9 @@
 
 <style scoped>
   @import '../../../../static/font/font.css';
+  .instruction_part{
+    margin-bottom: 60px;
+  }
   .instructions{
     overflow: hidden;
     border-bottom: 1px solid #eee;

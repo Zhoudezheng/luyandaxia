@@ -133,7 +133,7 @@
              this.headFixed=false
           }
         },true)
-        this.evaluateList();
+        //this.evaluateList();
         },
     methods: {
       address(){

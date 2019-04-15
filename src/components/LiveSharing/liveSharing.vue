@@ -163,7 +163,7 @@
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
                 "coverpic" : {"style": "cover", "src":this.detail.cover},
                 "live":this.$store.state.detail.status === 1?true:false,
-                "flash":true,
+                "flash":false,
                 "h5_flv":true,
                 "x5_player":true,
                 "controls":"default",
