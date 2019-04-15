@@ -8,11 +8,13 @@
         <img src="./image/background.png" alt="背景图片" class="ship_con">
     </div>
     <div class="ship_user">
-          <img src="./image/Bitmap.png" class="liveuser_toen">
-          <span class="liveuser_span">名字真难</span>
-          <span class="liveuser_fensi">有效期：2020-03-01 下午6：08</span>
+          <img :src="userviplist.avatar" class="liveuser_toen">
+          <span class="liveuser_span">{{userviplist.nickname}}</span>
+          <span class="liveuser_fensi" v-show="!userviplist.vip_end">普通用户</span>
+          <span class="liveuser_fensi" v-show="userviplist.vip_end">普通会员</span>
     </div>
-    <div class="equity">
+    <div class="ship_title" v-html="this.html"></div>
+    <!-- <div class="equity">
         <img src="./image/equity.png" alt="权益" class="equity_ico">
         <span class="equity_span">权益介绍</span>
     </div>
@@ -88,25 +90,85 @@
         <div>2.支持完成后，服务将在5分钟后生效；</div>
         <div> 3.续费可以会员期限内续期，不会与当前有效时间重叠；</div>
         <div>4.查阅“会员服务协议”，“苹果手机支付教程”等内容。</div>
-    </div>
-    <div class="footer_car">
+    </div> -->
+    <div class="footer_car" @click="buyviplist">
         <img src="./image/buy.png" alt="点击" class="car_p">
         <div class="car_buy">
             <span class="car_fol">购买会员 </span>
-            <span class="car_a">￥198.00</span>
+            <span class="car_a">￥{{userviplist.annual_fee}}</span>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'; 
+import {reqvipinfolist} from '../../api'
   export default {
+    data(){
+      return{
+        html:'',
+      }
+    },
+    mounted(){
+        this.getVipdata();
+        this.load()
+    },
+    computed:{
+        ...mapState(['userviplist']),
+        url: {
+          get:function () {
+              return this.$store.state.userviplist.url
+          },
+          set:function(){
+              this.url = this.$store.state.userviplist.url
+          },
+        }
+    },
+    watch:{
+      url(){
+        this.load()
+      },
+    },
     methods:{
-         shipper(){
+      shipper(){
           this.$router.push({
               path:'/personalcenter'
           })
       },
+      getVipdata(){
+         this.$store.dispatch('getVipList');
+      },
+      load () {
+        let url = this.url
+        if (url && url.length > 0) {
+        // 加载中
+        let param = {
+            accept: 'text/html, text/plain'
+        }
+        this.$http.get(url, param).then((response) => {
+            // 处理HTML显示
+            //console.log(response)
+            this.html = response.body
+        }).catch(() => {
+            this.html = '加载失败'
+        })
+        }
+      },
+      async buyviplist(){
+          let token = this.$store.state.Authorization;
+          let result= await reqvipinfolist(token);
+          let order_sn=result.data.order_sn;
+          this.buyvip(order_sn);
+      },
+      buyvip(order_sn){
+        localStorage.setItem('type', '2');
+        localStorage.setItem('order_sndata', order_sn);
+        localStorage.setItem('priceed', this.$store.state.userviplist.annual_fee);
+        this.$router.push({
+           path: '/VipMember',
+         })
+      }
     }
 }
 </script>
@@ -122,7 +184,7 @@
 }
 .ship_div .ship_check{
     background-size: 16px 28px;
-    width: 16px;
+    width: 16px !important;
     height: 28px;
     float: left;
     margin-top: 30px;
@@ -149,7 +211,7 @@
 }
 .ship_user .liveuser_toen{
     float: left;
-    width:100px;
+    width:100px !important;
     height: 100px;
     border-radius: 50%; 
     margin-top: 27px;
@@ -169,7 +231,7 @@
 .ship_user .liveuser_fensi{
     float: left;
     margin-top: 88px;
-    margin-left: -135px;
+    margin-left: -73px;
     height: 40px;     
     font-size:28px;
     font-family:PingFangSC-Regular;
@@ -296,6 +358,9 @@
 }
 .footer_car .car_buy .car_a{
     font-size:28px;
+}
+.ship_title{
+    margin-bottom: 160px;
 }
 
 </style>

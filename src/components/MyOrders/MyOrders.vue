@@ -12,7 +12,7 @@
       <div :class="{checked:shows==3}" @click="goTou(3)">待收货</div>
       <div :class="{checked:shows==4}" @click="goTou(4)">已完成</div>
     </div>
-    <div class="orderList" v-for="(item) in orders && orders.list" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
+    <div class="orderList" v-for="(item,index) in orders && orders.list" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
       <div class="orderFirst">
         <span class="orderID">订单编号：{{item.order_sn}}</span>
         <span v-if="item.status == 0">待付款</span>
@@ -46,8 +46,8 @@
           </div>
         </div>
         <div class="btnWarp">
-          <input v-if="item.status == 0" class="gray" type="button" value="取消订单">
-          <input v-if="item.status == 0" class="orange" type="button" value="去付款">
+          <input v-if="item.status == 0" class="gray" type="button" value="取消订单" @click="delbuyshop(item,index)">
+          <input v-if="item.status == 0" class="orange" type="button" value="去付款" @click="tobuyshop(item)">
           <input v-if="item.status == 1" class="orange" type="button" value="提醒发货">
           <input v-if="item.status == 2" class="gray" type="button" @click="unfold()" value="查看发票">
           <input v-if="item.status == 2" class="gray" type="button" value="申请售后">
@@ -92,7 +92,9 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState} from 'vuex';
+  import { MessageBox,Toast } from 'mint-ui';
+  import {delbuyshop} from '../../api'
 
   export default {
     data() {
@@ -118,9 +120,27 @@
       getOrders(status, page) {
         let token = localStorage.getItem('Authorization')
         this.$store.dispatch('getOrders', {token, status, page}).then(() => {
-          let orders = this.orders.list
+          let orders = this.orders.list;
           this.isShow = orders.length >= 3;
         })
+      },
+      tobuyshop(item){
+        var itemlist= item;
+        this.$store.dispatch('setOrderSn',itemlist)
+        let orderDetail = {
+          total: itemlist.total_price,
+        }
+        localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
+        this.$router.push({
+          path: '/VipMember',
+        })
+      },
+      delbuyshop(item,index){
+        MessageBox.confirm('确定执行此操作?').then(action => {
+           delbuyshop(item.id,'delete');
+           Toast('取消成功');
+           this.orders.list.splice(index,1);
+         })
       },
       backtrack(){
         this.$router.go(-1)

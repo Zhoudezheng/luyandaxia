@@ -83,6 +83,7 @@
         })
       },
       addressp() {
+        localStorage.setItem('iforder', 'no');
         this.$router.push({
           path: '/address'
         })

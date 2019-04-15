@@ -69,7 +69,7 @@
           },
         }
     },
-    watch:{
+   watch:{
       url(){
         this.load()
       },
