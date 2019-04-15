@@ -156,6 +156,7 @@
         } else if (index == 2) {
           let type=1;
           let id=shopData.id;
+          Toast('加入成功');
           this.$store.dispatch('addshoppingcart',{type,id})
         } else if (index == 3) {
           let {id,name,cover,price,spec} = shopData
