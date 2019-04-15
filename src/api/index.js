@@ -68,3 +68,9 @@ export const  reqSearchData= (token,page,keyword)=>ajax(BASE+'/search/product',{
 export const reqUserInfo = (token) => ajax(BASE+'/member/detail',{token},'POST');
 //修改用户信息
 export const setUserList = (token,avatar,nickname,mobile,realname,company,job,email) => ajax(BASE+'/member/modify_detail',{token,avatar,nickname,mobile,realname,company,job,email},'POST');
+//获取购买vip数据
+export const reqVipdata = (token) => ajax(BASE+'/vipset/detail',{token},'POST');
+//获取vip订单号
+export const reqvipinfolist = (token) => ajax(BASE+'/vip/create_new',{token},'POST');
+//删除订单
+export const delbuyshop = (id ,type) => ajax (BASE+'/order/handle',{id,type},'POST')

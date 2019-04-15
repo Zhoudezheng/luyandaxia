@@ -19,7 +19,8 @@ import {
   IS_VIP,
   SEARCH_DATA,
   EVALUATE_LIST,
-  USER_INFO
+  USER_INFO,
+  USER_VIP,
 } from './mutation-types'
 
 import {
@@ -41,8 +42,10 @@ import {
   reqaddshopping,
   reqdelshopping,
   reqSearchData,
-  reqUserInfo
+  reqUserInfo,
+  reqVipdata,
 } from '../api'
+import { stat } from 'fs';
 
 export default {
 
@@ -92,9 +95,9 @@ export default {
 // 获取订单列表
   async getOrders({commit}, data) {
     let token = data.token
-    let status = data.status
+    let status = data.status;
     let page = data.page
-    const result = await reqOrderList(token, status, page)
+    const result = await reqOrderList(token, status, page);
     if (result.code === 200) {
       const detail = result.data
       commit(ORDER_LIST, detail)
@@ -171,7 +174,10 @@ export default {
     }
 
   },
-
+ //订单付款
+ setOrderSn({commit},data){
+   commit(CREATE_ORDER,data)
+ },
   // 预览订单
   async previewOrder({commit, state}, data) {
     const token = state.Authorization
@@ -279,6 +285,14 @@ export default {
     let result = await reqUserInfo(token);
     if(result.code === 200){
       commit(USER_INFO,result.data)
+    }
+  },
+  //获取购买VIP数据
+  async getVipList({commit,state}){
+    let token =state.Authorization;
+    let result = await reqVipdata(token);
+    if(result.code === 200){
+      commit(USER_VIP,result.data)
     }
   }
 }

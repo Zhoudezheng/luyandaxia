@@ -194,7 +194,7 @@
       createOrder() {
         // console.log(this.arraychecked.length)
         const the = this
-        let arrayChecked = this.arraychecked
+        let arrayChecked = this.arraychecked;
         let data = []
         let cartId = []
         for (let i = 0; i < arrayChecked.length; i++) {
@@ -223,6 +223,7 @@
         }
         localStorage.setItem('type', '1');
         // console.log(data)
+        
        if(this.arraychecked.length > 0){
          this.$router.push({
            path: '/PurchaseOrder',

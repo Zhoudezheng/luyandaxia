@@ -20,6 +20,7 @@ import {
   SEARCH_DATA,
   EVALUATE_LIST,
   USER_INFO,
+  USER_VIP,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -102,4 +103,7 @@ export default {
   [USER_INFO](state,data){
     state.userinfo=data
   },
+  [USER_VIP](state,data){
+    state.userviplist = data;
+  }
 }

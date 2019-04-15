@@ -9,7 +9,7 @@
         <span class="mony_a">¥</span>
         <span class="mony_b">{{this.price}}</span>
       </p>
-      <p class="vip_Member">购买VIP年费会员</p>
+      <!-- <p class="vip_Member">购买VIP年费会员</p> -->
     </div>
     <div class="vip_lins"></div>
     <button type="button" class="vip_weixin" @click="showactive(1)">
@@ -43,8 +43,14 @@
       ...mapState(['orderId', 'alipayPayment', 'wechatPayment'])
     },
     mounted() {
-      this.price = this.$route.query.cost
-      this.getOrderDetail()
+      var b= localStorage.getItem('type');
+      if( b === '2'){
+        this.price= localStorage.getItem('priceed');
+      }else{
+        this.price = this.$route.query.cost;
+        this.getOrderDetail()
+      };
+      
     },
     methods: {
       liveSharing() {
@@ -57,10 +63,15 @@
       vipsuccessful() {
         const the = this
         let way = this.activeClass
-        let type = localStorage.getItem('type')
-        let order_sn = this.orderId
-        let os = this.os
-        let return_url = '/VipSuccessful'
+        let type = localStorage.getItem('type');
+        let order_sn =''
+        if(type === '2'){
+          order_sn = localStorage.getItem('order_sndata');
+        }else{
+          order_sn = this.orderId;
+        }
+        let os = this.os;
+        let return_url = '/VipSuccessful';
         // console.log(type, order_sn, os, way);
         if (way == 1) {
           this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
@@ -89,7 +100,7 @@
       getOrderDetail() {
         let orderDetail = localStorage.getItem('orderDetail')
         orderDetail = JSON.parse(orderDetail)
-        this.price = orderDetail.total
+        this.price = orderDetail.total;
         let os = navigator.userAgent
         let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
         let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);

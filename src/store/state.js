@@ -24,4 +24,5 @@ export default {
   searchlist:[],
   evaluateList:{},
   userinfo:{},
+  userviplist:{},
 }
