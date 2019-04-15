@@ -6,8 +6,8 @@
     </div>
     <div class="purchase_address" @click="toadress">
       <img src="./image/address.png" alt="地址" class="address_ico">
-      <div class="address_a">{{orderDetails.address.address}}</div>
-      <div class="address_name">{{orderDetails.address.name}}  {{orderDetails.address.phone}}</div>
+      <div class="address_a">{{address.address}}</div>
+      <div class="address_name">{{address.name}}  {{address.phone}}</div>
       <img src="./image/doadd.png" alt="编辑地址" class="address_go">
     </div>
     <div class="purchase_lines"></div>
@@ -75,7 +75,8 @@
         isBuyVideo: false,
         product_info: [],
         cart_list: [],
-        totalPrice: 0
+        totalPrice: 0,
+        address:{}
       }
     },
     components: {
@@ -95,6 +96,7 @@
         this.$router.go(-1)
       },
       toadress(){
+        localStorage.setItem('iforder', 'yes');
         this.$router.push({
           path:'/address'
         })
@@ -140,12 +142,21 @@
           this.handler, {passive: false});//打开默认事件
       },
       getOrderDetails() {
-        let product_info = this.$route.query.orderData.data
-        this.product_info = product_info
-        this.cart_list = this.$route.query.orderData.cartId
-        this.totalPrice = this.$route.query.orderData.totalPrice
-        product_info = Base64.encode(JSON.stringify(product_info))
-        this.$store.dispatch('previewOrder', product_info)
+        let a=[];
+        if(this.$route.query.orderData.data){
+          this.$store.dispatch('setorderData',this.$route.query.orderData.data);
+          a=this.$store.state.saveorder
+        }else{
+          a=this.$store.state.saveorder
+        }
+        let product_info = a;
+        this.product_info = product_info;
+        this.cart_list = this.$route.query.orderData.cartId;
+        this.totalPrice = this.$route.query.orderData.totalPrice;
+        product_info = Base64.encode(JSON.stringify(product_info));
+        this.$store.dispatch('previewOrder', product_info).then(()=>{
+         this.address=this.orderDetails.address;
+        })
       },
     },
   }

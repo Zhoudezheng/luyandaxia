@@ -21,6 +21,7 @@ import {
   EVALUATE_LIST,
   USER_INFO,
   USER_VIP,
+  SAVE_ORDER,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -105,5 +106,8 @@ export default {
   },
   [USER_VIP](state,data){
     state.userviplist = data;
-  }
+  },
+  [SAVE_ORDER](state,data){
+    state.saveorder=data;
+  },
 }

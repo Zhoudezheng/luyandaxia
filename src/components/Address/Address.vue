@@ -43,6 +43,11 @@ export default {
     },
     methods:{
        presonal(){
+           var iforder=localStorage.getItem('iforder');
+           console.log(iforder);
+           if(iforder == 'yes'){
+               this.$router.go(-1);
+           }
            this.$router.push({
                path:'/personalcenter'
            })

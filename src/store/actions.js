@@ -21,6 +21,7 @@ import {
   EVALUATE_LIST,
   USER_INFO,
   USER_VIP,
+  SAVE_ORDER,
 } from './mutation-types'
 
 import {
@@ -189,6 +190,10 @@ export default {
       commit(CONFIRM_ORDER, result.data)
     }
 
+  },
+  //保存订单
+  setorderData({commit},data){
+    commit(SAVE_ORDER,data)
   },
   // 微信支付
   async wechatPayment({commit, state}, {order_sn, device_type, type}) {

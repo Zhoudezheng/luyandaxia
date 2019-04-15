@@ -103,6 +103,10 @@ export default {
     components:{},
     methods:{
         address(){
+            var iforder=localStorage.getItem('iforder');
+            if(iforder === 'yes'){
+                this.$router.go('-2');
+            }
             this.$router.push({
                 path:'/address'
             })
@@ -132,11 +136,19 @@ export default {
            var phone= this.phonenumber;
            var address =this. location;
            var info=this.detailed;
-           var type=0;
+           var type=1;
            let result= await addAddressList(token,name,phone,address,info,type);
-           this.$router.push({
-              path:'/address'
-           })
+           if(result.code === 200){
+             var iforder=localStorage.getItem('iforder');
+             if(iforder === 'yes'){
+                this.$router.go(-2)
+             }else{
+                this.$router.push({
+                  path :'/address' 
+                })
+             }
+           }
+          
         },
       //picker组件的change事件，进行取值赋值
         addressChange(picker, values){
