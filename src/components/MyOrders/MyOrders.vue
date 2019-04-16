@@ -7,18 +7,18 @@
     </div>
     <div class="nav">
       <div :class="{checked:shows==100}" @click="goTou(100)">全部</div>
-      <div :class="{checked:shows==1}" @click="goTou(1)">待付款</div>
-      <div :class="{checked:shows==2}" @click="goTou(2)">待发货</div>
-      <div :class="{checked:shows==3}" @click="goTou(3)">待收货</div>
-      <div :class="{checked:shows==4}" @click="goTou(4)">已完成</div>
+      <div :class="{checked:shows==0}" @click="goTou(0)">待付款</div>
+      <div :class="{checked:shows==1}" @click="goTou(1)">待发货</div>
+      <div :class="{checked:shows==2}" @click="goTou(2)">待收货</div>
+      <div :class="{checked:shows==3}" @click="goTou(3)">已完成</div>
     </div>
     <div class="orderList" v-for="(item,index) in orders && orders.list" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
       <div class="orderFirst">
         <span class="orderID">订单编号：{{item.order_sn}}</span>
         <span v-if="item.status == 0">待付款</span>
         <span v-if="item.status == 1">待发货</span>
-        <span v-if="item.status == 2">已完成</span>
-        <span v-if="item.status == 3">待收货</span>
+        <span v-if="item.status == 3">已完成</span>
+        <span v-if="item.status == 2">待收货</span>
         <span v-if="item.status == 4">已取消</span>
       </div>
       <div>
@@ -49,12 +49,12 @@
           <input v-if="item.status == 0" class="gray" type="button" value="取消订单" @click="delbuyshop(item,index)">
           <input v-if="item.status == 0" class="orange" type="button" value="去付款" @click="tobuyshop(item)">
           <input v-if="item.status == 1" class="orange" type="button" value="提醒发货">
-          <input v-if="item.status == 2" class="gray" type="button" @click="unfold()" value="查看发票">
+          <!-- <input v-if="item.status == 2" class="gray" type="button" @click="unfold()" value="查看发票">
           <input v-if="item.status == 2" class="gray" type="button" value="申请售后">
-          <input v-if="item.status == 2" class="orange" type="button" value="评价晒单">
+          <input v-if="item.status == 2" class="orange" type="button" value="评价晒单"> 
           <input v-if="item.status == 2" class="orange" type="button" value="再次购买">
-          <input v-if="item.status == 3" class="gray" type="button" value="查看物流">
-          <input v-if="item.status == 3" class="orange" type="button" value="确认收货">
+          <input v-if="item.status == 3" class="gray" type="button" value="查看物流">-->
+          <input v-if="item.status == 2" class="orange" type="button" value="确认收货">
           <input v-if="item.status == 4" class="gray" type="button" value="再次购买">
         </div>
       </div>

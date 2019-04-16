@@ -154,6 +154,7 @@
     methods: {
           setVideo(){
                this.video = this.$store.state.videoUrl
+               console.log(this.video)
                this.computeTime = this.$store.state.detail.preview_at
                 this.player =new TcPlayer('id_test_video', {
                 "mp4":this.video.mp4,
@@ -163,7 +164,7 @@
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
                 "coverpic" : {"style": "cover", "src":this.detail.cover},
                 "live":this.$store.state.detail.status === 1?true:false,
-                "flash":false,
+                "flash":true,
                 "h5_flv":true,
                 "x5_player":true,
                 "controls":"default",

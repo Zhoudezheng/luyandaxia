@@ -73,4 +73,6 @@ export const reqVipdata = (token) => ajax(BASE+'/vipset/detail',{token},'POST');
 //获取vip订单号
 export const reqvipinfolist = (token) => ajax(BASE+'/vip/create_new',{token},'POST');
 //删除订单
-export const delbuyshop = (id ,type) => ajax (BASE+'/order/handle',{id,type},'POST')
+export const delbuyshop = (id ,type) => ajax (BASE+'/order/handle',{id,type},'POST');
+//获取上传图片token
+export const reqImageToekn = (token) => ajax(BASE+'/upload/token',{token},'POST');

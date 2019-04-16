@@ -54,11 +54,17 @@ export default [
           {
             path:'Interaction',
             name:'Interaction',
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:Interaction
             },
           {
             path:'recommend', 
             name:'recommend', 
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:recommend
           },
           {
@@ -69,10 +75,16 @@ export default [
     },
     {
       path: '/vipmember',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component: vipmember,
     },
     {
       path:'/singlevideo',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:singlevideo,
     },
     {
@@ -83,16 +95,25 @@ export default [
           {
             path:'commodity',
             name:'commodity',
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component: commodity
           },
           {
             path:'evaluation',
             name:'evaluation',
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:evaluation
             },
           {
             path:'instructions', 
             name:'instructions', 
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:instructions
           },
           {
@@ -103,21 +124,31 @@ export default [
     },
     {
       path:'/vipsuccessful',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:vipsuccessful,
     },
     {
       path:'/videosuccessful',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:videosuccessful,
     },
     {
     path: '/MyOrders',
+    meta: {
+      requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+    },
     component: MyOrders,
     },
     {
       path:'/shoppingcart',
       component:shoppingcart,
       meta: {
-        isShow: true // 标识显示底部导航
+        isShow: true, // 标识显示底部导航
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
       }
     },
     {
@@ -136,17 +167,24 @@ export default [
     },
     {
       path:'/account',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:account,
     },
     {
       path:'/membership',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:membership,
     },
     {
       path:'/shoppingcart',
       component:shoppingcart,
       meta: {
-        isShow: true // 标识显示底部导航
+        isShow: true, // 标识显示底部导航
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
       }
     },
     {
@@ -157,39 +195,39 @@ export default [
       }
     },
     {
-      path:'/personalcenter',
-      component:personalcenter,
-      meta: {
-        isShow: true // 标识显示底部导航
-      }
-    },
-    {
       path:'/purchaseorder',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:purchaseorder,
     },
     {
       path:'/address',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:address
     },
     {
       path: '/newaddress',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:newaddress,
     },
     {
       path:'/editaddress',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:editaddress
     },
     {
-      path:'/account',
-      component:account,
-    },
-    {
       path:'/Classification',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
       component:Classification,
-    },
-    {
-      path:'/membership',
-      component:membership,
     },
     {
       path:'/projectsharing',
@@ -198,14 +236,23 @@ export default [
         // 二级路由路径,不加/
           {
             path:'background',
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component: background
           },
           {
             path:'brightspot',
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:brightspot
           },
           {
             path:'creativeteam', 
+            meta: {
+              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
             component:creativeteam
           },
           {

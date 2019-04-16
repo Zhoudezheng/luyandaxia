@@ -22,6 +22,7 @@ import {
   USER_INFO,
   USER_VIP,
   SAVE_ORDER,
+  IMAGE_TOKEN,
 } from './mutation-types'
 
 import {
@@ -45,6 +46,7 @@ import {
   reqSearchData,
   reqUserInfo,
   reqVipdata,
+  reqImageToekn,
 } from '../api'
 import { stat } from 'fs';
 
@@ -70,7 +72,14 @@ export default {
           m3u8: '',
           flv: detail.video.replace("rtmp", "http") + ".flv",
         }
-      } else {
+      } else if(detail.video.indexOf("rtmp")>=0){
+        video = {
+          mp4: '',
+          rtmp: detail.video,
+          m3u8: '',
+          flv: '',
+        }
+      }else{
         video = {
           mp4: detail.video,
           rtmp: '',
@@ -298,6 +307,14 @@ export default {
     let result = await reqVipdata(token);
     if(result.code === 200){
       commit(USER_VIP,result.data)
+    }
+  },
+  async getImageToken({commit,state}){
+    let token =state.Authorization;
+    let result = await reqImageToekn(token);
+    if(result.code === 200){
+      console.log('imagetoken',result.data.token)
+      commit(IMAGE_TOKEN,result.data.token)
     }
   }
 }

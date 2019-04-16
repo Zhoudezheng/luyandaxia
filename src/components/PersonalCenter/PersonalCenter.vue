@@ -5,32 +5,33 @@
       <span class="personalcenter_mode">个人中心</span>
     </div>
     <div class="personal_head">
-      <img :src="isVip.avatar" alt="头像" class="head_pert">
-      <div class="head_cont">
+      <img :src="isVip.avatar" alt="头像" class="head_pert" v-show="islog">
+      <div class="head_cont" v-show="islog">
         <p class="head_name" @click="toAccount">{{isVip.nickname}}</p>
         <span class="head_vip" v-show="isVip.vip_end == 1"> 普通会员</span>
         <span class="head_vip" v-show="isVip.vip_end == 0"> 普通用户</span>
       </div>
+      <span class="login_part" @click="tologin" v-show="islog == false">立即登录</span>
       <span class="head_adress" @click="addressp">管理收货地址</span>
       <img src="./image/Path.png" alt="lujing" class="head_path" @click="addressp">
     </div>
     <div class="footer_guide border-1px">
-            <span class="guide_item" @click="goTo('/MyOrders','1')">
+            <span class="guide_item" @click="goTo('/MyOrders','0')">
                 <span class="item_icona">
                 </span>
                 <span class="span_a">待付款</span>
             </span>
-      <a href="javascript:;" class="guide_item" @click="goTo('/MyOrders','2')">
+      <a href="javascript:;" class="guide_item" @click="goTo('/MyOrders','1')">
                 <span class="item_iconb">
                 </span>
         <span class="span_a">待发货</span>
       </a>
-      <div class="guide_item" @click="goTo('/MyOrders','3')">
+      <div class="guide_item" @click="goTo('/MyOrders','2')">
                 <span class="item_iconc">
                 </span>
-        <span class="span_a">待评价</span>
+        <span class="span_a">待收货</span>
       </div>
-      <div  class="guide_item" @click="goTo('/MyOrders','14')">
+      <div  class="guide_item" @click="goTo('/MyOrders','3')">
                 <span class="item_icond">
                 </span>
         <span class="span_a">已完成</span>
@@ -53,9 +54,9 @@
       <span class="content_in">联系我们</span>
       <img class="conten_to" src="./image/go.png" alt="path">
     </div>
-    <div class="admin_content">
+    <div class="admin_content" v-show="islog">
       <span class="content_in">注销登录</span>
-      <img class="conten_to" src="./image/go.png" alt="path">
+      <img class="conten_to" src="./image/go.png" alt="path" @click="logOut">
     </div>
   </div>
 </template>
@@ -63,12 +64,23 @@
 <script>
   import {resaddressList} from '../../api'
  import {mapState} from 'vuex'
+  import { MessageBox,Toast } from 'mint-ui';
 
   export default {
+    data(){
+      return{
+        islog:false,
+      }
+    },
      computed: {
       ...mapState(['isVip']),
      },
     mounted(){
+      console.log('isvip',this.isVip)
+      if(this.$store.state.Authorization != '')
+      {
+        this.islog = true
+      }
       this.getuserinfo()
     },
     methods: {
@@ -100,6 +112,20 @@
         this.$store.dispatch('getIsVip').then(()=>{
           this.isVip.avatar=this.isVip.avatar || 'http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/090d6947f49ac44342fc6c84c25e744aefa7bcc00'
         })
+      },
+      logOut(){
+        MessageBox.confirm('确定退出当前?').then(action => {
+           this.$store.dispatch('del_token')
+           Toast('退出成功');
+           this.islog = false
+         })
+      },
+      tologin(){
+        this.$router.push(
+        {
+          path:'/login',
+          query:{redirect:this.$route.fullPath}//{path:to.path,query:to.query}},
+        })
       }
 
     }
@@ -108,6 +134,7 @@
 
 <style scoped>
   @import '../../../static/font/font.css';
+  
 
   .personal {
     height: 1334px;
@@ -177,6 +204,18 @@
     margin-left: 32px;
     text-align: left;
   }
+  .personal_head .login_part{
+    float: left;
+    margin-left: 122px;
+    margin-top: 136px;
+    color: rgba(255, 255, 255, 1);
+    font-family: PingFangSC-Semibold;
+    margin-right: 140px;
+    line-height: 30px;
+    font-size: 24px;
+    font-weight: 500;
+    height: 30px;
+  }
 
   .head_cont .head_name {
     height: 50px;
@@ -184,7 +223,7 @@
     font-family: PingFangSC-Semibold;
     font-weight: 600;
     color: rgba(255, 255, 255, 1);
-    line-height: 50px;
+    line-height: 30px;
   }
 
   .head_cont .head_vip {
