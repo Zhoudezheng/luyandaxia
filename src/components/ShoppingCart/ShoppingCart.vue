@@ -79,6 +79,7 @@
     mounted() {
       this.getTotal()
       this.getShoppingCart();
+      localStorage.setItem('invoice' ,"不开发票")
     },
     watch: {
       'goodLits': {
@@ -318,6 +319,7 @@
   .car-list {
     background: #ffffff;
     margin-top: 92px;
+    margin-bottom: 180px;
   }
 
   .car-item {
@@ -479,7 +481,7 @@
     height: 98px;
     background: #ffffff;
     position: fixed;
-    bottom: 91px;
+    bottom: 89px;
     left: 0;
     right: 0;
   }

@@ -27,6 +27,7 @@ import commodity from '../components/CommodityDetails/Commodity/commodity'
 import evaluation from '../components/CommodityDetails/Evaluation/evaluation'
 import instructions from '../components/CommodityDetails/Instructions/instructions'
 import Classification from '../components/Classification/Classification'
+import orderdetail from '../components/OrderDetail/orderdetail'
 
 
 export default [
@@ -190,6 +191,10 @@ export default [
     {
       path:'/membership',
       component:membership,
+    },
+    {
+      path:'/orderdetail',
+      component:orderdetail
     },
     {
       path:'/projectsharing',

@@ -110,6 +110,10 @@
     },
     methods:{
         address(){
+            var iforder=localStorage.getItem('iforder');
+            if(iforder === 'yes'){
+                this.$router.go('-2');
+            }
             this.$router.push({
                 path:'/address'
             })
@@ -134,9 +138,17 @@
             var type =this.type;
             var token=this.$store.state.Authorization;
             var savelist= await saveAddressList(token,id,name,phone,address,info,type);
-            this.$router.push({
-              path:'/address'
-            })
+            if(savelist.code === 200){
+             var iforder=localStorage.getItem('iforder');
+             if(iforder === 'yes'){
+                this.$router.go(-2)
+             }else{
+                this.$router.push({
+                  path :'/address' 
+                })
+             }
+           }
+          
          
         },
         okloc(){

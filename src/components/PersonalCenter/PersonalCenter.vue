@@ -15,22 +15,22 @@
       <img src="./image/Path.png" alt="lujing" class="head_path" @click="addressp">
     </div>
     <div class="footer_guide border-1px">
-            <span class="guide_item" @click="goTo('/MyOrders','1')">
+            <span class="guide_item" @click="goTo('/MyOrders','0')">
                 <span class="item_icona">
                 </span>
                 <span class="span_a">待付款</span>
             </span>
-      <a href="javascript:;" class="guide_item" @click="goTo('/MyOrders','2')">
+      <a href="javascript:;" class="guide_item" @click="goTo('/MyOrders','1')">
                 <span class="item_iconb">
                 </span>
         <span class="span_a">待发货</span>
       </a>
-      <div class="guide_item" @click="goTo('/MyOrders','3')">
+      <div class="guide_item" @click="goTo('/MyOrders','2')">
                 <span class="item_iconc">
                 </span>
         <span class="span_a">待评价</span>
       </div>
-      <div  class="guide_item" @click="goTo('/MyOrders','14')">
+      <div  class="guide_item" @click="goTo('/MyOrders','3')">
                 <span class="item_icond">
                 </span>
         <span class="span_a">已完成</span>

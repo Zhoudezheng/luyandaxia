@@ -22,6 +22,7 @@ import {
   USER_INFO,
   USER_VIP,
   SAVE_ORDER,
+  ORDER_DETAIL,
 } from './mutation-types'
 
 import {
@@ -45,6 +46,7 @@ import {
   reqSearchData,
   reqUserInfo,
   reqVipdata,
+  reqorderDetail,
 } from '../api'
 import { stat } from 'fs';
 
@@ -298,6 +300,13 @@ export default {
     let result = await reqVipdata(token);
     if(result.code === 200){
       commit(USER_VIP,result.data)
+    }
+  },
+  async getOrderdetails({commit,state},data){
+    let token =state.Authorization;
+    let result = await reqorderDetail(token,data);
+    if(result.code === 200){
+      commit(ORDER_DETAIL,result.data)
     }
   }
 }

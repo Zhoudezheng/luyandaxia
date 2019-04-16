@@ -71,7 +71,7 @@
     data() {
       return {
         post: '',
-        invoice: '不开发票',
+        invoice:'不开发票',
         isBuyVideo: false,
         product_info: [],
         cart_list: [],
@@ -88,7 +88,7 @@
     mounted() {
       // 获取传过来的参数
       this.getOrderDetails();
-      console.log(this.$store.state.orderDetails);
+      this.invoice=localStorage.getItem('invoice');
     }
     ,
     methods: {
@@ -144,15 +144,15 @@
       getOrderDetails() {
         let a=[];
         if(this.$route.query.orderData.data){
-          this.$store.dispatch('setorderData',this.$route.query.orderData.data);
+          this.$store.dispatch('setorderData',this.$route.query.orderData);
           a=this.$store.state.saveorder
         }else{
           a=this.$store.state.saveorder
         }
-        let product_info = a;
+        let product_info = a.data;
         this.product_info = product_info;
-        this.cart_list = this.$route.query.orderData.cartId;
-        this.totalPrice = this.$route.query.orderData.totalPrice;
+        this.cart_list = a.cartId;
+        this.totalPrice = a.totalPrice;
         product_info = Base64.encode(JSON.stringify(product_info));
         this.$store.dispatch('previewOrder', product_info).then(()=>{
          this.address=this.orderDetails.address;
