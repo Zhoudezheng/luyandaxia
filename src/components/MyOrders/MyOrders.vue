@@ -49,12 +49,12 @@
           <input v-if="item.status == 0" class="gray" type="button" value="取消订单" @click="delbuyshop(item,index)">
           <input v-if="item.status == 0" class="orange" type="button" value="去付款" @click="tobuyshop(item)">
           <input v-if="item.status == 1" class="orange" type="button" value="提醒发货">
-          <input v-if="item.status == 2" class="gray" type="button" @click="unfold()" value="查看发票">
-          <!-- <input v-if="item.status == 2" class="gray" type="button" value="申请售后"> -->
-          <!-- <input v-if="item.status == 2" class="orange" type="button" value="评价晒单"> -->
+          <!-- <input v-if="item.status == 2" class="gray" type="button" @click="unfold()" value="查看发票">
+          <input v-if="item.status == 2" class="gray" type="button" value="申请售后">
+          <input v-if="item.status == 2" class="orange" type="button" value="评价晒单"> 
           <input v-if="item.status == 2" class="orange" type="button" value="再次购买">
-          <!-- <input v-if="item.status == 3" class="gray" type="button" value="查看物流">
-          <input v-if="item.status == 3" class="orange" type="button" value="确认收货"> -->
+          <input v-if="item.status == 3" class="gray" type="button" value="查看物流">-->
+          <input v-if="item.status == 2" class="orange" type="button" value="确认收货">
           <input v-if="item.status == 4" class="gray" type="button" value="再次购买">
         </div>
       </div>

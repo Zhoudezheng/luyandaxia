@@ -78,3 +78,5 @@ export const delbuyshop = (id ,type) => ajax (BASE+'/order/handle',{id,type},'PO
 export const reqorderDetail = (token,order_sn) => ajax(BASE+'/order/detail',{token,order_sn},'POST');
 //提醒发货
 export const reqshipment = (token,id) => ajax(BASE+'/mine_order/notice',{token,id},'POST');
+//获取上传图片token
+export const reqImageToekn = (token) => ajax(BASE+'/upload/token',{token},'POST');

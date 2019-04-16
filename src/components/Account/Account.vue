@@ -44,10 +44,10 @@
             <span class="ico_head">邮 箱</span>
             <input  type="tel" maxlength="16" class="user_input" placeholder="请输入邮箱" v-model="email"  @blur.prevent="inputLoseFocus">
          </div>
-         <div class="account_user">
+         <!-- <div class="account_user">
             <span class="ico_head">银 行 卡</span>
             <input  type="tel" maxlength="18" class="user_input" placeholder="未绑定（点击绑定）" v-model="bankcard"  @blur.prevent="inputLoseFocus">
-         </div>
+         </div> -->
          <div class="user_submit">
                <input style='-webkit-appearance:none,appearance:none' class="user_buttoned" type="button" value="保存" :disabled="!isallwrite" :class="{user_button:isallwrite}" @click="saveUserinfo">
          </div>
@@ -61,6 +61,8 @@ import {mapState} from 'vuex'
 import { userInfo } from 'os';
 import {setUserList} from '../../api';
 import { Toast } from 'mint-ui';
+//七牛上传插件
+import * as qiniu from 'qiniu-js';
 export default {
     data(){
         return{
@@ -82,7 +84,7 @@ export default {
                 return true
             }
         },
-        ...mapState(['userinfo'])
+        ...mapState(['userinfo','imageToken'])
     },
     mounted () {
       // 处理安卓手机输入法遮挡输入框问题（摘自WEUI）
@@ -121,53 +123,48 @@ export default {
             console.log(this.avatar)
           });
       },
-
     //可参考 https://www.cnblogs.com/xiaocaiyuxiaoniao/p/9437013.html
       upload (e) {  
       let files = e.target.files || e.dataTransfer.files;  
       if (!files.length) return;  
-      this.picValue = files[0];  
-      this.imgPreview(this.picValue);  
-      },  
-      imgPreview (file) {  
-        let self = this;  
-        let Orientation;  
-        //去获取拍照时的信息，解决拍出来的照片旋转问题  
-        Exif.getData(file, function(){  
-            Orientation = Exif.getTag(this, 'Orientation');  
-        });  
-        // 看支持不支持FileReader  
-        if (!file || !window.FileReader) return;  
-    
-        if (/^image/.test(file.type)) {  
-            // 创建一个reader  
-            let reader = new FileReader();  
-            // 将图片2将转成 base64 格式  
-            reader.readAsDataURL(file);  
-            // 读取成功后的回调  
-            reader.onloadend = function () {  
-                let result = this.result;  
-                let img = new Image();  
-                img.src = result;  
-                //判断图片是否大于100K,是就直接上传，反之压缩图片  
-                if (this.result.length <= (100 * 1024)) {  
-                self.headerImage = this.result;  
-                self.postImg(self.headerImage);  
-                }else {  
-                img.onload = function () {  
-                    let data = self.compress(img,Orientation);  
-                    self.headerImage = data;  
-                    self.postImg(self.headerImage);  
-                }  
-                }  
-            }   
-            }  
-      },  
-      postImg (result) {  
-            //这里写接口  
-            this.userinfo.avatar=result;
-            this.avatar=result;
-      }, 
+      this.picValue = files[0];
+      //获取qiniu的token
+      this.$store.dispatch('getImageToken').then(()=>{
+          var uptoken = this.imageToken
+         
+        var file = this.picValue //Blob 对象，上传的文件
+        var key = file.name  // 上传后文件资源名以设置的 key 为主，如果 key 为 null 或者 undefined，则文件资源名会以 hash 值作为资源名。
+
+        let config = {
+          useCdnDomain: true,   //表示是否使用 cdn 加速域名，为布尔值，true 表示使用，默认为 false。
+          region: null     // 根据具体提示修改上传地区,当为 null 或 undefined 时，自动分析上传域名区域
+        };
+
+        let putExtra = {
+          fname: "",  //文件原文件名
+          params: {}, //用来放置自定义变量
+          mimeType: null  //用来限制上传文件类型，为 null 时表示不对文件类型限制；限制类型放到数组里： ["image/png", "image/jpeg", "image/gif"]
+        };
+         console.log('uptoken',uptoken)
+        var observable = qiniu.upload(file, key, uptoken, putExtra, config);
+        observable.subscribe({
+          next: (result) => {
+          // 主要用来展示进度
+            console.log(result)
+          },
+          error: (errResult) => {
+          // 失败报错信息
+            console.log(errResult)
+          },
+          complete: (result) => {
+          // 接收成功后返回的信息
+            console.log(result)
+            this.userinfo.avatar="http://cdn.kanjian2020.com/"+result.key;
+            this.avatar="http://cdn.kanjian2020.com/"+result.key;
+          }
+        })
+      })
+      },
       async saveUserinfo(){
           var token =this.$store.state.Authorization;
           var avatar=this.avatar;
@@ -177,6 +174,10 @@ export default {
           var company=this.company;
           var job =this.post;
           var email =this.email;
+          if(realname == null || realname == '' || typeof(realname) == 'undefined'){
+              Toast('请输入姓名')
+              return
+          } 
           let result =await setUserList(token,avatar,nickname,mobile,realname,company,job,email);
           if(result.code ===200){
               Toast(result.msg)

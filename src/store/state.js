@@ -26,5 +26,6 @@ export default {
   userinfo:{},
   userviplist:{},
   saveorder:[],
-  orderDetailsList:{}
+  orderDetailsList:{},
+  imageToken:{},
 }
