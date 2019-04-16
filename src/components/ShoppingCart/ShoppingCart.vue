@@ -63,7 +63,7 @@
 
 <script>
   import {mapState} from 'vuex'
-
+  import { MessageBox,Toast } from 'mint-ui';
 
   export default {
     data() {
@@ -183,6 +183,7 @@
             let id=_d.id;
             this.$store.dispatch('addshoppingcart',{type,id})
             this.getTotal();
+            Toast('删除成功');
           }
         }
       },

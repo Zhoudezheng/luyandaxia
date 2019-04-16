@@ -73,7 +73,9 @@ export default {
     },
     mounted(){
         let id = this.$route.query.id
-        this.$store.dispatch('projectData',id)
+        this.$store.dispatch('projectData',id).then(()=>{
+            console.log(this.$store.state.projectDetail)
+        })
         setTimeout(()=>{
             this.setVideo();
             this.is_collection = this.proDetail.inis_collectionfo
@@ -147,10 +149,10 @@ export default {
     left: 0;
     right: 0;
     top: 0;
-    height: 91px;
+    height: 375px;
     z-index:20;
     background-color:rgba(243, 117, 5, 1);
-        display: flex;
+    display: flex;
 }
 .project_div .project_check{
     background-size: 16px 30px;

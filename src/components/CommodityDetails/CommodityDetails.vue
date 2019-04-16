@@ -33,6 +33,10 @@
           <span>库存{{productdata.stock}}件</span>
         </div>
       </div>
+      <!-- <div class="title_a5" v-if="is_spec" @click="showspec">
+        <span class="a5_a">规格</span>
+        <img src="./image/gengduo.png" alt="规格" class="a5_b">
+      </div> -->
     </div>
     <div class="details_footer">
       <div class="footer_warp " @click="goto(1)">
@@ -57,8 +61,36 @@
 			<span class="liveSharing_roterthree">
                 <router-link :to="{path:'instructions',query:{data:{id:productdata.id}}}" exact>商品评价</router-link>
             </span>	
-	</div class='liveSharing_bottom'>
+	   </div class='liveSharing_bottom'>
     <keep-alive> <router-view></router-view> </keep-alive>
+    <!-- <div v-show="is_specShow" class="specMark">
+      <div class="mask_back"></div>
+      <div class="mask_content">
+      <div class="mark_a">
+        <img :src="productdata.slider" alt="商品图片" class="a_1">
+        <div class="a_son">
+          <div class="a_2">{{productdata.name}}</div>
+          <div class="a_3">{{productdata.vip_price}}</div>
+          <div class="a_4">库存{{productdata.stock}}件</div>
+        </div>
+      </div>
+      <div></div>
+      <div></div>
+      <div>
+        <div></div>
+        <div class="num">
+            <div class="num_left" @click="reduce(index)">
+              <span class="num_reduce"></span>
+            </div>
+            <span class="num_nu">1</span>
+            <div class="num_right" @click="add(index)">
+              <span class="num_add"></span>
+            </div>
+        </div>
+      </div>
+      <div></div>
+     </div>
+    </div> -->
   </div>
 </template>
 
@@ -75,6 +107,8 @@
         nvaBarFixed:false,
         headFixed:false,
         list:[],
+        is_spec:false,
+        is_specShow:false,
         is_collection:false,
         swiperOption1: {
           pagination: {
@@ -139,11 +173,21 @@
       address(){
         this.$router.go(-1)
       },
+      showspec(){
+        this.is_specShow=true
+      },
       getList() {
         let id = this.$route.query.data.id
         this.$store.dispatch('getDetail', id).then(()=>{
            this.is_collection=this.productdata.is_collection;
-        this.list = this.productdata.slider.split(',');
+           this.list = this.productdata.slider.split(',');
+           var spec=this.$store.state.productdata.spec;
+            console.log(this.$store.state.productdata);
+            if(spec.length>0){
+              this.is_spec=true;
+            }else{
+              this.is_spec=false;
+            }
         })
       },
       goto(index) {
@@ -380,6 +424,20 @@
     display: inline-block;
     margin-right: 20px;
   }
+  .title_a5{
+    margin-top: 20px;
+  }
+  .title_a5 .a5_a{
+    display: inline-block;
+    margin-left: 20px;
+  }
+  .title_a5 .a5_b{
+    width: 15px;
+    height: 20px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 25px;
+  }
   .dete_line{
     margin-top: 20px;
     height: 4px;
@@ -388,6 +446,7 @@
 .commodity_router{
     height: 78px;
     border-bottom: 1px solid rgba(187,187,187,1);
+     margin-bottom: 50px;
 }
 .commodity_router .liveSharing_roterone,.liveSharing_rotertwo,.liveSharing_roterthree {
     float: left;
@@ -454,7 +513,41 @@
     height: 40px;
     margin-top: 20px;
   }
-  .liveSharing_bottom{
-    margin-bottom: 50px;
+  .specMark{
+    height: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 30;
+  }
+  .specMark .mask_back{
+     background:rgba(0,0,0,1);
+     opacity:0.5;
+     height:600px;
+  }
+  .specMark .mark_a{
+    width: 100%;
+    height: 200px;
+    background-color: #ffffff;
+    text-align: left;
+  }
+  .mark_a .a_1{
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  .mark_a .a_son{
+    float: left;
+    padding-top: 20px;
+  }
+  .mark_a .a_2,.a_3,.a_4{
+  padding-top: 20px;
+   margin-left: 20px;
+  }
+  .mask_content{
+    height: 100%;
   }
 </style>
