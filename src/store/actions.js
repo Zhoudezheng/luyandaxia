@@ -22,6 +22,7 @@ import {
   USER_INFO,
   USER_VIP,
   SAVE_ORDER,
+  ORDER_DETAIL,
   IMAGE_TOKEN,
 } from './mutation-types'
 
@@ -46,6 +47,7 @@ import {
   reqSearchData,
   reqUserInfo,
   reqVipdata,
+  reqorderDetail,
   reqImageToekn,
 } from '../api'
 import { stat } from 'fs';
@@ -309,6 +311,13 @@ export default {
       commit(USER_VIP,result.data)
     }
   },
+  async getOrderdetails({commit,state},data){
+    let token =state.Authorization;
+    let result = await reqorderDetail(token,data);
+    if(result.code === 200){
+      commit(ORDER_DETAIL,result.data)}
+  },
+  
   async getImageToken({commit,state}){
     let token =state.Authorization;
     let result = await reqImageToekn(token);

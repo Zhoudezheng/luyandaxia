@@ -13,7 +13,7 @@
       <div :class="{checked:shows==3}" @click="goTou(3)">已完成</div>
     </div>
     <div class="orderList" v-for="(item,index) in orders && orders.list" :class="item.status == 4 ? 'bgGray':'bgWhite' ">
-      <div class="orderFirst">
+      <div class="orderFirst" @click="showDetails(item.order_sn)">
         <span class="orderID">订单编号：{{item.order_sn}}</span>
         <span v-if="item.status == 0">待付款</span>
         <span v-if="item.status == 1">待发货</span>
@@ -40,7 +40,7 @@
           </div>
           <div>
             合计
-            <span class="wealth">￥{{item.total_price}}</span>
+            <span class="wealth">￥{{(Number(item.total_price) + Number(item.freight)).toFixed(2)}}</span>
             <span v-if="item.freight > 0" class="delivery">(含运费{{item.freight}}元)</span>
             <span v-else class="delivery">(免邮)</span>
           </div>
@@ -124,11 +124,20 @@
           this.isShow = orders.length >= 3;
         })
       },
+      showDetails(item){
+        this.$store.dispatch('getOrderdetails',item).then(()=>{
+          if(this.$store.state.orderDetailsList){
+            this.$router.push({
+              path:'/orderdetail'
+            })
+          }
+        })
+      },
       tobuyshop(item){
         var itemlist= item;
-        this.$store.dispatch('setOrderSn',itemlist)
+        this.$store.dispatch('setOrderSn',itemlist);
         let orderDetail = {
-          total: itemlist.total_price,
+          total: (Number(itemlist.total_price) + Number(itemlist.freight)).toFixed(2),
         }
         localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
         this.$router.push({
@@ -137,8 +146,9 @@
       },
       delbuyshop(item,index){
         MessageBox.confirm('确定执行此操作?').then(action => {
-           delbuyshop(item.id,'delete');
-           Toast('取消成功');
+           delbuyshop(item.id,'cancel').then((data)=>{
+               Toast(data.msg);
+           })
            this.orders.list.splice(index,1);
          })
       },
@@ -191,7 +201,7 @@
   .search {
     width: 36px;
     height: 36px;
-    background: url("./image/search.png") no-repeat;
+    /* background: url("./image/search.png") no-repeat; */
     -webkit-background-size: 36px;
     background-size: 36px 36px;
   }

@@ -22,6 +22,7 @@ import {
   USER_INFO,
   USER_VIP,
   SAVE_ORDER,
+  ORDER_DETAIL,
   IMAGE_TOKEN,
 } from './mutation-types'
 import { stat } from 'fs';
@@ -110,6 +111,9 @@ export default {
   },
   [SAVE_ORDER](state,data){
     state.saveorder=data;
+  },
+  [ORDER_DETAIL](state,data){
+    state.orderDetailsList =data.detail
   },
   [IMAGE_TOKEN](state, token) {
     state.imageToken = token;

@@ -22,6 +22,7 @@ export const EVALUATE_LIST = 'evaluate_list' //商品评价列表
 export const USER_INFO = 'user_info' //获取用户信息
 export const USER_VIP = 'user_vip'//获取购买vip数据
 export const SAVE_ORDER = 'save_order'//保存订单信息
+export const ORDER_DETAIL = 'order_detail'//获取订单详情
 export const IMAGE_TOKEN = 'image_token' //获取上传图片token
 
 

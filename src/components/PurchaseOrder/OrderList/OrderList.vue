@@ -59,8 +59,10 @@
       },
       showoff(){
         if(this.activeClass == 1){
+            localStorage.setItem('invoice' ,"不开发票")
             this.$emit('gettypelist',"不开发票")
         }else{
+             localStorage.setItem('invoice' ,"普通纸质发票")
              this.$emit('gettypelist',"普通纸质发票")
         }
         this.$emit('getcacel',false)
