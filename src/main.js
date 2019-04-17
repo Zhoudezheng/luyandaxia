@@ -8,17 +8,12 @@ import Axios from 'axios'
 import 'lib-flexible'
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import VideoPlayer from 'vue-video-player'
-import proxy from 'http-proxy-middleware'
-import 'video.js/dist/video-js.css';
-import 'vue-video-player/src/custom-theme.css';
 import  VueResource  from 'vue-resource';
 import preview from 'vue-photo-preview';
 import 'vue-photo-preview/dist/skin.css';
 
 Vue.use(preview)
 Vue.use(VueResource) 
-Vue.use(VideoPlayer)
 Vue.use(Mint)
 Vue.config.productionTip = false;
 window.onresize = setHtmlFontSize;

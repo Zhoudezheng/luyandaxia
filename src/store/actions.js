@@ -70,20 +70,20 @@ export default {
       if (detail.status === 1) {
         video = {
           mp4: '',
-          rtmp: detail.video,
+          rtmp: detail.video== null?'':detail.video,
           m3u8: '',
-          flv: detail.video.replace("rtmp", "http") + ".flv",
+          flv: detail.video== null?'':detail.video.replace("rtmp", "http") + ".flv",
         }
-      } else if(detail.video.indexOf("rtmp")>=0){
+      } else if(detail.status === 2){
         video = {
-          mp4: '',
-          rtmp: detail.video,
+          mp4: detail.reply_video == null?'':detail.reply_video,
+          rtmp: '',
           m3u8: '',
           flv: '',
         }
-      }else{
+      } else{
         video = {
-          mp4: detail.video,
+          mp4: '',
           rtmp: '',
           m3u8: '',
           flv: '',
