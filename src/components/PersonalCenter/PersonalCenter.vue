@@ -52,6 +52,7 @@
     </div>
     <div class="admin_content">
       <span class="content_in">联系我们</span>
+      <a :href="'tel:' + '400-1782-998'" class="content_tel">400-1782-998</a>
       <img class="conten_to" src="./image/go.png" alt="path">
     </div>
     <div class="admin_content" v-show="islog">
@@ -349,6 +350,17 @@
     line-height: 35px;
     margin-top: 30px;
     margin-left: 28px;
+  }
+  .content_tel {
+    float: left;
+    height: 40px;
+    font-size: 28px;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(74, 74, 74, 1);
+    line-height: 35px;
+    margin-top: 30px;
+    margin-left: 336px;
   }
 
   .conten_to {
