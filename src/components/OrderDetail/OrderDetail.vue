@@ -29,7 +29,7 @@
             <div class="orderDetails">
                 <span>{{product.name}}</span>
             </div>
-            <div class="oreder_spec" v-show="product.spec">规格</div>
+            <div class="oreder_spec" v-show="product.spec">{{product.spec}}</div>
             <div :class="product.spec ? 'price':'priceed'">
                 <span> ￥{{product.price}}</span>
                 <span>X {{product.num}}</span>

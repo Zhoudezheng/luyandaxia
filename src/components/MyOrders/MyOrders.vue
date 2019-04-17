@@ -31,6 +31,7 @@
               <span>{{product.name}}</span>
               <span>X {{product.num}}</span>
             </div>
+            <div v-if="product.spec" class="order_spec">{{product.spec}}</div>
             <div class="price">￥{{product.price}}</div>
           </div>
         </div>
@@ -293,12 +294,20 @@
   .orderDetails {
     display: flex;
     align-items: self-start;
-    justify-content: space-between;;
+    justify-content: space-between;
+    height: 40px;
+  }
+  .order .order_spec{
+    display: flex;
+    align-items: self-start;
+    justify-content: space-between;
+    font-size: 22px;
+    color: #9b9b9b;
   }
 
   .price {
     display: flex;
-    height: 100px;
+    height: 60px;
     justify-items: self-end;
     align-items: flex-end;
     font-size: 20px;
