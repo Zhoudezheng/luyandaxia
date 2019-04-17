@@ -49,6 +49,7 @@ import {
   reqVipdata,
   reqorderDetail,
   reqImageToekn,
+  reqaddordershopping,
 } from '../api'
 import { stat } from 'fs';
 
@@ -289,6 +290,17 @@ export default {
       let result =await  reqdelshopping(token,type,id)
      }
   },
+  //详情加入购物车
+  async addshopporderingcart({commit, state},{type,id,spec,num}){
+    let token = state.Authorization;
+    if(type==1){
+      
+     let result =await  reqaddordershopping(token,type,id,spec,num);
+    }else{
+     console.log(type,id)
+     let result =await  reqdelordershopping(token,type,id,spec,num)
+    }
+ },
   async getsearchShopping({commit,state},data){
      let token =state.Authorization;
      let result =await reqSearchData(token,1,data) ;

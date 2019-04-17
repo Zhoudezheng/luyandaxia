@@ -15,6 +15,7 @@
       <div class="purchase_list" v-for="(item) in orderDetails.product">
         <img :src="item.cover" alt="2222">
         <span class="list_a1">{{item.name}}</span>
+        <span class="list_a2" v-if="item.spec">{{item.spec}}</span>
         <span class="list_a2">¥{{item.price}}</span>
         <span class="list_a3">x {{item.num}}</span>
       </div>

@@ -33,10 +33,10 @@
           <span>库存{{productdata.stock}}件</span>
         </div>
       </div>
-      <!-- <div class="title_a5" v-if="is_spec" @click="showspec">
+      <div class="title_a5" v-if="is_spec" @click="showspec">
         <span class="a5_a">规格</span>
         <img src="./image/gengduo.png" alt="规格" class="a5_b">
-      </div> -->
+      </div>
     </div>
     <div class="details_footer">
       <div class="footer_warp " @click="goto(1)">
@@ -44,6 +44,7 @@
         <div>购物车</div>
       </div>
       <div class="footer_warp" @click="goto(2)">
+        <div class="add_cart footer_item" v-if="is_spec" @click="showspec">加入购物车</div>
         <div class="add_cart footer_item">加入购物车</div>
       </div>
       <div class="footer_warp" @click="goto(3)">
@@ -63,8 +64,8 @@
             </span>	
 	   </div class='liveSharing_bottom'>
     <keep-alive> <router-view></router-view> </keep-alive>
-    <!-- <div v-show="is_specShow" class="specMark">
-      <div class="mask_back"></div>
+    <div v-show="is_specShow" class="specMark">
+      <div class="mask_back" @click="showspeced"></div>
       <div class="mask_content">
       <div class="mark_a">
         <img :src="productdata.slider" alt="商品图片" class="a_1">
@@ -74,23 +75,37 @@
           <div class="a_4">库存{{productdata.stock}}件</div>
         </div>
       </div>
-      <div></div>
-      <div></div>
-      <div>
-        <div></div>
-        <div class="num">
-            <div class="num_left" @click="reduce(index)">
-              <span class="num_reduce"></span>
-            </div>
-            <span class="num_nu">1</span>
-            <div class="num_right" @click="add(index)">
-              <span class="num_add"></span>
-            </div>
-        </div>
+      <div class="details_mask">
+          <div class="mask_data" >
+              <div class="detama_a">{{ productdata.spec && productdata.spec[0] && productdata.spec[0].name}}</div>
+              <div v-for="(items,index) in productdata.spec && productdata.spec[0] && productdata.spec[0].item.split(',')" 
+                   v-bind:class="{colorChange:index==dynamic}"
+                   class="detama_b" 
+                   @click="tobuyspec(items,index)">{{items}}</div>
+          </div>
+           <div class="mask_data" >
+              <div class="detama_a">{{productdata.spec && productdata.spec[1] && productdata.spec[1].name}}</div>
+              <div v-for="(items,index) in productdata.spec && productdata.spec[1] && productdata.spec[1].item.split(',')" 
+                   v-bind:class="{ colorChanged:index==dynamicd}"
+                   class="detama_b" 
+                   @click="tobuyspecd(items,index)">{{items}}</div>
+          </div>
+         <div class="mast_b">
+          <div class="deta_b">购买数量</div>
+          <div class="num">
+              <div class="num_left" @click="reduce()">
+                <span class="num_reduce"></span>
+              </div>
+              <span class="num_nu">{{num}}</span>
+              <div class="num_right" @click="add()">
+                <span class="num_add"></span>
+              </div>
+          </div>
+         </div>
       </div>
-      <div></div>
+      <div class="deta_fixed" @click="addshop">确定</div>
      </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -107,9 +122,15 @@
         nvaBarFixed:false,
         headFixed:false,
         list:[],
+        arr:[],
         is_spec:false,
         is_specShow:false,
         is_collection:false,
+        dynamic:-1,
+        dynamicd:-1,
+        num:1,
+        secolor:'',
+        xlse:'',
         swiperOption1: {
           pagination: {
             el: '.swiper-pagination'
@@ -151,9 +172,27 @@
         // this.productdata=this.productdata;
         // this.is_collection=this.$store.state.productdata.is_collection;
         // this.list = this.productdata.slider.split(',');
+        // this.productdataed = this.$store.state.productdata.spec;
+        //       let arr=[];
+        //       for(let i=0; i<this.$store.state.productdata.spec.length; i++){
+        //          let arr3=[];
+        //          let objlist={a:this.productdataed[i],name:this.productdataed[i].name};
+        //          arr3.push(objlist);
+        //          var itemList=objlist.a.item.split(',');
+        //          var arr2=[];
+        //          for(let i=0; i<itemList.length; i++){
+        //               var listdeta={name:itemList[i],id:false};
+        //               arr2.push(listdeta);
+        //               console.log(listdeta);
+        //          }
+                
+        //           arr.push(arr2);
+        //       }
+        //       this.productdataed=arr;
+        //       console.log(this.productdataed);
         this.box = this.$refs.wo;
         this.getList()
-        this.box.addEventListener('scroll', () => {
+        this.box && this.box.addEventListener('scroll', () => {
         var offsetTop = document.querySelector('#nav_flexed').offsetTop;
           if (this.$refs.wo.scrollTop > offsetTop) {
                  this.nvaBarFixed = true
@@ -176,6 +215,12 @@
       showspec(){
         this.is_specShow=true
       },
+      showspeced(){
+        this.is_specShow=false
+        this.dynamic=-1;
+        this.num=1;
+        this.dynamicd=-1;
+      },
       getList() {
         let id = this.$route.query.data.id
         this.$store.dispatch('getDetail', id).then(()=>{
@@ -190,9 +235,43 @@
             }
         })
       },
+      reduce() {
+        if (this.num <= 1) return;
+        this.num--
+      },
+      add() {
+        this.num++
+      },
+      tobuyspec(item,index){
+        this.dynamic = index;
+        this.secolor=item;
+      },
+      tobuyspecd(item,index){
+        this.dynamicd = index;
+        this.xlse=item;
+      },
+      addshop(){
+        let type=1;
+        let shopData = this.productdata;
+        let id=shopData.id;
+        let spec='';
+        if(this.secolor){
+          spec += `${this.secolor}`
+        }
+        if(this.xlse){
+          spec +=`,${this.xlse}`
+        }
+        let num =this.num;
+        this.$store.dispatch('addshopporderingcart',{type,id,spec,num}).then(()=>{
+            Toast('已成功加入购物车');
+            this.is_specShow=false;
+            this.dynamic=-1;
+            this.num=1;
+            this.dynamicd=-1;
+        })
+      },
       goto(index) {
         let shopData = this.productdata;
-        console.log(shopData);
         if (index == 1) {
           this.$router.push({
             path: '/shoppingcart'
@@ -200,8 +279,12 @@
         } else if (index == 2) {
           let type=1;
           let id=shopData.id;
-          Toast('加入成功');
-          this.$store.dispatch('addshoppingcart',{type,id})
+          if(this.is_spec){
+             return
+          }else{
+             Toast('加入成功');
+             this.$store.dispatch('addshoppingcart',{type,id})
+          }
         } else if (index == 3) {
           let {id,name,cover,price,spec} = shopData
           let num = 1
@@ -500,6 +583,40 @@
     color: #ffffff;
   }
 
+  .details_mask{
+    height: 100%;
+    background-color: #ffffff;
+    margin-bottom: 89px;
+  }
+  .details_mask .mask_data{
+    height: 135px;
+  }
+  .details_mask .detama_a{
+    text-align: left;
+    padding-top: 20px;
+    margin-left: 20px;
+    font-size: 28px;
+  }
+  .details_mask .detama_b{
+    float: left;
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    background-color: rgb(219, 216, 212);
+    color: #000000;
+    border-radius: 20px;
+  }
+  .details_mask .colorChange{
+    background-color: #FE9A1C;
+    color: #ffffff;
+  }
+.details_mask .colorChanged{
+    background-color: #FE9A1C;
+    color: #ffffff;
+  }
   .add_cart {
     background-color: #FE9A1C;
   }
@@ -550,4 +667,71 @@
   .mask_content{
     height: 100%;
   }
+  .mast_b{
+    margin-top: 40px;
+  }
+  .deta_b{
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+  .num {
+    width: 200px;
+    position: absolute;
+    right: 42px;
+  }
+
+  .num_left {
+    float: left;
+  }
+
+  .num_left .num_reduce {
+    margin-top: 10px;
+    float: left;
+    width: 44px;
+    height: 44px;
+    background-image: url('./image/reduce.png');
+    background-repeat: no-repeat;
+    background-position: 18px 10px;
+    background-size: 16px 4px;
+    border-radius: 2px;
+  }
+
+  .num .num_nu {
+    display: inline-block;
+    width: 76px;
+    height: 44px;
+    background: rgba(246, 246, 246, 1);
+    text-align: center;
+    line-height: 44px;
+  }
+
+  .num_right {
+    float: right;
+  }
+
+  .num .num_add {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background-image: url('./image/plus.png');
+    background-repeat: no-repeat;
+    background-position: 16px 11px;
+    background-size: 16px 16px;
+    border-radius: 2px;
+  }
+  .deta_fixed{
+    position: fixed;
+    height: 89px;
+    background-color: #FE9A1C;
+    color: #ffffff;
+    width: 100%;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 89px;
+    font-size: 32px;
+  }
+
 </style>

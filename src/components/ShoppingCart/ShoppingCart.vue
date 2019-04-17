@@ -23,8 +23,9 @@
                 </div>
 
                 <div class="cat-desc">
-                  <span>Vip特惠价：￥{{item.vip_price}}</span>
+                  <span>VIP特惠价：￥{{item.vip_price}}</span>
                 </div>
+                <div v-if="item.spec" class="cat-spec">{{item.spec}}</div>
                 <div class="cat_mony">
                   <span class="mony_zero">¥{{item.price}}</span>
                   <span class="mony_hua">¥{{item.local_price}}</span>
@@ -472,11 +473,14 @@
     background-size: 32px 32px;
     margin-top: 35px;
     margin-left: 28px;
-
-
   }
 
-
+  .cat-spec{
+    text-align: left;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #aaaaaa;
+  }
   .car-footer {
     height: 98px;
     background: #ffffff;
@@ -554,6 +558,7 @@
     width: 200px;
     position: absolute;
     right: 42px;
+    bottom: 10px;
   }
 
   .num_left {
