@@ -77,15 +77,15 @@
       </div>
       <div class="details_mask">
           <div class="mask_data" >
-              <div class="detama_a">{{productdata.spec[0] && productdata.spec[0].name}}</div>
-              <div v-for="(items,index) in productdata.spec[0] && productdata.spec[0].item.split(',')" 
+              <div class="detama_a">{{ productdata.spec && productdata.spec[0] && productdata.spec[0].name}}</div>
+              <div v-for="(items,index) in productdata.spec && productdata.spec[0] && productdata.spec[0].item.split(',')" 
                    v-bind:class="{colorChange:index==dynamic}"
                    class="detama_b" 
                    @click="tobuyspec(items,index)">{{items}}</div>
           </div>
            <div class="mask_data" >
-              <div class="detama_a">{{productdata.spec[1] && productdata.spec[1].name}}</div>
-              <div v-for="(items,index) in productdata.spec[1] && productdata.spec[1].item.split(',')" 
+              <div class="detama_a">{{productdata.spec && productdata.spec[1] && productdata.spec[1].name}}</div>
+              <div v-for="(items,index) in productdata.spec && productdata.spec[1] && productdata.spec[1].item.split(',')" 
                    v-bind:class="{ colorChanged:index==dynamicd}"
                    class="detama_b" 
                    @click="tobuyspecd(items,index)">{{items}}</div>
