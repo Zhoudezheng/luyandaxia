@@ -73,7 +73,7 @@
         totalPrice: 0,
         // totalNum: 0,
         selected_all: false,
-        arraychecked: []
+        arraychecked: [],
 
       }
     },
