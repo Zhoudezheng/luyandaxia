@@ -71,9 +71,9 @@ export default {
       if (detail.status === 1) {
         video = {
           mp4: '',
-          rtmp: detail.video== null?'':detail.video,
-          m3u8: '',
-          flv: detail.video== null?'':detail.video.replace("rtmp", "http") + ".flv",
+          rtmp: '',
+          m3u8: detail.video== null?'':detail.video.replace("rtmp", "http") + ".m3u8",
+          flv: '',
         }
       } else if(detail.status === 2){
         video = {

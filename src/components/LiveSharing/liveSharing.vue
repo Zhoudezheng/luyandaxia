@@ -2,20 +2,20 @@
   <div id="aaa" ref="wo" class="aaaaa" >
     <div class="videoLess" id='flxedoff'>
           <div class="isFixed">
-           <div id="id_test_video" style="width:100%; height:aotu" class="bbb"></div>
+           <div id="id_test_video" style="width:100%; height:auto;" class="bbb"></div>
           </div>
     </div>
     <div class='mask_live'  v-show="isShowLive">
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
         <div class="masklive_div">
-            <img src="./video/shuaxin.png" alt="刷新">
-            <a href="#" @click="reWatch">重新试看</a>
+            <!-- <img src="./video/shuaxin.png" alt="刷新"> -->
+            <a href="#" @click="showBuyMask" v-show="is_vip">立即购买</a>
         </div>
         <input type="text" class="masklive_input" value="开通VIP会员" @click="vipmember">
-        <div class="masklive_buy" v-show="is_vip">
+        <!-- <div class="masklive_buy" v-show="is_vip">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
-        </div>
+        </div> -->
     </div>
     <div>
     <div class="liveSharing_nva">
@@ -64,9 +64,10 @@
 </template>
 
 <script>
-  import { reqDingyue,reqShoucang} from '../../api'
+  import { reqDingyue,reqShoucang,reqvipinfolist} from '../../api'
   import purchase from './PurchaseVideo/PurchaseVideo.vue'
-  import { Toast } from 'mint-ui';
+  import { Toast } from 'mint-ui'
+  import {mapState} from 'vuex'
   export default {
     data(){
         return {
@@ -82,7 +83,7 @@
             is_collection:false,
             video:{},
             player:{},
-            vip_price:"128.00",
+            vip_price:"0.00",
             handler:function(e){e.preventDefault();},
         }
     },
@@ -105,6 +106,7 @@
         }
     },
     computed: {
+    ...mapState(['userviplist']),
     detail: {
         get:function () {
             return this.$store.state.detail;
@@ -118,10 +120,8 @@
         //获取直播id
          let id = this.$route.query.id
         //获取直播信息
-         this.$store.dispatch('getliveData',id)
-          setTimeout(()=>{
-            this.setVideo();
-            //判断是否显示购买单个视频
+         this.$store.dispatch('getliveData',id).then(()=>{
+             //判断是否显示购买单个视频
             if(this.detail.is_vip === 2)
             {
                 this.is_vip = false
@@ -135,7 +135,9 @@
             }
             //是否收藏
             this.is_collection = this.detail.is_collection===0?false:true
-            
+         })
+          setTimeout(()=>{
+            this.setVideo();
          },1000)
          this.box = this.$refs.wo;
          this.box.addEventListener('scroll', () => {
@@ -160,15 +162,15 @@
                 "m3u8":this.video.m3u8,
                 "flv":this.video.flv, //请替换成实际可用的播放地址
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
-                "coverpic" : {"style": "cover", "src":this.detail.cover},
+                "coverpic" : {"style": "stretch", "src":this.detail.cover},
                 "live":this.$store.state.detail.status === 1?true:false,
                 "flash":true,
                 "h5_flv":true,
                 "x5_player":true,
                 "controls":"default",
                 "systemFullscreen":true,
-                // "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
-                "height" : '400px',//视频的显示高度，请尽量使用视频分辨率高度
+                // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
+                "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
@@ -207,6 +209,20 @@
               this.player.currentTime(0)
               this.isShowLive = false;
           },
+          async buyviplist(){
+            let token = this.$store.state.Authorization;
+            let result= await reqvipinfolist(token);
+            let order_sn=result.data.order_sn;
+            this.buyvip(order_sn);
+           },
+            buyvip(order_sn){
+            localStorage.setItem('type', '2');
+            localStorage.setItem('order_sndata', order_sn);
+            localStorage.setItem('priceed', this.userviplist.annual_fee);
+            this.$router.push({
+            path: '/VipMember',
+            })
+           },
           handleScrollfoot () {
               let sh = document.getElementById('aaa').scrollHeight
               let st = document.documentElement.scrollTop
@@ -229,10 +245,10 @@
             
           },
           vipmember(){
-            this.$router.push({  
-                path:'/vipmember',
-                query:{cost:this.vip_price}
+            this.$store.dispatch('getVipList').then(()=>{
+                this.vip_price = this.userviplist.annual_fee
             })
+            this.buyviplist()
           },
           closeTouch(){
             document.getElementsByTagName("body")[0].addEventListener('touchmove',
@@ -285,6 +301,10 @@
     -webkit-overflow-scrolling: touch;
 
   }
+.vcp-player .touchable .vcp-playing{
+    width: 370px;
+    height: 187px;
+}
 .mask_live{
       position: fixed;
       width: 100%;
@@ -381,6 +401,9 @@
     color:rgba(74,74,74,1);
     line-height:56px;
     text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }   
 .liveSharing_nva .liveSharing_nvapeople{
     /* display: inline-block; */

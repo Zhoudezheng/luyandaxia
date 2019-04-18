@@ -118,6 +118,7 @@
           total: this.orderDetails.total
         }
         localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
+        localStorage.setItem('type','1')
         this.$router.push({
           path: '/VipMember',
         })

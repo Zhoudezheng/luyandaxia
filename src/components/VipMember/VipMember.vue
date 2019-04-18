@@ -46,8 +46,9 @@
       var b= localStorage.getItem('type');
       if( b === '2'){
         this.price= localStorage.getItem('priceed');
-      }else{
-        this.price = this.$route.query.cost;
+        console.log('vip',this.price)
+      }
+      else{
         this.getOrderDetail()
       };
       
@@ -101,6 +102,7 @@
         let orderDetail = localStorage.getItem('orderDetail')
         orderDetail = JSON.parse(orderDetail)
         this.price = orderDetail.total;
+        console.log('order',this.price)
         let os = navigator.userAgent
         let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
         let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
