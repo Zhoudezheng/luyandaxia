@@ -43,16 +43,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import {reqvipinfolist} from '../../../api'
   export default {
     data(){
       return{
         activeClass:1,
         tatal_cost:"0.00",
-        vip_price:"128.00",
+        vip_price:"0.00",
         video_price:"0.00",
     }
     },
     computed: {
+      ...mapState(['userviplist']),
     detail: {
         get:function () {
             return this.$store.state.detail;
@@ -63,14 +66,19 @@
     }
     },
     mounted(){
-      if(this.activeClass == 1){
-         this.tatal_cost = this.vip_price
-      }else{
-        this.tatal_cost = this.video_price
-      }
-      setTimeout(()=>{
-          this.video_price = this.detail.individual_cost
-      },1000)
+      this.$store.dispatch('getVipList').then(()=>{
+          this.vip_price = this.userviplist.annual_fee
+          if(this.activeClass == 1){
+            this.tatal_cost = this.vip_price
+          }else{
+            this.tatal_cost = this.video_price
+          }
+          setTimeout(()=>{
+              this.video_price = this.detail.individual_cost
+          },1000)
+      })
+      
+      
     },
     methods:{
       cancelVideo(){
@@ -79,16 +87,26 @@
       singlevideo(){
         //console.log("cost",this.tatal_cost)
         if(this.activeClass ==1){
-             this.$router.push({  
-              path:'/vipmember',
-              query:{cost:this.tatal_cost}
-            })
+            this.buyviplist()
         }else{
             this.$router.push({  
               path:'/singlevideo'
             })
         }
-         
+      },
+       async buyviplist(){
+          let token = this.$store.state.Authorization;
+          let result= await reqvipinfolist(token);
+          let order_sn=result.data.order_sn;
+          this.buyvip(order_sn);
+      },
+      buyvip(order_sn){
+        localStorage.setItem('type', '2');
+        localStorage.setItem('order_sndata', order_sn);
+        localStorage.setItem('priceed', this.userviplist.annual_fee);
+        this.$router.push({
+           path: '/VipMember',
+         })
       },
       showactive(){
         this.activeClass=1
@@ -186,14 +204,19 @@
     border-top:2px solid rgba(242,245,248,1);
  }
  .purchase .purchase_content{
-    height:127px;
     font-size:28px;
     font-family:PingFangSC-Regular;
     font-weight:400;
     color:rgba(102,102,102,1);
     line-height:40px;
     text-align: left;
-    padding: 28px 28px 0 28px;
+    padding: 28px 28px 0px 28px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    display: -webkit-box;
  }
  .purchase_details .purchase_button{
     width:694px;
