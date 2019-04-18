@@ -286,8 +286,15 @@
              this.$store.dispatch('addshoppingcart',{type,id})
           }
         } else if (index == 3) {
-          let {id,name,cover,price,spec} = shopData
+          let {id,name,cover,price} = shopData
           let num = 1
+          let spec='';
+          if(this.secolor){
+            spec += `${this.secolor}`
+          }
+          if(this.xlse){
+            spec +=`,${this.xlse}`
+          }
           let product_id = shopData.id
           let totalPrice = 0
          let ifVip = localStorage.getItem('ifVip');
