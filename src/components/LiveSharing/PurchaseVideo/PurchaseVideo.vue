@@ -44,7 +44,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import {reqvipinfolist} from '../../../api'
+import {reqvipinfolist,reqvideoOrder} from '../../../api'
   export default {
     data(){
       return{
@@ -89,10 +89,22 @@ import {reqvipinfolist} from '../../../api'
         if(this.activeClass ==1){
             this.buyviplist()
         }else{
-            this.$router.push({  
-              path:'/singlevideo'
-            })
+            this.buyvideolist()
         }
+      },
+      async buyvideolist(){
+          let token = this.$store.state.Authorization;
+          let result= await reqvideoOrder(token,this.detail.id);
+          console.log(result)
+          let order_sn=result.data.order_sn;
+          this.buyvideo(order_sn);
+      },
+      buyvideo(order_sn){
+        localStorage.setItem('type', '3');
+        localStorage.setItem('order_sndata', order_sn);
+        this.$router.push({
+           path: '/singlevideo',
+         })
       },
        async buyviplist(){
           let token = this.$store.state.Authorization;
@@ -103,7 +115,7 @@ import {reqvipinfolist} from '../../../api'
       buyvip(order_sn){
         localStorage.setItem('type', '2');
         localStorage.setItem('order_sndata', order_sn);
-        localStorage.setItem('priceed', this.userviplist.annual_fee);
+        localStorage.setItem('priceed', this.tatal_cost);
         this.$router.push({
            path: '/VipMember',
          })

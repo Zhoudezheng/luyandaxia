@@ -82,3 +82,6 @@ export const reqorderDetail = (token,order_sn) => ajax(BASE+'/order/detail',{tok
 export const reqshipment = (token,id) => ajax(BASE+'/mine_order/notice',{token,id},'POST');
 //获取上传图片token
 export const reqImageToekn = (token) => ajax(BASE+'/upload/token',{token},'POST');
+//创建购买视频订单
+export const reqvideoOrder = (token,id) => ajax(BASE+'/live/buy',{token,id},'POST');
+

@@ -131,7 +131,7 @@ export default {
           },
           payment(){
               this.$router.push({  
-                path:'/VipMember',
+                path:'/Membership',
             })
           }
     }

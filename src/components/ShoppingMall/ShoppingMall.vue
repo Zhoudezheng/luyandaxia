@@ -131,6 +131,7 @@
         })
       },
       todetail(id){
+        localStorage.setItem('product_id',id)
         this.$router.push({
           path: '/commoditydetails',
           query:{

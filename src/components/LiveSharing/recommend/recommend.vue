@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="recommend_list" v-for="recommend in this.recommends" v-show="this.$store.state.detail.recommend.length>0">
+    <div class="recommend_list" v-for="recommend in this.recommends" v-show="isNull == false">
          <img :src="recommend.cover" alt="1111">
          <a href="#" class="list_a1">{{recommend.name}}</a>
          <a href="#" class="list_a2">{{recommend.info}}</a>
     </div>
-    <div  class="recommend_listed" v-show="this.$store.state.detail.recommend.length == 0">
+    <div  class="recommend_listed" v-show="isNull == true">
       <img src="./image/nosou.png" alt="信息" class="listed_img">
       <div class="list_div">暂无数据</div>
     </div>
@@ -14,23 +14,25 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+import { fail } from 'assert';
   export default {
     data(){
       return{
-        
+        isNull:true,
       }
     },
     mounted(){
-    
     },
     computed: {
     recommends: {
           get:function () {
-             console.log(this.$store.state.detail.recommend)
+              this.isNull = typeof(this.$store.state.detail.recommend) == 'undefined'?true:false
+              console.log('leixing',typeof(this.$store.state.detail.recommend))
               return this.$store.state.detail.recommend
           },
           set:function(){
-              this.url = this.$store.state.detail.recommend
+              this.recommends = this.$store.state.detail.recommend
           },
         }
     },

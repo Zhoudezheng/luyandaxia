@@ -57,6 +57,7 @@
         this.$store.dispatch('getProductList',{category_id,type})
       },
       toDetails(id){
+        localStorage.setItem('product_id',id)
         this.$router.push({
           path:'/CommodityDetails',
           query:{
