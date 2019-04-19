@@ -24,6 +24,7 @@ import {
   SAVE_ORDER,
   ORDER_DETAIL,
   IMAGE_TOKEN,
+  SHOP_LIKE,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -118,4 +119,7 @@ export default {
   [IMAGE_TOKEN](state, token) {
     state.imageToken = token;
   },
+  [SHOP_LIKE](state,data){
+    state.shopslike=data
+  }
 }

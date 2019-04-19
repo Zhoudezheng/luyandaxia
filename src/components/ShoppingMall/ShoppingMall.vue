@@ -4,46 +4,64 @@
       <span class="head_title">文创商城</span>
       <div class="head_search" @click="inputmodel"></div>
     </div>
-    <div class="shopping_nva">
-      <ul class="nva_ul">
-        <li v-for="(item) in shops && shops.category" class="nva_li" @click="toClass(item.id,item.name)">
-          <img :src="item.icon" alt="新品推荐">
-          <span>{{item.name}}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="shopping_line"></div>
-    <div class="shopping_more">
-      <div class="more_color"></div>
-      <span class="more_span">新品推荐</span>
-      <span class="more_p" @click="toClass(3,'新品推荐')">更多</span>
-      <img src="./image/gengduo.png" alt="更多" class="more_to">
-    </div>
-    <div class="shopping_lines"></div>
-    <div class="shopping_banner">
-      <swiper :options="swiperOption">
-        <swiper-slide class="banner_content" v-for="(item) in shops && shops.recommend" :key="item.id"  >
-          <img :src="item.cover" class="content_img" @click="todetail(item.id)">
-          <span class="content_span" @click="todetail(item.id)">{{item.name}}</span>
-          <p class="content_p" @click="todetail(item.id)">
-            <span class="p_span">¥</span>
-            <span class="p_sp">{{item.local_price}}</span>
-          </p>
-        </swiper-slide>
-      </swiper>
-    </div>
-    <div class="shopping_lineed"></div>
-    <div class="shopping_more">
-      <div class="more_color"></div>
-      <span class="more_span">猜你喜欢</span>
-    </div>
-    <div class="shopping_footer">
-      <div class="shopping_list" v-for="(item) in shops && shops.like" :key="item.id" @click="todetail(item.id)">
-        <img :src="item.cover" alt="1111" class="list_img">
-        <span class="list_a1">{{item.name}}</span>
-        <span class="list_a2">￥{{item.price}}</span>
+       <div class="page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+            <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange"
+                         :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                         :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
+                <!-- :auto-fill="true" 时页面加载完毕时 默认执行loadBottom 值为false时 自己写一个加载 -->
+                 <div class="shopping_nva">
+                    <ul class="nva_ul">
+                      <li v-for="item in shops && shops.category" class="nva_li" @click="toClass(item.id,item.name)">
+                        <img :src="item.icon" alt="新品推荐">
+                        <span>{{item.name}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="shopping_line"></div>
+                  <div class="shopping_more">
+                    <div class="more_color"></div>
+                    <span class="more_span">新品推荐</span>
+                    <span class="more_p" @click="toClass(3,'新品推荐')">更多</span>
+                    <img src="./image/gengduo.png" alt="更多" class="more_to">
+                  </div>
+                  <div class="shopping_lines"></div>
+                  <div class="shopping_banner">
+                    <swiper :options="swiperOption">
+                      <swiper-slide class="banner_content" v-for="(item) in shops && shops.recommend" :key="item.id"  >
+                        <img :src="item.cover" class="content_img" @click="todetail(item.id)">
+                        <span class="content_span" @click="todetail(item.id)">{{item.name}}</span>
+                        <p class="content_p" @click="todetail(item.id)">
+                          <span class="p_span">¥</span>
+                          <span class="p_sp">{{item.local_price}}</span>
+                        </p>
+                      </swiper-slide>
+                    </swiper>
+                  </div>
+                  <div class="shopping_lineed"></div>
+                  <div class="shopping_more">
+                    <div class="more_color"></div>
+                    <span class="more_span">猜你喜欢</span>
+                  </div>
+                  <div class="shopping_footer">
+                    <div class="shopping_list" v-for="(item) in likeList" :key="item.id" @click="todetail(item.id)">
+                      <img :src="item.cover" alt="1111" class="list_img">
+                      <span class="list_a1">{{item.name}}</span>
+                      <span class="list_a2">￥{{item.price}}</span>
+                    </div>
+                  </div>
+                 <div slot="top" class="mint-loadmore-top" style="text-align:center">
+                    <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+                    <mt-spinner v-show="topStatus == 'loading'" color="#26a2ff"></mt-spinner>
+                 </div>
+                 <div v-if="allLoaded" style="text-align:center;" class="data-none">没有更多数据了</div>
+                 <div slot="bottom" class="mint-loadmore-bottom">
+                    <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+                    <span v-show="bottomStatus === 'loading'">
+                        <mt-spinner v-show="bottomStatus == 'loading'" color="#26a2ff"></mt-spinner>
+                    </span>
+                 </div>
+            </mt-loadmore>
       </div>
-    </div>
      <!-- 搜索框 -->
     <searchdata v-show="serchdata" @searchlist="listsearch"/>
   </div>
@@ -54,9 +72,13 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import {mapState} from 'vuex'
   import { reqcommondeta } from '../../api'
-  import { truncate } from 'fs';
+  import { truncate, link } from 'fs';
   import searchdata from './SearchData/SearchData.vue'
-
+  import Vue from 'vue'
+  import { Loadmore } from 'mint-ui';
+  Vue.component(Loadmore.name, Loadmore);
+  import { Spinner } from 'mint-ui';
+  Vue.component(Spinner.name, Spinner);
   export default {
     data() {
       return {
@@ -68,7 +90,16 @@
           width: 180,
           freeModeSticky: true,
         },
+        examplename: 'Loadmore',
+        pageNum: 1,//页码
+        list: 0,//数据
+        allLoaded: false,//数据是否加载完毕
+        bottomStatus: '',//底部上拉加载状态
+        wrapperHeight: 0,//容器高度
+        topStatus: '',//顶部下拉加载状态
         serchdata:false,
+        likeList:[],
+        next:null,
       }
     },
     components: {
@@ -77,11 +108,23 @@
       searchdata
     },
     computed: {
-      ...mapState(['shops','isVip'])
+      ...mapState(['shops','isVip','shopslike'])
     },
     mounted() {
-      this.getShop()
-      // console.log(this.$store.state.shops);
+      this.getShop();
+      let windowWidth = document.documentElement.clientWidth;//获取屏幕宽度
+      if (windowWidth >= 768) {//这里根据自己的实际情况设置容器的高度
+          this.wrapperHeight = document.documentElement.clientHeight - 105;
+      } else {
+          this.wrapperHeight = document.documentElement.clientHeight - 80;
+      }
+      setTimeout(() => {//页面挂载完毕 模拟数据请求 这里为了方便使用一次性定时器
+        var lit = this.$store.state.shopslike.list;
+        this.next=this.$store.state.shopslike.next;
+        for(let i=0; i<lit.length;i++){
+          this.likeList.push(lit[i]);
+        }
+      }, 1500)
     },
     methods: {
         purchase(){
@@ -95,8 +138,11 @@
         listsearch(msg){
           this.serchdata=msg;
         },
-      getShop(){
-        this.$store.dispatch('getShop')
+        getShop(){
+        this.$store.dispatch('getShop').then(()=>{
+          console.log(this.shops)
+        })
+        this.$store.dispatch('getShoplike',this.pageNum)
         this.$store.dispatch('getIsVip').then(()=>{
           let vipEnd = this.isVip.vip_end
           let date = (new Date()).getTime()
@@ -108,7 +154,7 @@
           }
           localStorage.setItem('ifVip', is_vip);
         })
-      },
+        },
       // async todetail(index) {
       //   var token = this.$store.state.Authorization;
       //   var det = await reqcommondeta(token, index);
@@ -119,7 +165,9 @@
       //     })
       //   }
       // },
-      toClass(id,name){
+       toClass(id,name){
+        localStorage.setItem('allList',id);
+        localStorage.setItem('allListed',name);
         this.$router.push({
           path:'Classification',
           query:{
@@ -129,7 +177,7 @@
             }
           }
         })
-      },
+       },
       todetail(id){
         this.$router.push({
           path: '/commoditydetails',
@@ -139,7 +187,47 @@
             }
           }
         })
-      }
+      },
+      
+      handleBottomChange(status) {
+          this.bottomStatus = status;
+      },
+      loadBottom() {
+          this.handleBottomChange("loading");//上拉时 改变状态码
+          this.pageNum += 1;
+          setTimeout(() => {//上拉加载更多 模拟数据请求这里为了方便使用一次性定时器
+              if (this.next) {//最多下拉三次
+                  this.$store.dispatch('getShoplike',this.pageNum).then(()=>{
+                     this.next=this.shopslike.next;
+                     for(let i=0; i<this.shopslike.list.length;i++){
+                        this.likeList.push(this.shopslike.list[i]);
+                      }
+                  })
+                  //上拉加载 每次数值加12
+              } else {
+                  this.allLoaded = true;//模拟数据加载完毕 禁用上拉加载
+              }
+              this.handleBottomChange("loadingEnd");//数据加载完毕 修改状态码
+              this.$refs.loadmore.onBottomLoaded();
+          }, 2000);
+      },
+      handleTopChange(status) {
+          this.topStatus = status;
+      },
+      loadTop() {//下拉刷新 模拟数据请求这里为了方便使用一次性定时器
+          this.handleTopChange("loading");//下拉时 改变状态码
+          this.pageNum = 1;
+          this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+          setTimeout(() => {
+              this.$store.dispatch('getShoplike',this.pageNum).then(()=>{
+                       this.next=this.shopslike.next;
+                       this.likeList=this.shopslike.list;
+              })
+              //下拉刷新 数据初始化
+              this.handleTopChange("loadingEnd")//数据加载完毕 修改状态码
+              this.$refs.loadmore.onTopLoaded();
+          }, 2000);
+      },
     }
   }
 </script>
@@ -147,6 +235,10 @@
 <style scoped>
   @import '../../../static/font/font.css';
 
+.page-loadmore-wrapper {
+        overflow: scroll;
+        z-index: 100;
+}
   .shopping_head {
     height: 91px;
     text-align: center;
@@ -360,7 +452,7 @@
   }
 
   .shopping_footer {
-    margin-bottom: 120px;
+    margin-bottom: 90px;
   }
 
   .shopping_list {
@@ -408,5 +500,10 @@
     line-height: 33px;
     text-align: left
   }
-
+  .mint-loadmore-bottom,.mint-loadmore-top,.center{
+    margin-left: 350px;
+  }
+  .data-none{
+    margin-bottom: 40px;
+  }
 </style>

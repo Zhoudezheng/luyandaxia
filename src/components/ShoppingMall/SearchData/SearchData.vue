@@ -16,7 +16,7 @@
       <div class="hostory_s">搜索历史</div>
       <img src="./image/del.png" alt="删除" class="hostory_y" @click="delhostory">
       <div class="HistoryListdata">
-          <span v-for=" (item) in HistoryListdata">{{item}}</span>
+          <span v-for=" (item,index) in HistoryListdata" @click="search12(item)">{{item}}</span>
       </div>
   </div>
       <div class="shopping_footer" v-else="!isshowhostory">
@@ -101,7 +101,12 @@
                 this.HistoryList.pop()
              }
              localStorage.setItem('HistoryList', JSON.stringify(this.HistoryList));
-		      },
+          },
+          search12(item){
+              this.$store.dispatch('getsearchShopping',item);
+              this.inputvalue=item;
+              this.isshowhostory=false;
+          },
           search2(ev){
             if(ev.keyCode == 13) {  //键盘回车的编码是13
               this.search();

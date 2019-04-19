@@ -28,4 +28,5 @@ export default {
   saveorder:[],
   orderDetailsList:{},
   imageToken:{},
+  shopslike:{},
 }

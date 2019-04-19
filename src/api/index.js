@@ -26,6 +26,8 @@ export const reqOrderList = (token, status, page) => ajax(BASE+'/mine_order/list
 export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token, id},'POST');
 // 商城首页
 export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
+//获取商城首页加载更多
+export const reqShoplikeIndex = (token,page) => ajax(BASE+'/shop/more_like',{token,page},'POST');
 // 商城首页
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
 //获取用户地址
@@ -55,7 +57,7 @@ export const reqInstruction = (token,product_id) => ajax(BASE+'/product/evaluate
 
 // export const reqAlipayPayment = (token,order_sn,device_type,type,return_url) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type,return_url},'POST');
 // 获取分类列表
-export const reqProductList = (token,category_id,type) => ajax(BASE+'/product/list',{token,category_id,type},'POST');
+export const reqProductList = (token,page,category_id,type) => ajax(BASE+'/product/list',{token,page,category_id,type},'POST');
 // 获取分类列表
 export const reqIsVip = (token,) => ajax(BASE+'/mine_vip/info',{token,},'POST');
 //添加购物车
@@ -82,3 +84,6 @@ export const reqorderDetail = (token,order_sn) => ajax(BASE+'/order/detail',{tok
 export const reqshipment = (token,id) => ajax(BASE+'/mine_order/notice',{token,id},'POST');
 //获取上传图片token
 export const reqImageToekn = (token) => ajax(BASE+'/upload/token',{token},'POST');
+//获取更多数据
+export const reqpagelist = (token,page) => ajax(BASE+'/shop/more_like',{token,page},'POST');
+

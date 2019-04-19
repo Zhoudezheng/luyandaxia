@@ -24,6 +24,7 @@ import {
   SAVE_ORDER,
   ORDER_DETAIL,
   IMAGE_TOKEN,
+  SHOP_LIKE,
 } from './mutation-types'
 
 import {
@@ -50,6 +51,7 @@ import {
   reqorderDetail,
   reqImageToekn,
   reqaddordershopping,
+  reqShoplikeIndex,
 } from '../api'
 import { stat } from 'fs';
 
@@ -149,7 +151,18 @@ export default {
       commit(SHOP_INDEX, {})
     }
   },
-
+ //商城首页更多加载
+ async getShoplike({commit,state},data) {
+  const token = state.Authorization
+  const result = await reqShoplikeIndex(token,data);
+  if (result.code === 200) {
+    let data = result.data
+    commit(SHOP_LIKE, data)
+  } else {
+    console.log(result.msg);
+    commit(SHOP_LIKE, {})
+  }
+},
   // 获取购物车列表
   async getShoppingCart({commit, state}) {
     const token = state.Authorization
@@ -234,9 +247,9 @@ export default {
 
 
   // 获取分类列表
-  async getProductList({commit, state}, {category_id, type}) {
+  async getProductList({commit, state}, {page,category_id, type}) {
     let token = state.Authorization
-    let result = await reqProductList(token, category_id, type)
+    let result = await reqProductList(token, page,category_id, type)
     if (result.code === 200) {
       let data = result.data
       commit(PRODUCT_LIST, data)

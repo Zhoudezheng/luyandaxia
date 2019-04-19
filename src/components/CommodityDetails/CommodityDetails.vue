@@ -169,27 +169,6 @@
       }
     },
     mounted(){
-        // this.productdata=this.productdata;
-        // this.is_collection=this.$store.state.productdata.is_collection;
-        // this.list = this.productdata.slider.split(',');
-        // this.productdataed = this.$store.state.productdata.spec;
-        //       let arr=[];
-        //       for(let i=0; i<this.$store.state.productdata.spec.length; i++){
-        //          let arr3=[];
-        //          let objlist={a:this.productdataed[i],name:this.productdataed[i].name};
-        //          arr3.push(objlist);
-        //          var itemList=objlist.a.item.split(',');
-        //          var arr2=[];
-        //          for(let i=0; i<itemList.length; i++){
-        //               var listdeta={name:itemList[i],id:false};
-        //               arr2.push(listdeta);
-        //               console.log(listdeta);
-        //          }
-                
-        //           arr.push(arr2);
-        //       }
-        //       this.productdataed=arr;
-        //       console.log(this.productdataed);
         this.box = this.$refs.wo;
         this.getList()
         this.box && this.box.addEventListener('scroll', () => {
@@ -222,7 +201,7 @@
         this.dynamicd=-1;
       },
       getList() {
-        let id = this.$route.query.data.id
+        let id = this.$route.query.data.id;
         this.$store.dispatch('getDetail', id).then(()=>{
            this.is_collection=this.productdata.is_collection;
            this.list = this.productdata.slider.split(',');
