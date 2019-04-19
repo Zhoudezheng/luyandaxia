@@ -77,21 +77,15 @@ export default {
           m3u8: detail.video== null?'':detail.video.replace("rtmp", "http") + ".m3u8",
           flv: '',
         }
-      } else if(detail.status === 2){
+      } else {
         video = {
           mp4: detail.reply_video == null?'':detail.reply_video,
           rtmp: '',
           m3u8: '',
           flv: '',
         }
-      } else{
-        video = {
-          mp4: '',
-          rtmp: '',
-          m3u8: '',
-          flv: '',
-        }
-      }
+      } 
+      
       //console.log(video)
       commit(VIDEO_URL, {video})
     } else {

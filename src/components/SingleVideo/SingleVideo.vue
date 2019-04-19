@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
   export default {
     data(){
         return {
@@ -62,6 +63,7 @@
         }
     },
     computed: {
+      ...mapState(['alipayPayment', 'wechatPayment']),
     detail: {
         get:function () {
             return this.$store.state.detail;
@@ -76,34 +78,44 @@
     },
     methods: {
         liveSharing(){
-            this.$router.push({  
-                path:'/liveSharing',
-            })
-        },
-        async singlevideo(){
             // this.$router.push({  
-            //     path:'/videosuccessful',
+            //     path:'/liveSharing',
             // })
-                const that =this;
-               //先请求后台获取到需要跳转用到的form数据
-               var result = await resAlipaybuy(1,)
-
-
-//                     if(res.data.code==0){
-//                         const form=res.data.form;  
-//                         const div = document.createElement('div');
-//                         div.innerHTML = form; //此处form就是后台返回接收到的数据
-//                         document.body.appendChild(div);
-//                         document.forms[0].submit();
-// // document.body.appendChild(div); document.forms[0].submit();这两步是关键，此时只要后台返回form正确，就可以直接跳转到支付宝页面
-//                     }else{
-//                       alert(res.data.msg);
-//                     }
-//                   },function(res){
-//                     //               alert("请求失败")
-//                   });
- 
-              },
+            this.$router.go(-1)
+        },
+        singlevideo() {
+        const the = this
+        let way = this.activeClass
+        let type = localStorage.getItem('type');
+        let order_sn =''
+        if(type === '2'||type === '3'){
+          order_sn = localStorage.getItem('order_sndata');
+        }else{
+          order_sn = this.orderId;
+        }
+        let os = this.os;
+        let return_url = '/VipSuccessful';
+        // console.log(type, order_sn, os, way);
+        if (way == 1) {
+          this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+            let wechat = this.wechatPayment
+            the.wxInitPay(wechat)
+          })
+        } else if (way == 2) {
+          os = '3'
+          this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            let form = this.alipayPayment.key
+            const div = document.createElement('div');
+            div.innerHTML = form; //此处form就是后台返回接收到的数据
+            document.body.appendChild(div);
+            document.forms[0].submit()
+            // console.log(data);
+          })
+        }
+        // this.$router.push({
+        //   path: '/vipsuccessful',
+        // })
+      },
         showactive(){
            this.activeClass=1
         },

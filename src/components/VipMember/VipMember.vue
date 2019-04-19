@@ -44,9 +44,8 @@
     },
     mounted() {
       var b= localStorage.getItem('type');
-      if( b === '2'){
+      if( b === '2' || b == '4'){
         this.price= localStorage.getItem('priceed');
-        console.log('vip',this.price)
       }
       else{
         this.getOrderDetail()
@@ -66,7 +65,7 @@
         let way = this.activeClass
         let type = localStorage.getItem('type');
         let order_sn =''
-        if(type === '2'){
+        if(type === '2' || type === '4'){
           order_sn = localStorage.getItem('order_sndata');
         }else{
           order_sn = this.orderId;

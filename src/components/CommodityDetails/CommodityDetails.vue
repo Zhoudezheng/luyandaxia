@@ -201,7 +201,7 @@
         this.dynamicd=-1;
       },
       getList() {
-        let id = this.$route.query.data.id;
+        let id = localStorage.getItem('product_id')
         this.$store.dispatch('getDetail', id).then(()=>{
            this.is_collection=this.productdata.is_collection;
            this.list = this.productdata.slider.split(',');
