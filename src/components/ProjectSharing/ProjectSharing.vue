@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { reqShoucang } from '../../api'
+import { reqShoucang,reqProjectOrder } from '../../api'
 import { Toast } from 'mint-ui';
 export default {
     data(){
@@ -68,19 +68,18 @@ export default {
             }
         },
         imgUrl:function(){
-            return this.is_collection?require('./image/Collection.png'):require('./image/Collectioned.png')
+            return this.is_collection?require('./image/Collectioned.png'):require('./image/Collection.png')
         }
     },
     mounted(){
         let id = this.$route.query.id
         this.$store.dispatch('projectData',id).then(()=>{
-            console.log(this.$store.state.projectDetail)
+            
+            this.is_collection = this.$store.state.projectDetail.is_collection==0?false:true
+            console.log('is_collection',this.is_collection)
         })
         setTimeout(()=>{
             this.setVideo();
-            this.is_collection = this.proDetail.inis_collectionfo
-            //this.imgUrl = this.is_collection?'./image/Collectioned.png':'./image/Collection.png'
-            //console.log("info",this.projectDetail)
         },1000)
         this.box = this.$refs.wo;
         this.box.addEventListener('scroll', () => {
@@ -111,7 +110,7 @@ export default {
                 "controls":"default",
                 "systemFullscreen":true,
                 // "width" :  '480',//视频的显示宽度，请尽量使用视频分辨率宽度
-                "height" : '200px',//视频的显示高度，请尽量使用视频分辨率高度
+                "height" : '189',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
@@ -129,10 +128,24 @@ export default {
                 //this.imgUrl = this.is_collection?'./image/Collectioned.png':'./image/Collection.png'
             }
           },
-          payment(){
-              this.$router.push({  
-                path:'/Membership',
+        async buyprojectlist(){
+            let token = this.$store.state.Authorization;
+            //1 bp 2 视频
+            let projecttype= '1'
+            let result= await reqProjectOrder(token,this.proDetail.info.id,projecttype);
+            localStorage.setItem('priceed', result.data.price);
+            let order_sn=result.data.order_sn;
+            this.buyproject(order_sn);
+        },
+        buyproject(order_sn){
+            localStorage.setItem('type', '4');
+            localStorage.setItem('order_sndata', order_sn);
+            this.$router.push({
+            path: '/VipMember',
             })
+        },
+          payment(){
+              this.buyprojectlist()
           }
     }
 }
