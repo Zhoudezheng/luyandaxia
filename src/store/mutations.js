@@ -14,6 +14,7 @@ import {
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
   COMMON_PRODUCT,
+  COMMON_COLLEN,
   COMMON_LIST,
   PRODUCT_LIST,
   IS_VIP,
@@ -88,6 +89,9 @@ export default {
   },
   [COMMON_PRODUCT](state, data){
     state.productdata=data.detail
+  },
+  [COMMON_COLLEN](state,data){
+    state.commcollen=data
   },
   [COMMON_LIST](state,data){
     state.commonlist = data

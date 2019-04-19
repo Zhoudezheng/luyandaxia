@@ -87,7 +87,9 @@
           observer: true,//修改swiper自己或子元素时，自动初始化swiper
           observeParents: true,//修改swiper的父元素时，自动初始化swiper
           freeMode: true,
-          width: 180,
+          slidesPerView: 2,
+          spaceBetween: 20,
+          // width: 370,
           freeModeSticky: true,
         },
         examplename: 'Loadmore',
@@ -395,7 +397,7 @@
   .shopping_banner .banner_content {
     /* float: left; */
     margin-top: 28px;
-    margin-left: 28px;
+    /* margin-left: 28px; */
     width: 305px;
     height: 347px;
     background: rgba(255, 255, 255, 1);

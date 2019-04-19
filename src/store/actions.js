@@ -14,6 +14,7 @@ import {
   WECHAT_PAYMENT,
   ALIPAY_PAYMENT,
   COMMON_PRODUCT,
+  COMMON_COLLEN,
   COMMON_LIST,
   PRODUCT_LIST,
   IS_VIP,
@@ -259,6 +260,7 @@ export default {
     if (result.code === 200) {
       let data = result.data
       commit(COMMON_PRODUCT, data)
+      commit(COMMON_COLLEN, data)
       commit(COMMON_LIST,data.detail)
     } else {
       commit(COMMON_PRODUCT, result.data)

@@ -7,7 +7,7 @@
     </div>
     <div class="car-list">
       <ul>
-        <li class="car-item" v-for="(item,index) in goodLits">
+        <li class="car-item" v-for="(item,index) in goodLits" @click="todetail(item.product_id)">
           <div class="input-block" @click.prevent="selectOne(index)">
             <label class="input-label" :class="{ active: item.isSelected }" :for="'car-checkbox-'+index"></label>
           </div>
@@ -69,7 +69,7 @@
   export default {
     data() {
       return {
-        goodLits: [ ],
+        goodLits: [],
         totalPrice: 0,
         // totalNum: 0,
         selected_all: false,
@@ -99,6 +99,17 @@
       liveSharing() {
         this.$router.push({
           path: '/shoppingmall',
+        })
+      },
+      todetail(id){
+        localStorage.setItem('product_id',id)
+        this.$router.push({
+          path: '/commoditydetails',
+          query:{
+            data:{
+              id
+            }
+          }
         })
       },
       getTotal() {
@@ -191,6 +202,7 @@
       },
       getShoppingCart() {
         this.$store.dispatch('getShoppingCart').then(()=>{
+          console.log(this.goods.list)
           this.goodLits= this.goods.list
         })
       },

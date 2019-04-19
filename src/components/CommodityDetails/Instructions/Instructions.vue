@@ -1,7 +1,7 @@
 <template>
   <div class="instruction_part">
     <div class="instructions" v-for="(item) in evaluateList && evaluateList.list">
-        <img class="user_avatar" :src="item.avatar" alt="">
+        <img class="user_avatar" :src="item.avatar ? item.avatar : 'http://file.market.xiaomi.com/thumbnail/PNG/l114/AppStore/090d6947f49ac44342fc6c84c25e744aefa7bcc00'" alt="">
         <div class="user_info">
             <div class="user_name">{{item.nickname}}</div>
             <div class="user_time">{{item.create_at}}</div>

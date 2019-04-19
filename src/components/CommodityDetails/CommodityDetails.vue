@@ -137,7 +137,10 @@
           },
           observer: true,
           autoplay: true,
-          loop: true
+          loop: true,
+          autoplay: {
+            disableOnInteraction: false,
+          },
         },
         swiperOption2: {
           pagination: {
@@ -154,7 +157,7 @@
       swiperSlide
     },
     computed: {
-      ...mapState(['shops', 'productdata','isVip']),
+      ...mapState(['shops', 'productdata','isVip','commcollen']),
       swiperOption(){
         var len = this.list.length
         if(len == 1){
@@ -203,7 +206,7 @@
       getList() {
         let id = localStorage.getItem('product_id')
         this.$store.dispatch('getDetail', id).then(()=>{
-           this.is_collection=this.productdata.is_collection;
+           this.is_collection=this.commcollen.is_collection;
            this.list = this.productdata.slider.split(',');
            var spec=this.$store.state.productdata.spec;
             console.log(this.$store.state.productdata);
