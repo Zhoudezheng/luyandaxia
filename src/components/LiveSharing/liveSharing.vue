@@ -95,11 +95,21 @@
             deep: true,
             handler: function (val){
                 //判断是否能看，能看则播放，不能看则判断试看时间
+                //   console.log(this.computeTime,val)
+                 let token =this.$store.state.Authorization;
                 if(this.detail.can_watch === 0)
-                {
+                {   
                     if(val >= this.computeTime){
                         this.player.pause()
                         this.isShowLive = true
+                    }
+                    if(this.detail.is_vip === 0){
+                        if(Math.round(this.currentTime) == 180 && !token){
+                           this.player.pause()
+                           this.$router.push({
+                               path:'/login'
+                           })
+                    } 
                     }
                 }
             }
@@ -120,6 +130,7 @@
         //获取直播id
          let id = this.$route.query.id
         //获取直播信息
+         this.$store.dispatch('getlivedatalist',id)
          this.$store.dispatch('getliveData',id).then(()=>{
              //判断是否显示购买单个视频
             if(this.detail.is_vip === 2)
@@ -156,7 +167,7 @@
           setVideo(){
                this.video = this.$store.state.videoUrl
                this.computeTime = this.$store.state.detail.preview_at
-                this.player =new TcPlayer('id_test_video', {
+               this.player =new TcPlayer('id_test_video', {
                 "mp4":this.video.mp4,
                 "rtmp":this.video.rtmp,
                 "m3u8":this.video.m3u8,
@@ -179,6 +190,7 @@
                 "listener":(msg)=>{
                     if(msg.type != 'error')
                     this.currentTime = msg.src.el.currentTime
+                   
                 }
             })
           },
@@ -236,8 +248,16 @@
                }
           },
           showBuyMask(){
-            this.closeTouch();
-            this.isBuyVideo=true
+            let token =this.$store.state.Authorization;
+            if(token){
+              this.closeTouch();
+              this.isBuyVideo=true
+            }else{
+              this.$router.push({
+                 path:'/login'
+              }) 
+            }
+          
           },
           getCal(msg){//msg就是传过来的数据了  这只是个形参  名字可以随意
             this.openTouch();
@@ -245,10 +265,17 @@
             
           },
           vipmember(){
-            this.$store.dispatch('getVipList').then(()=>{
+            let token =this.$store.state.Authorization;
+            if(token){
+             this.$store.dispatch('getVipList').then(()=>{
                 this.vip_price = this.userviplist.annual_fee
-            })
-            this.buyviplist()
+             })
+             this.buyviplist()
+            }else{
+             this.$router.push({
+                path:'/login'
+              }) 
+            }
           },
           closeTouch(){
             document.getElementsByTagName("body")[0].addEventListener('touchmove',

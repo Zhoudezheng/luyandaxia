@@ -53,6 +53,7 @@ import {
   reqImageToekn,
   reqaddordershopping,
   reqShoplikeIndex,
+  reqLiveDataList,
 } from '../api'
 import { stat } from 'fs';
 
@@ -64,6 +65,39 @@ export default {
     let token = state.Authorization
     // 1. 发送异步ajax请求
     const result = await reqLiveData(token, id)  // {code: 0, data: shops}
+    // 2. 根据结果提交mutation
+    if (result.code === 200) {
+      const detail = result.data
+      //const url = detail.url_content
+      commit(LIVE_DETAIL, {detail})  // action提交给mutation的是包含数据的对象, 而不数据本身
+      //commit(URL_CONTENT,{url})  //对直播详情介绍url进行复制
+      var video = {}
+      if (detail.status === 1) {
+        video = {
+          mp4: '',
+          rtmp: '',
+          m3u8: detail.video== null?'':detail.video.replace("rtmp", "http") + ".m3u8",
+          flv: '',
+        }
+      } else {
+        video = {
+          mp4: detail.reply_video == null?'':detail.reply_video,
+          rtmp: '',
+          m3u8: '',
+          flv: '',
+        }
+      } 
+      
+      //console.log(video)
+      commit(VIDEO_URL, {video})
+    } else {
+      console.log(result.msg);
+    }
+  },
+  async getlivedatalist({commit}, id) {
+    // 1. 发送异步ajax请求
+    const result = await reqLiveDataList(id)
+    console.log(result)  // {code: 0, data: shops}
     // 2. 根据结果提交mutation
     if (result.code === 200) {
       const detail = result.data

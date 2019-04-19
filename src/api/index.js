@@ -16,6 +16,8 @@ export const reqPwdLogin = (username, password) => ajax(BASE+'/login/phone', {us
 //export const reqLiveDetail = (id)=>ajax(BASE+'/',{id},'POST');
 //[4、直播信息]
 export const reqLiveData = (token, id) => ajax(BASE+'/live', {token, id}, 'POST')
+//未登录直播
+export const reqLiveDataList = ( id) => ajax(BASE+'/live_h5', {id}, 'POST')
 //5.订阅
 export const reqDingyue = (token, id) => ajax(BASE+'/publisher/subscribe', {token, id}, 'POST')
 //6.收藏

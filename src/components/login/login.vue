@@ -116,10 +116,7 @@
           if(this.$route.query.redirect){
             this.$router.replace(this.$route.query.redirect);
           }else{
-            this.$router.push({
-              path:'/shoppingmall'
-            })
-
+            this.$router.go(-1)
           }
         
           

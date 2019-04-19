@@ -23,22 +23,22 @@ function setHtmlFontSize(){
     htmlDom.style.fontSize = htmlWidth / 10 + 'px';
 };
 setHtmlFontSize();
-router.beforeEach((to, from, next) => {
-  //console.log(to)
-  if(to.meta.requireAuth){ //判断该路由是否需要登录权限
-    if(store.state.Authorization){
-      next()
-    }else{
-      next({
-        path:'/login',
-        query:{redirect:to.fullPath}//{path:to.path,query:to.query}},
-      })
-      //console.log(to.fullPath)
-    }
-  }else{
-    next()
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   //console.log(to)
+//   if(to.meta.requireAuth){ //判断该路由是否需要登录权限
+//     if(store.state.Authorization){
+//       next()
+//     }else{
+//       next({
+//         path:'/login',
+//         query:{redirect:to.fullPath}//{path:to.path,query:to.query}},
+//       })
+//       //console.log(to.fullPath)
+//     }
+//   }else{
+//     next()
+//   }
+// });
 /* eslint-disable no-new */
 //Axios.defaults.headers.common['Authentication-Token'] = store.state.Authorization;
 // 添加请求拦截器
