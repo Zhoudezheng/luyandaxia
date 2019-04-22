@@ -65,6 +65,7 @@
 <script>
   import {mapState} from 'vuex'
   import { MessageBox,Toast } from 'mint-ui';
+import { reqShoppingCart ,reqShoppingChange} from '../../api';
 
   export default {
     data() {
@@ -174,11 +175,17 @@
       reduce(index) {
         if (this.goodLits[index].num <= 1) return;
         this.goodLits[index].num--
+        let id=this.goodLits[index].id;
+        let num =this.goodLits[index].num;
+        reqShoppingChange(id,num);
         this.getTotal()
       },
       add(index) {
-        this.goodLits[index].num++
-        this.getTotal()
+        this.goodLits[index].num++;
+        let id=this.goodLits[index].id;
+        let num =this.goodLits[index].num;
+        reqShoppingChange(id,num);
+        this.getTotal();
       },
       delshopping() {
         if (this.selected_all == true) {

@@ -42,7 +42,7 @@
          </div>
          <div class="account_user">
             <span class="ico_head">邮 箱</span>
-            <input  type="tel" maxlength="16" class="user_input" placeholder="请输入邮箱" v-model="email"  @blur.prevent="inputLoseFocus">
+            <input  type="tel" maxlength="32" class="user_input" placeholder="请输入邮箱" v-model="email"  @blur.prevent="inputLoseFocus">
          </div>
          <!-- <div class="account_user">
             <span class="ico_head">银 行 卡</span>
@@ -120,7 +120,7 @@ export default {
             this.iphone=this.userinfo.phone;
             this.company=this.userinfo.company;
             this.post=this.userinfo.job;
-            console.log(this.avatar)
+            this.email=this.userinfo.email;
           });
       },
     //可参考 https://www.cnblogs.com/xiaocaiyuxiaoniao/p/9437013.html
