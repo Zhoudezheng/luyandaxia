@@ -178,27 +178,6 @@
       }
     },
     mounted(){
-        // this.productdata=this.productdata;
-        // this.is_collection=this.$store.state.productdata.is_collection;
-        // this.list = this.productdata.slider.split(',');
-        // this.productdataed = this.$store.state.productdata.spec;
-        //       let arr=[];
-        //       for(let i=0; i<this.$store.state.productdata.spec.length; i++){
-        //          let arr3=[];
-        //          let objlist={a:this.productdataed[i],name:this.productdataed[i].name};
-        //          arr3.push(objlist);
-        //          var itemList=objlist.a.item.split(',');
-        //          var arr2=[];
-        //          for(let i=0; i<itemList.length; i++){
-        //               var listdeta={name:itemList[i],id:false};
-        //               arr2.push(listdeta);
-        //               console.log(listdeta);
-        //          }
-                
-        //           arr.push(arr2);
-        //       }
-        //       this.productdataed=arr;
-        //       console.log(this.productdataed);
         if(typeof(this.$route.query.share_id) != 'undefined'){
             console.log('share_idee',this.$route.query.share_id)
             localStorage.setItem('share_id',this.$route.query.share_id)
@@ -232,16 +211,12 @@
       },
       showspeced(){
         this.is_specShow=false
-        // this.dynamic=-1;
-        // this.num=1;
-        // this.dynamicd=-1;
       },
       getList() {
         let id = 0
         if(typeof(this.$route.query.id)!='undefined')
         {
           id = this.$route.query.id
-          console.log('id',id)
         }else
         {
           id = localStorage.getItem('product_id')
@@ -263,6 +238,9 @@
         this.num--
       },
       add() {
+        let stock=this.productdata.stock;
+        if(stock < this.num+1) Toast('暂无库存');
+        if(stock < this.num+1) return;
         this.num++
       },
       tobuyspec(item,index){
@@ -314,6 +292,7 @@
           let type=1;
           let id=shopData.id;
           let spec='';
+          let stock=this.productdata.stock;
           if(this.secolor){
             spec += `${this.secolor}`
           }
@@ -329,6 +308,8 @@
             })
           }else if(this.is_spec){
              this.is_specShow=true;
+          }else if(stock<=0){
+                Toast('库存不足')
           }else{
              Toast('加入成功');
              this.$store.dispatch('addshoppingcart',{type,id})
@@ -337,6 +318,7 @@
           let {id,name,cover,price} = shopData
           let num = 1
           let spec='';
+          let stock=this.productdata.stock;
           if(this.secolor){
             spec += `${this.secolor}`
           }
@@ -375,6 +357,8 @@
           })
         }else if(this.is_spec){
              this.is_specShow=true;
+        }else if(stock<=0){
+            Toast('库存不足')
         }else{ 
           this.$router.push({
             path: '/purchaseorder',

@@ -3,7 +3,7 @@
     <div class="account_div">
       <img src="./image/huitui.png" alt="协议按钮" class="account_check" @click="accountper">
       <span  class="account_mode">账户信息</span>
-      <span  class="shopping_del" >地址管理</span>
+      <span  class="shopping_del" @click="toaddress">地址管理</span>
     </div>
     <form>
         <!-- <div class="account_ico">
@@ -101,6 +101,11 @@ export default {
       this.getuserdata()
     },
     methods:{
+      toaddress(){
+          this.$router.push({
+              path:'/address'
+          })
+      },
       inputLoseFocus() {
         setTimeout(() => {
           window.scrollTo(0, 0);

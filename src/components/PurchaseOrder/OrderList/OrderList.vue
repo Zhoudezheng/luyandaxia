@@ -27,8 +27,8 @@
                    <img src="./image/Group.png" alt="发票" v-show="typeactive == 2" class="c_ico">
                 </div>
                 <div  v-show="typeactive == 2" class="company_name">
-                    <input type="text" placeholder="单位名称" class="name_a">
-                    <input type="text" placeholder="识别号" class="name_b">
+                    <input type="text" placeholder="单位名称" class="name_a" v-model="compay_t">
+                    <input type="text" placeholder="识别号" class="name_b" v-model="compay_h">
                 </div>
                 <div class="company_nva">发票内容</div>
                 <div class="company_content" >
@@ -46,11 +46,14 @@
 </template>
 
 <script>
+  import { Toast } from 'mint-ui';
   export default {
     data(){
       return{
         activeClass:1,
         typeactive:1,
+        compay_t:'',
+        compay_h:'',
     }
     },
     methods:{
@@ -60,12 +63,25 @@
       showoff(){
         if(this.activeClass == 1){
             localStorage.setItem('invoice' ,"不开发票")
-            this.$emit('gettypelist',"不开发票")
+            this.$emit('gettypelist',"不开发票");
+            this.$emit('getcacel',false)
         }else{
+             if(!this.compay_t && this.typeactive == 2){
+                Toast('单位名称不能为空')
+             }
+             if(this.compay_t && !this.compay_h &&this.typeactive==2){
+                Toast('识别号不能为空')
+             }
+             if(this.compay_t && this.compay_h && this.typeactive ==2 ){
+                 this.$emit('getcacel',false)
+             }
+             if( this.typeactive ==1){
+                 this.$emit('getcacel',false)
+             }
              localStorage.setItem('invoice' ,"普通纸质发票")
              this.$emit('gettypelist',"普通纸质发票")
         }
-        this.$emit('getcacel',false)
+       
       },
       ifshow(){
           this.activeClass = 1;
