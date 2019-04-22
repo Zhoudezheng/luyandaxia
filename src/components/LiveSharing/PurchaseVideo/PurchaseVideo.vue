@@ -229,6 +229,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     display: -webkit-box;
+    height: 106px;
  }
  .purchase_details .purchase_button{
     width:694px;

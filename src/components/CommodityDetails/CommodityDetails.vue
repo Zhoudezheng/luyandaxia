@@ -172,6 +172,33 @@
       }
     },
     mounted(){
+        // this.productdata=this.productdata;
+        // this.is_collection=this.$store.state.productdata.is_collection;
+        // this.list = this.productdata.slider.split(',');
+        // this.productdataed = this.$store.state.productdata.spec;
+        //       let arr=[];
+        //       for(let i=0; i<this.$store.state.productdata.spec.length; i++){
+        //          let arr3=[];
+        //          let objlist={a:this.productdataed[i],name:this.productdataed[i].name};
+        //          arr3.push(objlist);
+        //          var itemList=objlist.a.item.split(',');
+        //          var arr2=[];
+        //          for(let i=0; i<itemList.length; i++){
+        //               var listdeta={name:itemList[i],id:false};
+        //               arr2.push(listdeta);
+        //               console.log(listdeta);
+        //          }
+                
+        //           arr.push(arr2);
+        //       }
+        //       this.productdataed=arr;
+        //       console.log(this.productdataed);
+        if(typeof(this.$route.query.share_id) != 'undefined'){
+            console.log('share_idee',this.$route.query.share_id)
+            localStorage.setItem('share_id',this.$route.query.share_id)
+        }else{
+            localStorage.setItem('share_id','')
+        }
         this.box = this.$refs.wo;
         this.getList()
         this.box && this.box.addEventListener('scroll', () => {
@@ -204,7 +231,15 @@
         this.dynamicd=-1;
       },
       getList() {
-        let id = localStorage.getItem('product_id')
+        let id = 0
+        if(typeof(this.$route.query.id)!='undefined')
+        {
+          id = this.$route.query.id
+          console.log('id',id)
+        }else
+        {
+          id = localStorage.getItem('product_id')
+        }
         this.$store.dispatch('getDetail', id).then(()=>{
            this.is_collection=this.commcollen.is_collection;
            this.list = this.productdata.slider.split(',');
