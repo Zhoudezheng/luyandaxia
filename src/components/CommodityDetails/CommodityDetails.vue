@@ -342,11 +342,25 @@
         }
       },
       async shoucang(){
-              var result = await reqShoucang(this.$store.state.Authorization,"4",this.productdata.id)
-
+            if(!navigator.onLine){
+              Toast("网络错误");
+              return ;
+            }
+            if(this.$store.state.Authorization == ''){
+              console.log('fullpath',this.$route.fullPath)
+              this.$router.push({
+                path:'/login',
+                query:{redirect:this.$route.fullPath}//{path:to.path,query:to.query}},
+              }
+              )
+            }
+            var result = await reqShoucang(this.$store.state.Authorization,"4",this.productdata.id)
+            
             if (result.code === 200) {
                 Toast(result.msg);
                 this.is_collection = !this.is_collection
+            }else{
+              Toast(result.msg)
             }
       },
       evaluateList(){

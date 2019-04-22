@@ -7,11 +7,11 @@
     </div>
     <div class='mask_live'  v-show="isShowLive">
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
-        <div class="masklive_div">
+        <div class="masklive_div" v-show="is_vip">
             <!-- <img src="./video/shuaxin.png" alt="刷新"> -->
-            <a href="#" @click="showBuyMask" v-show="is_vip">立即购买</a>
+            <a href="#" @click="showBuyMask"   >立即购买</a>
         </div>
-        <input type="text" class="masklive_input" value="开通VIP会员" @click="vipmember">
+        <input type="text" ref="masklive_input" value="开通VIP会员" @click="vipmember">
         <!-- <div class="masklive_buy" v-show="is_vip">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
@@ -104,7 +104,7 @@
                         this.isShowLive = true
                     }
                     if(this.detail.is_vip === 0){
-                        if(Math.round(this.currentTime) == 180 && !token){
+                        if(Math.round(this.currentTime) >= 120 && !token){
                            this.player.pause()
                            this.$router.push({
                                path:'/login'
@@ -130,11 +130,12 @@
         //获取直播id
          let id = this.$route.query.id
         //获取直播信息
-         this.$store.dispatch('getlivedatalist',id)
-         this.$store.dispatch('getliveData',id).then(()=>{
+         //this.$store.dispatch('getlivedatalist',id)
+         this.$store.dispatch('getlivedatalist',id).then(()=>{
              //判断是否显示购买单个视频
             if(this.detail.is_vip === 2)
             {
+                this.$refs.masklive_input.style.marginRight = "0"
                 this.is_vip = false
             }
             //是否订阅
@@ -152,7 +153,9 @@
          },1000)
          this.box = this.$refs.wo;
          this.box.addEventListener('scroll', () => {
+             console.log('滚动')
          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
+         console.log('offsetTop',offsetTop)
           if (this.$refs.wo.scrollTop+180 > offsetTop) {
                  this.nvaBarFixed = true
           } 
@@ -310,7 +313,7 @@
   @import '../../../static/font/font.css';
 .aaaaa{
       height: 100%;
-      overflow: scroll;
+      overflow: -moz-scrollbars-none;
 }
 .videoLess{
     /* position: fixed;
@@ -323,7 +326,7 @@
     top:0px;
     z-index:20;
     height: 375px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
 
@@ -354,6 +357,7 @@
     line-height:33px;
     margin-top: 114px;
     margin-left: 147px;
+    white-space: nowrap;
 }
 .mask_live .masklive_div{
     float: left;
@@ -397,7 +401,7 @@
     line-height:35px;
     text-align: center;
     margin-right: 120px;
-}
+} 
 .mask_live .masklive_buy{
     margin-top: 30px;
     width:269px;
