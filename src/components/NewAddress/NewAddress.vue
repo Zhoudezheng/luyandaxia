@@ -44,12 +44,14 @@ import {Popup, Picker } from 'mint-ui';
 Vue.component(Picker.name, Picker);
 import threeLevelAddress from '../../assets/commom/json/threeLevelAddress.json'
 import { addAddressList } from '../../api'
+import { Toast, MessageBox } from 'mint-ui'
 export default {
     data(){
         return {
             consignee:'',
             phonenumber:'',
             location:'',
+            isRightPhone:'',
             detailed:'',
             arr:[],
             region:'',//三级地址
@@ -100,7 +102,6 @@ export default {
             ],
         }
     },
-    components:{},
     methods:{
         address(){
             var iforder=localStorage.getItem('iforder');
@@ -133,22 +134,45 @@ export default {
         async saveNewaddress(){
            var token=this.$store.state.Authorization;
            var name= this.consignee;
-           var phone= this.phonenumber;
-           var address =this. location;
-           var info=this.detailed;
-           var type=1;
-           let result= await addAddressList(token,name,phone,address,info,type);
-           if(result.code === 200){
-             var iforder=localStorage.getItem('iforder');
-             if(iforder === 'yes'){
-                this.$router.go(-2)
-             }else{
-                this.$router.push({
-                  path :'/address' 
-                })
-             }
+           var isRightPhone=/^1\d{10}$/.test(this.phonenumber);
+           console.log(isRightPhone)
+           if(!name){
+               Toast('请填写姓名')
            }
-          
+           var phone= this.phonenumber;
+           if(name && !phone ){
+              Toast('请填写联系方式')
+           }
+           var address =this. location;
+           if(name && phone &&!address){
+               Toast('请选择地址')
+           }
+           var info=this.detailed;
+           if(name && phone &&  address && !info){
+               Toast('请填写详细地址')
+           }
+           var type=1;
+           if( name && phone && address && info){
+               if(isRightPhone){
+                let result= await addAddressList(token,name,phone,address,info,type);
+                if(result.code === 200){
+                    Toast(result.msg)
+                    var iforder=localStorage.getItem('iforder');
+                    if(iforder === 'yes'){
+                        this.$router.go(-2)
+                    }else{
+                        this.$router.push({
+                        path :'/address' 
+                        })
+                    }
+                }else{
+                    Toast(result.msg)
+                }
+               }else{
+                   Toast('请输入正确联系方式')
+               }
+              
+           }
         },
       //picker组件的change事件，进行取值赋值
         addressChange(picker, values){

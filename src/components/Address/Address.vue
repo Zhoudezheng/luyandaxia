@@ -82,13 +82,16 @@ export default {
                path:'/editaddress'
            })
        },
-       async deladdress(index){
+       deladdress(index){
+          MessageBox.confirm('确定执行此操作?').then(action => {
            var token=this.$store.state.Authorization;
            var list=this.dataList[index];
            var id=list.id;
-           let dellist = await delAddressList(token,id)
+           delAddressList(token,id)
            this.dataList.splice(index,1);
            Toast('删除成功');
+          })
+          
        }
     }
 }
