@@ -36,6 +36,8 @@
       <div class="title_a5" v-if="is_spec" @click="showspec">
         <span class="a5_a">规格</span>
         <img src="./image/gengduo.png" alt="规格" class="a5_b">
+        <span v-if="showsecolor" class="a5_d">{{showsecolordata}}</span>
+        <span v-if="showxlse" class="a5_d">{{showxlsedata}}</span>
       </div>
     </div>
     <div class="details_footer">
@@ -44,7 +46,7 @@
         <div>购物车</div>
       </div>
       <div class="footer_warp" @click="goto(2)">
-        <div class="add_cart footer_item" v-if="is_spec" @click="showspec">加入购物车</div>
+        <!-- <div class="add_cart footer_item" v-if="is_spec" @click="showspec">加入购物车</div> -->
         <div class="add_cart footer_item">加入购物车</div>
       </div>
       <div class="footer_warp" @click="goto(3)">
@@ -131,6 +133,10 @@
         num:1,
         secolor:'',
         xlse:'',
+        showsecolor:false,
+        showxlse:false,
+        showsecolordata:'',
+        showxlsedata:'',
         swiperOption1: {
           pagination: {
             el: '.swiper-pagination'
@@ -199,9 +205,9 @@
       },
       showspeced(){
         this.is_specShow=false
-        this.dynamic=-1;
-        this.num=1;
-        this.dynamicd=-1;
+        // this.dynamic=-1;
+        // this.num=1;
+        // this.dynamicd=-1;
       },
       getList() {
         let id = localStorage.getItem('product_id')
@@ -227,12 +233,14 @@
       tobuyspec(item,index){
         this.dynamic = index;
         this.secolor=item;
+     
       },
       tobuyspecd(item,index){
         this.dynamicd = index;
         this.xlse=item;
       },
       addshop(){
+        // this.is_specShow=false;
         let type=1;
         let shopData = this.productdata;
         let id=shopData.id;
@@ -244,13 +252,22 @@
           spec +=`,${this.xlse}`
         }
         let num =this.num;
-        this.$store.dispatch('addshopporderingcart',{type,id,spec,num}).then(()=>{
-            Toast('已成功加入购物车');
-            this.is_specShow=false;
-            this.dynamic=-1;
-            this.num=1;
-            this.dynamicd=-1;
-        })
+        this.is_specShow=false;
+        this.showsecolor=true;
+        this.showsecolordata=this.secolor
+        this.showxlse=true;
+        this.showxlsedata=this.xlse;
+     
+        // this.dynamic=-1;
+        // this.num=1;
+        // this.dynamicd=-1;
+        // this.$store.dispatch('addshopporderingcart',{type,id,spec,num}).then(()=>{
+        //     Toast('已成功加入购物车');
+        //     this.is_specShow=false;
+        //     this.dynamic=-1;
+        //     this.num=1;
+        //     this.dynamicd=-1;
+        // })
       },
       goto(index) {
         let shopData = this.productdata;
@@ -261,8 +278,22 @@
         } else if (index == 2) {
           let type=1;
           let id=shopData.id;
-          if(this.is_spec){
-             return
+          let spec='';
+          if(this.secolor){
+            spec += `${this.secolor}`
+          }
+          if(this.xlse){
+            spec +=`,${this.xlse}`
+          }
+          let num =this.num;
+          var a=this.productdata.spec && this.productdata.spec[0]
+          var b=this.productdata.spec && this.productdata.spec[1]
+          if(this.is_spec && ((a && this.showsecolordata)||(b&&this.showxlsedata))){
+            this.$store.dispatch('addshopporderingcart',{type,id,spec,num}).then(()=>{
+                Toast('已成功加入购物车');
+            })
+          }else if(this.is_spec){
+             this.is_specShow=true;
           }else{
              Toast('加入成功');
              this.$store.dispatch('addshoppingcart',{type,id})
@@ -285,6 +316,31 @@
           } else {
             totalPrice = shopData.vip_price
           }
+          var a=this.productdata.spec && this.productdata.spec[0]
+          var b=this.productdata.spec && this.productdata.spec[1]
+          if(this.is_spec && ((a && this.showsecolordata)||(b&&this.showxlsedata))){
+            this.$router.push({
+            path: '/purchaseorder',
+            query:{
+              orderData:{
+                data:[
+                  {
+                    id,
+                    name,
+                    cover,
+                    price,
+                    spec,
+                    num,
+                    product_id,
+                  }
+                ],
+                totalPrice
+              }
+            }
+          })
+        }else if(this.is_spec){
+             this.is_specShow=true;
+        }else{ 
           this.$router.push({
             path: '/purchaseorder',
             query:{
@@ -304,6 +360,7 @@
               }
             }
           })
+        }
         }
       },
       async shoucang(){
@@ -509,6 +566,10 @@
     float: right;
     margin-top: 10px;
     margin-right: 25px;
+  }
+  .title_a5 .a5_d{
+    display: inline-block;
+    margin-left: 20px;
   }
   .dete_line{
     margin-top: 20px;
