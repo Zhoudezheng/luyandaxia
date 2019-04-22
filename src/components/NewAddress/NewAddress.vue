@@ -20,7 +20,7 @@
          </div>
          <div class="address_user">
             <span class="ico_head">详细地址:</span>
-            <input  type="tel" maxlength="16" class="user_input" placeholder="请输入小区/楼号/门牌号" v-model="detailed"  @blur.prevent="inputLoseFocus">
+            <input  type="tel" maxlength="32" class="user_input" placeholder="请输入小区/楼号/门牌号" v-model="detailed"  @blur.prevent="inputLoseFocus">
          </div>
       </form>
       <div class="footfiexd" @click="saveNewaddress">

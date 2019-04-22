@@ -7,12 +7,12 @@
     </div>
     <div class="car-list">
       <ul>
-        <li class="car-item" v-for="(item,index) in goodLits" @click="todetail(item.product_id)">
+        <li class="car-item" v-for="(item,index) in goodLits">
           <div class="input-block" @click.prevent="selectOne(index)">
             <label class="input-label" :class="{ active: item.isSelected }" :for="'car-checkbox-'+index"></label>
           </div>
           <div class="car-item-content">
-            <div class="car-img">
+            <div class="car-img"  @click="todetail(item.product_id)">
               <img :src="item.cover"/>
             </div>
             <div class="car-cont">
@@ -182,7 +182,19 @@
       },
       delshopping() {
         if (this.selected_all == true) {
-          this.goodLits = [];
+        for (var i = 0; i < this.goodLits.length; i++) {
+          var _d = this.goodLits[i]
+          if (_d.isSelected) {
+            // console.log(_d)
+            this.goodLits.splice(i, 1);
+            i--;
+            let type=2;
+            let id=_d.id;
+            this.$store.dispatch('addshoppingcart',{type,id})
+            this.getTotal();
+            Toast('删除成功');
+          }
+        }
           this.getTotal();
         }
         // 删除时的判断
