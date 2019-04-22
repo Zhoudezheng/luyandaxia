@@ -67,7 +67,7 @@
   import OrderList from './OrderList/OrderList.vue';
   import {Base64} from 'js-base64'
   import {mapState} from 'vuex'
-
+  import { Toast } from 'mint-ui';
   export default {
     data() {
       return {
@@ -110,20 +110,25 @@
       purchase() {
         let product_info = this.product_info
         let remark = this.post
-        let cart_list = this.cart_list
+        let cart_list = this.cart_list;
+        var address =this.orderDetails.address.address;
         let address_id = this.orderDetails.address.id
         let share_id = localStorage.getItem('share_id');
-        console.log('share_id',share_id)
-        product_info = Base64.encode(JSON.stringify(product_info))
-        this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id,share_id})
-        let orderDetail = {
-          total: this.orderDetails.total
+        product_info = Base64.encode(JSON.stringify(product_info));
+        if(address){
+          this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id,share_id})
+          let orderDetail = {
+            total: this.orderDetails.total
+          }
+          localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
+          localStorage.setItem('type','1')
+          this.$router.push({
+            path: '/VipMember',
+          })
+        }else{
+          Toast('请选择地址')
         }
-        localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
-        localStorage.setItem('type','1')
-        this.$router.push({
-          path: '/VipMember',
-        })
+       
       },
       getCal(msg) {
         this.openTouch();

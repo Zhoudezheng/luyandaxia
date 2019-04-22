@@ -82,13 +82,16 @@ export default {
                path:'/editaddress'
            })
        },
-       async deladdress(index){
+       deladdress(index){
+          MessageBox.confirm('确定执行此操作?').then(action => {
            var token=this.$store.state.Authorization;
            var list=this.dataList[index];
            var id=list.id;
-           let dellist = await delAddressList(token,id)
+           delAddressList(token,id)
            this.dataList.splice(index,1);
            Toast('删除成功');
+          })
+          
        }
     }
 }
@@ -124,8 +127,9 @@ export default {
     margin-left: 262px;
 }
 .address_content{
-   height: 210px;
+   /* height: 210px; */
    border-bottom: 1px solid #eeeeee;
+   overflow: auto;
    /* margin-top: 91px; */
 }
 .address_content .content_a{
@@ -160,7 +164,7 @@ export default {
     width: 80%;
     padding-bottom: 15px;
     border-bottom: 1px solid #eeeeee;
-    height:30px;
+    /* height:30px; */
     font-size:30px;
     font-family:PingFangSC-Semibold;
     font-weight:500;
@@ -170,6 +174,7 @@ export default {
 .address_content .content_choice{
    float: left;
    width: 100%;
+   margin-bottom: 8px;
 }
 .content_choice .choice_ico{
     float: left;

@@ -5,7 +5,7 @@
       <span class="personalcenter_mode">个人中心</span>
     </div>
     <div class="personal_head">
-      <img :src="isVip.avatar" alt="头像" class="head_pert" v-show="islog">
+      <img :src="isVip.avatar" alt="头像" class="head_pert" v-show="islog" @click="toAccount">
       <div class="head_cont" v-show="islog">
         <p class="head_name" @click="toAccount">{{isVip.nickname}}</p>
         <span class="head_vip" v-show="isVip.vip_end == 1"> 普通会员</span>

@@ -62,6 +62,8 @@ export const reqInstruction = (token,product_id) => ajax(BASE+'/product/evaluate
 export const reqProductList = (token,page,category_id,type) => ajax(BASE+'/product/list',{token,page,category_id,type},'POST');
 // 获取分类列表
 export const reqIsVip = (token,) => ajax(BASE+'/mine_vip/info',{token,},'POST');
+//购物车数量变化
+export const reqShoppingChange = (car_id,num) => ajax(BASE+'/shopping_cart/change',{car_id,num},'POST');
 //添加购物车
 export const reqaddshopping = (token,type,product_id)=>ajax(BASE+'/shopping_cart/action',{token,type,product_id},'POST');
 //详情加入购物车
