@@ -64,6 +64,7 @@ export default {
     // 2. 根据结果提交mutation
     if (result.code === 200) {
       const detail = result.data
+      console.log(detail)
       //const url = detail.url_content
       commit(LIVE_DETAIL, {detail})  // action提交给mutation的是包含数据的对象, 而不数据本身
       //commit(URL_CONTENT,{url})  //对直播详情介绍url进行复制
@@ -169,10 +170,10 @@ export default {
   },
 
   // 创建商城订单
-  async createOrder({commit, state}, {remark, cart_list, product_info, address_id}) {
+  async createOrder({commit, state}, {remark, cart_list, product_info, address_id,share_id}) {
     console.log(remark, cart_list, product_info, address_id)
     const token = state.Authorization
-    let result = await reqCreateOrder(token, remark, cart_list, product_info, address_id)
+    let result = await reqCreateOrder(token, remark, cart_list, product_info, address_id,share_id)
     if (result.code === 200) {
       let data = result.data
       commit(CREATE_ORDER, data)

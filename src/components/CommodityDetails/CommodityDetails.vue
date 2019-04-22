@@ -190,6 +190,12 @@
         //       }
         //       this.productdataed=arr;
         //       console.log(this.productdataed);
+        if(typeof(this.$route.query.share_id) != 'undefined'){
+            console.log('share_idee',this.$route.query.share_id)
+            localStorage.setItem('share_id',this.$route.query.share_id)
+        }else{
+            localStorage.setItem('share_id','')
+        }
         this.box = this.$refs.wo;
         this.getList()
         this.box && this.box.addEventListener('scroll', () => {
@@ -222,7 +228,15 @@
         this.dynamicd=-1;
       },
       getList() {
-        let id = localStorage.getItem('product_id')
+        let id = 0
+        if(typeof(this.$route.query.id)!='undefined')
+        {
+          id = this.$route.query.id
+          console.log('id',id)
+        }else
+        {
+          id = localStorage.getItem('product_id')
+        }
         this.$store.dispatch('getDetail', id).then(()=>{
            this.is_collection=this.productdata.is_collection;
            this.list = this.productdata.slider.split(',');

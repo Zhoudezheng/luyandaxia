@@ -112,8 +112,10 @@
         let remark = this.post
         let cart_list = this.cart_list
         let address_id = this.orderDetails.address.id
+        let share_id = localStorage.getItem('share_id');
+        console.log('share_id',share_id)
         product_info = Base64.encode(JSON.stringify(product_info))
-        this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id})
+        this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id,share_id})
         let orderDetail = {
           total: this.orderDetails.total
         }
