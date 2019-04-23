@@ -43,7 +43,7 @@ export const delAddressList = (token,id) =>ajax(BASE+'/address/delete',{token,id
 //设置默认地址
 export const defaultAddressList = (token,id) =>ajax(BASE+'/address/set_default',{token,id},'POST');
 // 创建订单
-export const reqCreateOrder = (token,remark,cart_list,product_info,address_id,share_id) => ajax(BASE+'/order/create',{token,remark,cart_list,product_info,address_id,share_id},'POST');
+export const reqCreateOrder = (token,remark,cart_list,product_info,address_id,share_id,invoice,pay_type) => ajax(BASE+'/order/create',{token,remark,cart_list,product_info,address_id,share_id,invoice,pay_type},'POST');
 // 预览订单
 export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm',{token,product_info},'POST');
 // 微信支付

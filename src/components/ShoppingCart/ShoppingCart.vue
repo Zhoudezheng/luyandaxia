@@ -16,17 +16,17 @@
               <img :src="item.cover"/>
             </div>
             <div class="car-cont">
-              <div class="cont">
-                <div class="shop_top">
+              <div class="cont" >
+                <div class="shop_top" @click="todetail(item.product_id)">
                   <span class="shop_name">{{item.name}}</span>
                   <span class="car-num">X{{item.num}}</span>
                 </div>
 
-                <div class="cat-desc">
+                <div class="cat-desc" @click="todetail(item.product_id)">
                   <span>VIP特惠价：￥{{item.vip_price}}</span>
                 </div>
-                <div v-if="item.spec" class="cat-spec">{{item.spec}}</div>
-                <div class="cat_mony">
+                <div v-if="item.spec" class="cat-spec" @click="todetail(item.product_id)">{{item.spec}}</div>
+                <div class="cat_mony" @click="todetail(item.product_id)">
                   <span class="mony_zero">¥{{item.price}}</span>
                   <span class="mony_hua">¥{{item.local_price}}</span>
                 </div>
@@ -52,7 +52,7 @@
         <span class="foot_all">全选</span>
       </div>
       <div class="total-cont">
-        <span>总价：￥{{totalPrice}}</span>
+        <span>总价：￥{{Number(totalPrice).toFixed(2)}}</span>
         <!-- <span>共{{totalNum}}件</span> -->
       </div>
       <div class="btn-box">
@@ -81,7 +81,9 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
     mounted() {
       this.getTotal()
       this.getShoppingCart();
-      localStorage.setItem('invoice' ,"不开发票")
+      localStorage.setItem('invoice' ,"不开发票");
+      localStorage.setItem('createOrderData','');
+      localStorage.setItem('invoiceed','')
     },
     watch: {
       'goodLits': {
@@ -154,11 +156,12 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
         if (arraychecked.length === this.goodLits.length) {
           this.selected_all = true
         }
-        this.arraychecked = arraychecked
+        this.arraychecked = arraychecked;
         this.getTotal()
       },
       slect_all() {
         // 判断全选还是全不选
+        var arraylist = [];
         if (this.selected_all) {
           for (var i = 0; i < this.goodLits.length; i++) {
             this.goodLits[i].isSelected = false;
@@ -166,9 +169,11 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
           this.selected_all = false
         } else {
           for (var i = 0; i < this.goodLits.length; i++) {
+            arraylist.push(this.goodLits[i]);
             this.goodLits[i].isSelected = true;
           }
           this.selected_all = true
+          this.arraychecked = arraylist;
         }
         this.getTotal()
       },
@@ -221,7 +226,6 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
       },
       getShoppingCart() {
         this.$store.dispatch('getShoppingCart').then(()=>{
-          console.log(this.goods.list)
           this.goodLits= this.goods.list
         })
       },
@@ -257,8 +261,8 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
         }
         localStorage.setItem('type', '1');
         // console.log(data)
-        
-       if(this.arraychecked.length > 0){
+        console.log(this.arraychecked)
+       if(this.arraychecked.length > 0 ||this.selected_all){
          this.$router.push({
            path: '/PurchaseOrder',
            query: {

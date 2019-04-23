@@ -30,13 +30,16 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState} from 'vuex';
+  import {reqCreateOrder} from '../../api'
   export default {
     data() {
       return {
         activeClass: 1,// 支付方式 1 微信 2 支付宝
         os: '',
-        price: "0.00"
+        price: "0.00",
+        order_sned:'',
+        orderList:''
       }
     },
     computed: {
@@ -64,11 +67,14 @@
         const the = this
         let way = this.activeClass
         let type = localStorage.getItem('type');
+        var istype='';
         let order_sn =''
         if(type === '2' || type === '4'){
+          istype=true;
           order_sn = localStorage.getItem('order_sndata');
         }else{
-          order_sn = this.orderId;
+          istype=false;
+          order_sn = this.order_sned;
         }
         let os = this.os;
         let return_url = '/VipSuccessful';
@@ -79,19 +85,48 @@
             the.wxInitPay(wechat)
           })
         } else if (way == 2) {
-          os = '3'
-          this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            os = '3';
+          if(this.orderList && !istype){
+            let order_sn=this.orderList;
+            this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
             let form = this.alipayPayment.key
             const div = document.createElement('div');
             div.innerHTML = form; //此处form就是后台返回接收到的数据
             document.body.appendChild(div);
             document.forms[0].submit()
-            // console.log(data);
-          })
+           })
+          }else if(istype){
+            this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            let form = this.alipayPayment.key
+            const div = document.createElement('div');
+            div.innerHTML = form; //此处form就是后台返回接收到的数据
+            document.body.appendChild(div);
+            document.forms[0].submit()
+           })
+          }else{
+           this.getshoppOrderData(2).then((data)=>{
+              this.orderList= data.data.order_sn;
+              this.vipsuccessful()
+           });
+          }
+        
         }
         // this.$router.push({
         //   path: '/vipsuccessful',
         // })
+      },
+      async getshoppOrderData (data) {
+            let token =this.$store.state.Authorization;
+            var shopping=JSON.parse(localStorage.getItem('createOrderData'));
+            var result='';
+            console.log(shopping);
+            result=await  reqCreateOrder(token,shopping.remark,shopping.cart_list,
+            shopping.product_info,shopping.address_id,shopping.share_id,shopping.invoice,data);
+            console.log(result)
+            if(result.code===200){
+              this.order_sned=result.data.order_sn;
+            }
+            return result;
       },
       showactive(val) {
         // 支付方式 1 微信 2 支付宝

@@ -106,7 +106,7 @@ export default {
         address(){
             var iforder=localStorage.getItem('iforder');
             if(iforder === 'yes'){
-                this.$router.go('-2');
+                this.$router.go('-1');
             }
             this.$router.push({
                 path:'/address'
@@ -159,7 +159,7 @@ export default {
                     Toast(result.msg)
                     var iforder=localStorage.getItem('iforder');
                     if(iforder === 'yes'){
-                        this.$router.go(-2)
+                        this.$router.go(-1)
                     }else{
                         this.$router.push({
                         path :'/address' 
