@@ -46,7 +46,7 @@ import { fail } from 'assert';
   }
  .recommend_list img{
    float: left;
-   width: 172px;
+   width: 172px !important;
    height:127px;
    margin: 28px 16px 28px 28px ;
  }

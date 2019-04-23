@@ -108,7 +108,7 @@
   }
   .mask .mask_a1{
     text-align: center;
-    color: #ff0909;
+    color: rgba(255,255,255,1);
     margin-top: 40px;
     font-size: 38px;
     text-decoration:underline ;
@@ -122,6 +122,7 @@
     background-color: rgba(243, 117, 5, 1);
     line-height: 60px;
     border-radius: 45px;
+    color: rgb(255,255,255,1);
   }
   .interaction_list{
     /* 未来遮罩层高度 */

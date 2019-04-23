@@ -184,7 +184,7 @@
                 "controls":"default",
                 "systemFullscreen":true,
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
-                "height" : '189',//视频的显示高度，请尽量使用视频分辨率高度
+                "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
@@ -253,7 +253,7 @@
           showBuyMask(){
             let token =this.$store.state.Authorization;
             if(token){
-              this.closeTouch();
+              //this.closeTouch();
               this.isBuyVideo=true
             }else{
               this.$router.push({
@@ -263,7 +263,7 @@
           
           },
           getCal(msg){//msg就是传过来的数据了  这只是个形参  名字可以随意
-            this.openTouch();
+            //this.openTouch();
             this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo
             
           },
@@ -333,7 +333,7 @@
   }
 .vcp-player .touchable .vcp-playing{
     width: 370px;
-    height: 187px;
+    /* height: 375px; */
 }
 .mask_live{
       position: fixed;
