@@ -6,7 +6,7 @@
     </div>
     <div class="purchase_address" @click="toadress">
       <img src="./image/address.png" alt="地址" class="address_ico">
-      <div class="address_a">{{address.address}}</div>
+      <div class="address_a">{{address.address}}{{address.info}}</div>
       <div class="address_name">{{address.name}}  {{address.phone}}</div>
       <img src="./image/doadd.png" alt="编辑地址" class="address_go">
     </div>
@@ -24,7 +24,7 @@
       <span class="amount_a1">商品总价</span>
       <span class="amount_a2">
             <span class="a2_un">￥</span>
-            <span class="a2_ut">{{totalPrice}}</span>
+            <span class="a2_ut">{{Number(totalPrice).toFixed(2)}}</span>
         </span>
     </div>
     <div class="Commodity_amount">
@@ -38,7 +38,7 @@
       <span class="amount_a1">订单总价</span>
       <span class="amount_a2">
             <span class="a2_un">￥</span>
-            <span class="a5_ut">{{orderDetails.total}}</span>
+            <span class="a5_ut">{{ Number(orderDetails.total).toFixed(2)}}</span>
         </span>
     </div>
     <div class="Commodity_amounted">
@@ -56,7 +56,7 @@
     <div class="purchase_buy">
       <div class="buy_content">
         <span class="content_total">总计</span>
-        <span class="content_mony">¥{{orderDetails.total}}</span>
+        <span class="content_mony">¥{{Number(orderDetails.total).toFixed(2)}}</span>
       </div>
       <input type="button" value="去支付" class="buy_link" @click="purchase">
     </div>
@@ -75,9 +75,13 @@
         invoice:'不开发票',
         isBuyVideo: false,
         product_info: [],
-        cart_list: [],
+        cart_list: '',
         totalPrice: 0,
-        address:{}
+        address:{},
+        invotype:0,
+        invotitl:'',
+        compan:'',
+        compan_id:'',
       }
     },
     components: {
@@ -90,6 +94,16 @@
       // 获取传过来的参数
       this.getOrderDetails();
       this.invoice=localStorage.getItem('invoice');
+      var shoppingList=localStorage.getItem('createOrderData') && JSON.parse(localStorage.getItem('createOrderData')) ;
+      var invoicetype= localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed'));
+      if(shoppingList.remark){
+        this.post=shoppingList.remark
+      }
+      if(invoicetype.type ==1){
+        this.invoice='普通纸质发票'
+      }else{
+        this.invoice='不开发票'
+      }
     }
     ,
     methods: {
@@ -108,15 +122,35 @@
         }, 100);
       },
       purchase() {
-        let product_info = this.product_info
-        let remark = this.post
+        let companyId={};
+        let product_info = this.product_info;
+        let remark = this.post;
         let cart_list = this.cart_list;
         var address =this.orderDetails.address.address;
         let address_id = this.orderDetails.address.id
         let share_id = localStorage.getItem('share_id');
         product_info = Base64.encode(JSON.stringify(product_info));
+        if(this.invotype == 0){
+           companyId['type']=this.invotype;
+           companyId['title_type']=1;
+        }else if(this.invotype == 1){
+          companyId['type']=this.invotype;
+          if(this.invotitl == 1){
+            companyId['title_type']=this.invotitl;
+          }else{
+            companyId['title_type']=this.invotitl;
+            companyId['company']=this.compan;
+            companyId['company_id']=this.compan_id;
+          }
+        }
+        localStorage.setItem('invoiceed',JSON.stringify(companyId));
+        var companyIdList =Base64.encode(JSON.stringify(companyId));
         if(address){
-          this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id,share_id})
+          let shoppData={remark:remark,cart_list:cart_list,product_info:product_info,address_id:address_id,
+            share_id:share_id,invoice:companyIdList
+          }
+          localStorage.setItem('createOrderData',JSON.stringify(shoppData));
+          // this.$store.dispatch('createOrder', {remark, cart_list, product_info, address_id,share_id})
           let orderDetail = {
             total: this.orderDetails.total
           }
@@ -130,7 +164,19 @@
         }
        
       },
-      getCal(msg) {
+      getCal(msg,a,b,c,d) {
+        if(a == 0){
+          this.invotype=a
+        }else if(a==1){
+          this.invotype=a;
+          if(b==1){
+            this.invotitl=b;
+          }else{
+            this.invotitl=b;
+            this.compan=c;
+            this.compan_id=d;
+          }
+        }
         this.openTouch();
         this.isBuyVideo = msg;//然后将数据赋值给isBuyVideo
       },

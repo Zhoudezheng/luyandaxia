@@ -7,16 +7,16 @@
             <div class="content_b">发票类型</div>
             <div class="content_c">
                 <div class="c_div" >
-                   <span :class=" activeClass == 1 ? 'c_personal': 'c_personals' " @click="ifshow">不开发票</span>
-                   <img src="./image/Group.png" alt="发票" class="c_ico" v-show="activeClass == 1">
+                   <span :class=" activeClass == 0 ? 'c_personal': 'c_personals' " @click="ifshow">不开发票</span>
+                   <img src="./image/Group.png" alt="发票" class="c_ico" v-show="activeClass == 0">
                 </div>
                 <div class="c_span" >
-                   <span :class="activeClass == 2 ? 'c_company': 'c_companys' " @click="ifshows">普通纸质发票</span>
-                   <img src="./image/Group.png" alt="发票" v-show="activeClass == 2" class="c_ico">
+                   <span :class="activeClass == 1 ? 'c_company': 'c_companys' " @click="ifshows">普通纸质发票</span>
+                   <img src="./image/Group.png" alt="发票" v-show="activeClass == 1" class="c_ico">
                 </div>
             </div>
-            <div v-show="activeClass == 1"></div>
-            <div v-show="activeClass == 2" class="c_type">
+            <div v-show="activeClass == 0"></div>
+            <div v-show="activeClass == 1" class="c_type">
                 <div class="type_head">发票抬头</div>
                 <div class="type_personal" >
                    <span :class=" typeactive == 1 ? 'personal_a': 'personal_b' " @click="iftype">个人</span>
@@ -47,24 +47,30 @@
 
 <script>
   import { Toast } from 'mint-ui';
+import { type } from 'os';
   export default {
     data(){
       return{
-        activeClass:1,
-        typeactive:1,
-        compay_t:'',
-        compay_h:'',
-    }
+        activeClass:(localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed')).type) || 0,
+        typeactive:(localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed')).title_type) || 1,
+        compay_t:(localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed')).company)||'',
+        compay_h:(localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed')).company_id)||'',
+        istype:'',
+      }
+    },
+    created(){
+       this.istype=localStorage.getItem('invoiceed') && JSON.parse(localStorage.getItem('invoiceed'));
+       console.log(this.istype)
     },
     methods:{
       cancelVideo(){
         this.$emit('getcacel',false)
       },
       showoff(){
-        if(this.activeClass == 1){
+        if(this.activeClass == 0){
             localStorage.setItem('invoice' ,"不开发票")
             this.$emit('gettypelist',"不开发票");
-            this.$emit('getcacel',false)
+            this.$emit('getcacel',false,0)
         }else{
              if(!this.compay_t && this.typeactive == 2){
                 Toast('单位名称不能为空')
@@ -73,10 +79,10 @@
                 Toast('识别号不能为空')
              }
              if(this.compay_t && this.compay_h && this.typeactive ==2 ){
-                 this.$emit('getcacel',false)
+                 this.$emit('getcacel',false,1,2,this.compay_t,this.compay_h)
              }
              if( this.typeactive ==1){
-                 this.$emit('getcacel',false)
+                 this.$emit('getcacel',false,1,1)
              }
              localStorage.setItem('invoice' ,"普通纸质发票")
              this.$emit('gettypelist',"普通纸质发票")
@@ -84,10 +90,10 @@
        
       },
       ifshow(){
-          this.activeClass = 1;
+          this.activeClass = 0;
       },
       ifshows(){
-          this.activeClass = 2;
+          this.activeClass = 1;
           
       },
       iftype(){
