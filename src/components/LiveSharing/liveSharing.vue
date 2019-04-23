@@ -264,8 +264,7 @@
           },
           getCal(msg){//msg就是传过来的数据了  这只是个形参  名字可以随意
             this.openTouch();
-            this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo
-            
+            this.isBuyVideo=msg;//然后将数据赋值给isBuyVideo         
           },
           vipmember(){
             let token =this.$store.state.Authorization;

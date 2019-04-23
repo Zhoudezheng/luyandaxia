@@ -15,13 +15,13 @@
            <span class="button_span">VIP会员</span>
            <span class="button_Vip">（所有全免费）</span>
            <span class="button_money">¥{{this.vip_price}}</span>
-           <img src="./image/Group.png" alt="已勾选" v-show="activeClass == 1">
+           <img src="./image/Group.png" alt="已勾选" v-show="activeClass == 1" class="button_po">
          </button>
           <button type="button" :class="activeClass == 2 ? 'purchase_button':'purchase_buttoned'" @click="showactives" >
            <span class="button_span">购买视频</span>
            <span class="button_Vip">（本视频{{this.detail.viewing_time}}小时免费看）</span>
            <span class="button_money">¥{{this.video_price}}</span>
-           <img src="./image/Group.png" alt="已勾选" v-show='activeClass == 2'> 
+           <img src="./image/Group.png" alt="已勾选" v-show='activeClass == 2' class="button_po"> 
          </button>
          <div class="purchase_quanyi">
            <!-- <img src="./image/quanyi.png" alt="权益"> -->
@@ -37,7 +37,7 @@
          <span class="content_total">总计</span>
          <span class="content_mony">¥{{this.tatal_cost}}</span>
         </div>
-         <input type="button" value="购买视频" class="buy_link" @click="singlevideo">
+         <div class="buy_link" @click="singlevideo">购买视频</div>
       </div>
     </div>
 </template>
@@ -299,6 +299,9 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     /* margin-left: 29px; */
     margin-top: 23px;
  }
+ .purchase_button,.purchase_buttoned{
+   position: relative;
+ }
  .purchase_button .button_money{
     height:45px;
     font-size:32px;
@@ -313,9 +316,9 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
  .purchase_button img{
     width: 40px !important;
     height: 41px;
-    float:right;
-    margin-right: -155px;
-    margin-top: 50px;
+     position: absolute;
+    right: 0;
+    bottom: 0;
  }
 
 .purchase_buttoned .button_span{
@@ -354,11 +357,11 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     margin-top: 33px;
 }
 .purchase_buttoned img{
+    position: absolute;
+    right: 0;
+    bottom: 0;
     width: 40px !important;
     height: 41px;
-    float:right;
-    margin-right: -155px;
-    margin-top: 52px;
 }
 .feel{
   height: 40px;
@@ -443,14 +446,13 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
   margin-left: 30px;
 }
 .purchase_buy .buy_link{
-  width:250px;
   height:98px;
   background:linear-gradient(90deg,rgba(255,161,44,1) 0%,rgba(255,121,19,1) 100%);
   font-size:36px;
   font-family:PingFangSC-Medium;
   font-weight:500;
   color:rgba(255,255,255,1);
-  line-height:50px;
+  line-height:98px;
 }
 input::-webkit-input-placeholder{
    width:191px;

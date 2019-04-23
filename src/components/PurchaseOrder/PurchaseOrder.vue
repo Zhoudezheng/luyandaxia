@@ -269,6 +269,8 @@
   .purchase_address .address_a {
     float: left;
     height: 45px;
+    text-align: left;
+    width: 80%;
     font-size: 32px;
     font-family: PingFangSC-Medium;
     font-weight: 500;
