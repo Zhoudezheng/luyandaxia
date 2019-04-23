@@ -77,6 +77,7 @@
     methods:{
       load () {
         let url = this.url
+        console.log('htmlurl',url)
       if (url && url.length > 0) {
       // 加载中
       let param = {
@@ -102,6 +103,7 @@
     padding-left: 20px;
     padding-top: 20px;
     padding-right: 20px;
+    font-size: initial;
 
   }
   .introduction_title .title_group{
