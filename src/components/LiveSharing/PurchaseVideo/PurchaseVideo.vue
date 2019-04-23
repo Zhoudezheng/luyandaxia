@@ -24,12 +24,12 @@
            <img src="./image/Group.png" alt="已勾选" v-show='activeClass == 2'> 
          </button>
          <div class="purchase_quanyi">
-           <img src="./image/quanyi.png" alt="权益">
-           <span>VIP特权</span>
+           <!-- <img src="./image/quanyi.png" alt="权益"> -->
+           <span v-html="instro_html">VIP特权</span>
          </div>
-         <div class="feel">
+         <!-- <div class="feel">
          <p class="quanyi_content">路演大侠全部直播免费看</p>
-         </div>
+         </div> -->
       </div>
       <div class="purchase_lin"></div>
       <div class="purchase_buy">
@@ -52,6 +52,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
         tatal_cost:"0.00",
         vip_price:"0.00",
         video_price:"0.00",
+        instro_html:"",
     }
     },
     computed: {
@@ -70,8 +71,10 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
           this.vip_price = this.userviplist.annual_fee
           if(this.activeClass == 1){
             this.tatal_cost = this.vip_price
+            this.loadInstroHtml(this.userviplist.url)
           }else{
             this.tatal_cost = this.video_price
+            this.loadInstroHtml(this.detail.singleBuyUrl)
           }
           setTimeout(()=>{
               this.video_price = this.detail.individual_cost
@@ -123,11 +126,30 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
       showactive(){
         this.activeClass=1
         this.tatal_cost = this.vip_price
+        this.loadInstroHtml(this.userviplist.url)
+        
       },
        showactives(){
         this.activeClass=2
         this.tatal_cost = this.video_price
+        this.loadInstroHtml(this.detail.singleBuyUrl)
+      },
+      loadInstroHtml (url) {
+        console.log('url',url)
+        if (url && url.length > 0) {
+        // 加载中
+        let param = {
+          accept: 'text/html, text/plain'
+        }
+        this.$http.get(url, param).then((response) => {
+          // 处理HTML显示
+          //console.log(response)
+          this.instro_html = response.body
+        }).catch(() => {
+          this.instro_html = '加载失败'
+        })
       }
+    }
     }
   }
 </script>
@@ -158,7 +180,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
    bottom: 102px;
    margin-top: -78px;
    width:750px;
-   height:837px;
+   height:984px;
    background-color:#ffffff;
    border-radius:36px 36px 0px 0px;
  }
@@ -172,7 +194,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
  }
  .purchase_list img{
    float: left;
-   width: 184px;
+   width: 184px !important;
    height:184px;
    margin: 28px 16px 28px 0px ;
  }
@@ -289,7 +311,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     margin-top: 33px;
  }
  .purchase_button img{
-    width: 40px;
+    width: 40px !important;
     height: 41px;
     float:right;
     margin-right: -155px;
@@ -332,7 +354,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     margin-top: 33px;
 }
 .purchase_buttoned img{
-    width: 40px;
+    width: 40px !important;
     height: 41px;
     float:right;
     margin-right: -155px;
@@ -343,7 +365,8 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
 }
 .purchase_quanyi{
   vertical-align:middle;
-  height: 68px;
+  height: 344px;
+  overflow: scroll;
 }
 .purchase_quanyi img{
   width: 28px;
@@ -411,12 +434,12 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
   float: left;
   width:111px;
   height:45px;
-  font-size:20px;
+  font-size:30px;
   font-family:PingFangSC-Semibold;
   font-weight:600;
   color:rgba(255,126,0,1);
   line-height:28px;
-  margin-top: 36px;
+  margin-top: 32px;
   margin-left: 30px;
 }
 .purchase_buy .buy_link{
