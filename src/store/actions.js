@@ -26,6 +26,7 @@ import {
   ORDER_DETAIL,
   IMAGE_TOKEN,
   SHOP_LIKE,
+  VIP_RECORD,
 } from './mutation-types'
 
 import {
@@ -54,6 +55,7 @@ import {
   reqaddordershopping,
   reqShoplikeIndex,
   reqLiveDataList,
+  reqshiprecord,
 } from '../api'
 import { stat } from 'fs';
 
@@ -312,6 +314,18 @@ export default {
       commit(IS_VIP, result.data)
     }
   },
+  //会员购买记录
+  async getshiprecord({commit, state},data) {
+    let token = state.Authorization;
+    let result = await reqshiprecord(token,data)
+    if (result.code === 200) {
+      let data = result.data
+      commit(VIP_RECORD, data)
+    } else {
+      commit(VIP_RECORD, result.data)
+    }
+  },
+
   //获取商品评价
   async getEvaluate_list({commit, state}, index) {
     let token = state.Authorization

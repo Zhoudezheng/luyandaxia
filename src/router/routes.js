@@ -28,6 +28,7 @@ import evaluation from '../components/CommodityDetails/Evaluation/evaluation'
 import instructions from '../components/CommodityDetails/Instructions/instructions'
 import Classification from '../components/Classification/Classification'
 import orderdetail from '../components/OrderDetail/orderdetail'
+import membershiprecord from '../components/MembershipRecord/membershiprecord'
 
 
 export default [
@@ -233,6 +234,10 @@ export default [
     {
       path:'/membership',
       component:membership,
+    },
+    {
+      path:'/membershiprecord',
+      component:membershiprecord
     },
     {
       path:'/orderdetail',

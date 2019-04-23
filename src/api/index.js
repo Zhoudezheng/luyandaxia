@@ -80,6 +80,8 @@ export const setUserList = (token,avatar,nickname,mobile,realname,company,job,em
 export const reqVipdata = (token) => ajax(BASE+'/vipset/detail',{token},'POST');
 //获取vip订单号
 export const reqvipinfolist = (token) => ajax(BASE+'/vip/create_new',{token},'POST');
+//获取vip购买记录
+export const reqshiprecord = (token,page) => ajax(BASE+'/mine_vip/record',{token,page},'POST');
 //删除订单
 export const delbuyshop = (id ,type) => ajax (BASE+'/order/handle',{id,type},'POST');
 //获取订单详情

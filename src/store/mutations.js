@@ -26,6 +26,7 @@ import {
   ORDER_DETAIL,
   IMAGE_TOKEN,
   SHOP_LIKE,
+  VIP_RECORD,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -125,5 +126,8 @@ export default {
   },
   [SHOP_LIKE](state,data){
     state.shopslike=data
-  }
+  },
+  [VIP_RECORD](state,data){
+    state.viprecord=data
+  },
 }

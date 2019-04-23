@@ -30,4 +30,5 @@ export default {
   imageToken:{},
   shopslike:{},
   commcollen:{},
+  viprecord:{},
 }
