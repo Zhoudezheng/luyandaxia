@@ -168,8 +168,17 @@
       //   }
       // },
        toClass(id,name){
-        localStorage.setItem('allList',id);
         localStorage.setItem('allListed',name);
+        if(id === 4){
+            localStorage.setItem('allList',0);
+            localStorage.setItem('allType',0);
+        }else if(id ===3){
+            localStorage.setItem('allList',0);
+            localStorage.setItem('allType',1);
+        }else{
+            localStorage.setItem('allList',id);
+            localStorage.setItem('allType',0);
+        }
         this.$router.push({
           path:'Classification',
           query:{

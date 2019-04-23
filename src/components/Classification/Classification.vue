@@ -52,6 +52,7 @@
       return {
         id: '',
         name: '',
+        type:'',
         pageNum: 1,//页码
         list: 0,//数据
         allLoaded: false,//数据是否加载完毕
@@ -87,6 +88,7 @@
       getCalls() {
         this.id = localStorage.getItem('allList');
         this.name = localStorage.getItem('allListed');
+        this.type = localStorage.getItem('allType');
       },
       back() {
         this.$router.go(-1)
@@ -94,7 +96,7 @@
       },
       getProductList(){
         let category_id = this.id;
-        let type = 0;
+        let type = this.type;
         let page=this.pageNum;
         this.$store.dispatch('getProductList',{page,category_id,type}).then(()=>{
             console.log(this.productList)
@@ -120,7 +122,7 @@
           this.pageNum += 1;
           let page =this.pageNum;
           let category_id = this.id;
-          let type=0;
+          let type=this.type;
           setTimeout(() => {//上拉加载更多 模拟数据请求这里为了方便使用一次性定时器
               if (this.next) {//最多下拉三次
                    this.$store.dispatch('getProductList',{page,category_id,type}).then(()=>{
