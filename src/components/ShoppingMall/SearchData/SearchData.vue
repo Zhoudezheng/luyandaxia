@@ -42,8 +42,8 @@
             return {
               inputvalue:'',
               isshowhostory:true,
-              HistoryList:JSON.parse(window.localStorage.getItem('HistoryList')),
-              HistoryListdata:JSON.parse(window.localStorage.getItem('HistoryList')),
+              HistoryList:(window.localStorage.getItem('HistoryList') && JSON.parse(window.localStorage.getItem('HistoryList')))||[],
+              HistoryListdata:(JSON.parse(window.localStorage.getItem('HistoryList'))&&JSON.parse(window.localStorage.getItem('HistoryList')))||[],
               inputOtion:{
                   type:Object,
                   default:{
