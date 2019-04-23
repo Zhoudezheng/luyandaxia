@@ -3,6 +3,7 @@
     <div class="ship_div">
         <img src="./image/fanhui.png" alt="协议按钮"  class="ship_check" @click="shipper" >
         <span  class="ship_mode">年费VIP</span>
+        <span class="ship_ad" @click="torecord">购买记录</span>
     </div>
     <div>
         <img src="./image/background.png" alt="背景图片" class="ship_con">
@@ -139,6 +140,11 @@ import {reqvipinfolist} from '../../api'
       getVipdata(){
          this.$store.dispatch('getVipList');
       },
+      torecord(){
+          this.$router.push({
+              path:'/membershiprecord'
+          })
+      },
       load () {
         let url = this.url
         if (url && url.length > 0) {
@@ -239,7 +245,18 @@ import {reqvipinfolist} from '../../api'
     color:rgba(187,187,187,1);
     line-height:40px;
 }
-.equity{
+.ship_ad{
+    float: right;
+    margin-top: 20px;
+    margin-right: 30px;
+    height:50px;
+    font-size:28px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(74,74,74,1);
+    line-height:50px;
+}
+/* .equity{
     margin-top: 16px;
     height: 68px;
     background:rgba(255,255,255,1);
@@ -333,7 +350,7 @@ import {reqvipinfolist} from '../../api'
     margin-right: 27px;
     text-align: left;
     margin-bottom: 165px;
-}
+} */
 .footer_car{
     position: fixed;
     left: 0;
