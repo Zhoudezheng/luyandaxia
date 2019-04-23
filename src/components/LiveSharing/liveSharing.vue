@@ -2,9 +2,22 @@
   <div id="aaa" ref="wo" class="aaaaa" >
     <div class="videoLess" id='flxedoff'>
           <div class="isFixed">
-           <div id="id_test_video" style="width:100%; height:auto;" class="bbb"></div>
+           <div id="id_test_video" style="width:100%;" class="bbb"></div>
           </div>
+          <!-- <div class="mask_a"></div> -->
+          <div class="livSharing_router nva_Fixed" id='nav_flexed' >
+			<span class="liveSharing_roterone">
+                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍</router-link>
+            </span>
+			<span class="liveSharing_rotertwo">
+                <router-link to='Interaction'>互动</router-link>
+            </span>
+			<span class="liveSharing_roterthree">
+                <router-link :to="{path:'recommend',query:{id:this.detail.id}}">推荐</router-link>
+            </span>	
+	</div>
     </div>
+    
     <div class='mask_live'  v-show="isShowLive">
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
         <div class="masklive_div" v-show="is_vip">
@@ -18,32 +31,9 @@
         </div> -->
     </div>
     <div>
-    <div class="liveSharing_nva">
-          <div class="liveSharing_nvatitle">{{this.detail.title}}</div>
-          <span class="liveSharing_nvapeople">观看人数：{{this.detail.pv}}人</span>
-          <span  :class="is_collection?'liveSharing_nvastart':'liveSharing_nvastart_down'" @click="shoucang"></span>
-    </div>
-    <div class="liveSharing_row"></div>
-    <div class="liveSharing_user">
-          <img :src="this.detail.publisher_avatar" class="liveuser_toen">
-          <span class="liveuser_span">{{this.detail.publisher_name}}</span>
-          <span class="liveuser_fensi">{{this.detail.publisher_fans}}个粉丝</span>
-          <div class="liveuser_sub">
-               <input class="liveuser_button" type="button" v-model=this.dingyue @click.prevent="liveuserToen">
-          </div>
-    </div>
-    <div class="liveSharing_row" :class=" nvaBarFixed === true ? 'nva_FixedRow' :''"></div>
-    <div class="livSharing_router" id='nav_flexed' :class=" nvaBarFixed === true ? 'nva_Fixed' :''" >
-			<span class="liveSharing_roterone">
-                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍</router-link>
-            </span>
-			<span class="liveSharing_rotertwo">
-                <router-link to='Interaction'>互动</router-link>
-            </span>
-			<span class="liveSharing_roterthree">
-                <router-link :to="{path:'recommend',query:{id:this.detail.id}}">推荐</router-link>
-            </span>	
-	</div>
+    
+    <!-- <div class="liveSharing_row " :class=" nvaBarFixed === true ? 'nva_FixedRow' :''"></div> -->
+    
     <div class='liveSharing_route' :class=" nvaBarFixed === true ? 'nva_Fixeded' :''">
             <span :class="{on: $route.path==='/liveSharing/introduction'}"></span>
             <span :class="{ontwo: $route.path==='/liveSharing/Interaction'}"></span>
@@ -152,17 +142,19 @@
             this.setVideo();
          },1000)
          this.box = this.$refs.wo;
-         this.box.addEventListener('scroll', () => {
-             console.log('滚动')
-         var offsetTop = document.querySelector('#nav_flexed').offsetTop;
-         console.log('offsetTop',offsetTop)
-          if (this.$refs.wo.scrollTop+180 > offsetTop) {
-                 this.nvaBarFixed = true
-          } 
-           if(  offsetTop < 380  && this.$refs.wo.scrollTop < offsetTop) {
-                 this.nvaBarFixed = false
-          }
-        },true)
+//          this.box.addEventListener('scroll', () => {
+//          var nav = document.querySelector('#nav_flexed')
+//          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
+//          console.log('nav',nav)
+//          console.log('dscroll',this.$refs.wo.scrollTop)
+//          console.log('nscroll',offsetTop)
+//           if (this.$refs.wo.scrollTop > 20) {
+//                  this.nvaBarFixed = true
+//           } 
+//            if( this.$refs.wo.scrollTop < 20) {
+//                  this.nvaBarFixed = false
+//           }
+//         },true)
          window.addEventListener('scroll', this.handleScrollfoot,true);
     },
     
@@ -184,7 +176,7 @@
                 "controls":"default",
                 "systemFullscreen":true,
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
-                "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
+                // "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
@@ -319,18 +311,32 @@
     /* position: fixed;
     width:750px;
     top: 0px; */
-    height: 375px;
+    height: 453px;
 }
 .videoLess .isFixed{
+    overflow: hidden;
     position:fixed;
     top:0px;
     z-index:20;
-    height: 375px;
+    height: 453px;
     overflow-y: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
 
   }
+  .bbb{
+      height: 372px;
+  }
+.mask_a{
+    height: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10
+}
 .vcp-player .touchable .vcp-playing{
     width: 370px;
     /* height: 375px; */
@@ -475,7 +481,7 @@
 }
 .nva_FixedRow{
     position:fixed;
-    top:370px;
+    top:365px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
@@ -489,12 +495,12 @@
 }
 .nva_Fixed{
     position:fixed;
-    top:385px;
+    top:372px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
     -webkit-overflow-scrolling: touch;
-    overflow: auto;
+    overflow: hidden;
     background-color: #ffffff
 }
 
@@ -571,7 +577,7 @@
 
 .nva_Fixeded{
     position:fixed;
-    top:460px;
+    top:445px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;

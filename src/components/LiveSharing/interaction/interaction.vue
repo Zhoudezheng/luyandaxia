@@ -85,9 +85,9 @@
 
 <style  lscoped>
   @import '../../../../static/font/font.css';
-  /* .interaction{
-     height:100%;
-  } */
+  .interaction{
+    position: relative;
+  }
   .mask{
     position: fixed;
     left: 0;

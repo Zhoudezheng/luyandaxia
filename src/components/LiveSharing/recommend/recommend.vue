@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="introduction">
     <div class="recommend_list" v-for="recommend in this.recommends" v-show="isNull == false">
          <img :src="recommend.cover" alt="1111">
          <a href="#" class="list_a1">{{recommend.name}}</a>
@@ -41,6 +41,9 @@ import { fail } from 'assert';
 
 <style  lscoped>
   @import '../../../../static/font/font.css';
+  .introduction{
+    position: relative;
+  }
   .recommend_list{
     height: 183px;
   }
