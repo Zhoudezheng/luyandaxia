@@ -211,7 +211,7 @@
     margin-top: 136px;
     color: rgba(255, 255, 255, 1);
     font-family: PingFangSC-Semibold;
-    margin-right: 140px;
+    margin-right: 280px;
     line-height: 30px;
     font-size: 24px;
     font-weight: 500;
@@ -225,6 +225,10 @@
     font-weight: 600;
     color: rgba(255, 255, 255, 1);
     line-height: 30px;
+    width: 270px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .head_cont .head_vip {
@@ -245,7 +249,7 @@
   .personal_head .head_adress {
     float: left;
     margin-top: 136px;
-    margin-left: 190px;
+    margin-left: 50px;
     height: 30px;
     font-size: 24px;
     font-family: PingFangSC-Medium;

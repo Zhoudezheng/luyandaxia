@@ -7,11 +7,11 @@
     </div>
     <div class='mask_live'  v-show="isShowLive">
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
-        <div class="masklive_div">
+        <div class="masklive_div" v-show="is_vip">
             <!-- <img src="./video/shuaxin.png" alt="刷新"> -->
-            <a href="#" @click="showBuyMask" v-show="is_vip">立即购买</a>
+            <a href="#" @click="showBuyMask"   >立即购买</a>
         </div>
-        <input type="text" class="masklive_input" value="开通VIP会员" @click="vipmember">
+        <input type="text" ref="masklive_input" value="开通VIP会员" @click="vipmember">
         <!-- <div class="masklive_buy" v-show="is_vip">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
@@ -56,7 +56,7 @@
     <div class="footer_flxed" id='isfootflxed' v-show=" $route.path != '/liveSharing/Interaction'">
            <div class= 'footFixed'>
            <img src="./video/Bitmap.png" alt="商标">
-           <span class="footer_app"> 路演文化传播与价值的提升第一平台</span>
+           <span class="footer_app"> 学路演 找大侠</span>
            <input type="button" class="app_download" value="打开APP" @click="downApp">
            </div>
     </div>
@@ -104,7 +104,7 @@
                         this.isShowLive = true
                     }
                     if(this.detail.is_vip === 0){
-                        if(Math.round(this.currentTime) == 180 && !token){
+                        if(Math.round(this.currentTime) >= 120 && !token){
                            this.player.pause()
                            this.$router.push({
                                path:'/login'
@@ -130,11 +130,12 @@
         //获取直播id
          let id = this.$route.query.id
         //获取直播信息
-         this.$store.dispatch('getlivedatalist',id)
-         this.$store.dispatch('getliveData',id).then(()=>{
+         //this.$store.dispatch('getlivedatalist',id)
+         this.$store.dispatch('getlivedatalist',id).then(()=>{
              //判断是否显示购买单个视频
             if(this.detail.is_vip === 2)
             {
+                this.$refs.masklive_input.style.marginRight = "0"
                 this.is_vip = false
             }
             //是否订阅
@@ -152,7 +153,9 @@
          },1000)
          this.box = this.$refs.wo;
          this.box.addEventListener('scroll', () => {
+             console.log('滚动')
          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
+         console.log('offsetTop',offsetTop)
           if (this.$refs.wo.scrollTop+180 > offsetTop) {
                  this.nvaBarFixed = true
           } 
@@ -323,7 +326,7 @@
     top:0px;
     z-index:20;
     height: 375px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
 
@@ -354,6 +357,7 @@
     line-height:33px;
     margin-top: 114px;
     margin-left: 147px;
+    white-space: nowrap;
 }
 .mask_live .masklive_div{
     float: left;
@@ -397,7 +401,7 @@
     line-height:35px;
     text-align: center;
     margin-right: 120px;
-}
+} 
 .mask_live .masklive_buy{
     margin-top: 30px;
     width:269px;
@@ -415,13 +419,15 @@
 }
 .liveSharing_nva{
     /* width:750px; */
-    height:153px;
+
+    height: 130px;
+    /* height:153px; */
     background:rgba(255,255,255,1);
    }
 .liveSharing_nvatitle{
     width:618px;
     height:56px;
-    margin: 36px 104px 0 28px;
+    margin: 20px 104px 0 28px;
     font-size:40px;
     font-family:PingFangSC-Semibold;
     font-weight:600;
@@ -435,7 +441,7 @@
 .liveSharing_nva .liveSharing_nvapeople{
     /* display: inline-block; */
     float: left;
-    margin: 32px 0px 36px 30px;
+    margin: 20px 0px 20px 30px;
     height:33px;
     font-size:24px;
     font-family:PingFangSC-Regular;
@@ -479,7 +485,7 @@
     background-color:#eeeeee;
 }
 .liveSharing_user{
-    height: 165px;
+    height: 140px;
 }
 .nva_Fixed{
     position:fixed;
@@ -494,13 +500,13 @@
 
 .liveSharing_user .liveuser_toen{
     float: left;
-    width:100px;
+    width:100px !important;
     height: 100px;
     border-radius: 50%; 
-    margin: 28px 0 28px 28px;
+    margin: 20px 0 28px 28px;
 }
 .liveSharing_user .liveuser_span{
-    margin: 28px 0 15px 24px;
+    margin: 20px 0 15px 24px;
     float: left;
     /* width:128px; */
     height:45px;
@@ -512,7 +518,7 @@
 }
 .liveSharing_user .liveuser_fensi{
     float: left;
-    margin-top: 88px;
+    margin-top: 80px;
     margin-left: -135px;
     height: 40px;     
     font-size:28px;
@@ -536,7 +542,9 @@
 }
 .liveSharing_user .liveuser_sub{
     float:right;
-    margin: 47px 28px 47px 0;
+    margin-top: 36px;
+    margin-right: -36px;
+    /*margin: 36px 0px 0px -36px; */
 }
 .livSharing_router{
     height: 78px;
@@ -627,9 +635,10 @@
 }
 .footer_flxed img{
     float: left;
-    width: 80px;
-    height:80px;
+    width: 54px !important;
+    height:54px;
     margin-left: 30px;
+    margin-top:15px;
 }
 .footer_flxed .footer_app{
     float: left;
@@ -641,11 +650,11 @@
 .footer_flxed .app_download{
     float: right;
     color: #eeeeee;
-    margin-top: 5px;
+    margin-top: 18px;
     margin-left: 30px;
     margin-right: 10px;
     width: 150px;
-    height: 70px;
+    height: 50px;
     border-radius: 45px;
      -webkit-appearance:none  !important;
     appearance:none !important;

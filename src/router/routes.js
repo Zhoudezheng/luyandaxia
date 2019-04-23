@@ -56,17 +56,17 @@ export default [
           {
             path:'Interaction',
             name:'Interaction',
-            meta: {
-              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
+            // meta: {
+            //   requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            // },
             component:Interaction
             },
           {
             path:'recommend', 
             name:'recommend', 
-            meta: {
-              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
+            // meta: {
+            //   requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            // },
             component:recommend
           },
           {
@@ -97,25 +97,25 @@ export default [
           {
             path:'commodity',
             name:'commodity',
-            meta: {
-              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
+            // meta: {
+            //   requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            // },
             component: commodity
           },
           {
             path:'evaluation',
             name:'evaluation',
-            meta: {
-              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
+            // meta: {
+            //   requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            // },
             component:evaluation
             },
           {
             path:'instructions', 
             name:'instructions', 
-            meta: {
-              requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
-            },
+            // meta: {
+            //   requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            // },
             component:instructions
           },
           {
