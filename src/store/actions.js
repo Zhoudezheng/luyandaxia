@@ -267,7 +267,8 @@ export default {
   // 支付宝支付
   async alipayPayment({commit, state}, {order_sn, device_type, type, return_url}) {
     let token = state.Authorization
-    let result = await reqAlipayPayment(token, order_sn, device_type, type, return_url)
+    let result = await reqAlipayPayment(token, order_sn, device_type, type, return_url);
+    console.log(result)
     if (result.code === 200) {
       let data = result.data
       commit(ALIPAY_PAYMENT, data)

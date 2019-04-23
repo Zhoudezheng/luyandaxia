@@ -30,12 +30,12 @@
                     </div>
 
                 <div slot="top" class="mint-loadmore-top" style="text-align:center">
-                <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
+                <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }"></span>
                 <mt-spinner v-show="topStatus == 'loading'" color="#26a2ff"></mt-spinner>
               </div>
               <div v-if="allLoaded" style="text-align:center;" class="data-none">没有更多数据了</div>
               <div slot="bottom" class="mint-loadmore-bottom">
-                <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+                <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }"></span>
                 <span v-show="bottomStatus === 'loading'">
                     <mt-spinner v-show="bottomStatus == 'loading'" color="#26a2ff"></mt-spinner>
                 </span>

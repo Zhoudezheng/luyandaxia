@@ -110,7 +110,7 @@
 
     },
     computed: {
-      ...mapState(['orders'])
+      ...mapState(['orders','alipayPayment'])
     },
     methods: {
       queryData() {
@@ -136,14 +136,24 @@
       },
       tobuyshop(item){
         var itemlist= item;
+        var type=1;
+        var order_sn=itemlist.order_sn;
+        var os='3';
+        let return_url = '/VipSuccessful';
+        if(itemlist.pay_type ==2){
+           this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            let form = this.alipayPayment.key
+            const div = document.createElement('div');
+            div.innerHTML = form; //此处form就是后台返回接收到的数据
+            document.body.appendChild(div);
+            document.forms[0].submit()
+           })
+        }
         this.$store.dispatch('setOrderSn',itemlist);
         let orderDetail = {
           total: (Number(itemlist.total_price) + Number(itemlist.freight)).toFixed(2),
         }
         localStorage.setItem('orderDetail', JSON.stringify(orderDetail));
-        this.$router.push({
-          path: '/VipMember',
-        })
       },
       delbuyshop(item,index){
         MessageBox.confirm('确定执行此操作?').then(action => {
