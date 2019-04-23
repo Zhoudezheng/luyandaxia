@@ -56,7 +56,7 @@
     <div class="footer_flxed" id='isfootflxed' v-show=" $route.path != '/liveSharing/Interaction'">
            <div class= 'footFixed'>
            <img src="./video/Bitmap.png" alt="商标">
-           <span class="footer_app"> 路演文化传播与价值的提升第一平台</span>
+           <span class="footer_app"> 学路演 找大侠</span>
            <input type="button" class="app_download" value="打开APP" @click="downApp">
            </div>
     </div>
@@ -313,7 +313,7 @@
   @import '../../../static/font/font.css';
 .aaaaa{
       height: 100%;
-      overflow: -moz-scrollbars-none;
+      overflow: scroll;
 }
 .videoLess{
     /* position: fixed;
@@ -419,13 +419,15 @@
 }
 .liveSharing_nva{
     /* width:750px; */
-    height:153px;
+
+    height: 130px;
+    /* height:153px; */
     background:rgba(255,255,255,1);
    }
 .liveSharing_nvatitle{
     width:618px;
     height:56px;
-    margin: 36px 104px 0 28px;
+    margin: 20px 104px 0 28px;
     font-size:40px;
     font-family:PingFangSC-Semibold;
     font-weight:600;
@@ -439,7 +441,7 @@
 .liveSharing_nva .liveSharing_nvapeople{
     /* display: inline-block; */
     float: left;
-    margin: 32px 0px 36px 30px;
+    margin: 20px 0px 20px 30px;
     height:33px;
     font-size:24px;
     font-family:PingFangSC-Regular;
@@ -483,7 +485,7 @@
     background-color:#eeeeee;
 }
 .liveSharing_user{
-    height: 165px;
+    height: 140px;
 }
 .nva_Fixed{
     position:fixed;
@@ -498,13 +500,13 @@
 
 .liveSharing_user .liveuser_toen{
     float: left;
-    width:100px;
+    width:100px !important;
     height: 100px;
     border-radius: 50%; 
-    margin: 28px 0 28px 28px;
+    margin: 20px 0 28px 28px;
 }
 .liveSharing_user .liveuser_span{
-    margin: 28px 0 15px 24px;
+    margin: 20px 0 15px 24px;
     float: left;
     /* width:128px; */
     height:45px;
@@ -516,7 +518,7 @@
 }
 .liveSharing_user .liveuser_fensi{
     float: left;
-    margin-top: 88px;
+    margin-top: 80px;
     margin-left: -135px;
     height: 40px;     
     font-size:28px;
@@ -540,7 +542,9 @@
 }
 .liveSharing_user .liveuser_sub{
     float:right;
-    margin: 47px 28px 47px 0;
+    margin-top: 36px;
+    margin-right: -36px;
+    /*margin: 36px 0px 0px -36px; */
 }
 .livSharing_router{
     height: 78px;
@@ -631,9 +635,10 @@
 }
 .footer_flxed img{
     float: left;
-    width: 80px;
-    height:80px;
+    width: 54px !important;
+    height:54px;
     margin-left: 30px;
+    margin-top:15px;
 }
 .footer_flxed .footer_app{
     float: left;
@@ -645,11 +650,11 @@
 .footer_flxed .app_download{
     float: right;
     color: #eeeeee;
-    margin-top: 5px;
+    margin-top: 18px;
     margin-left: 30px;
     margin-right: 10px;
     width: 150px;
-    height: 70px;
+    height: 50px;
     border-radius: 45px;
      -webkit-appearance:none  !important;
     appearance:none !important;
