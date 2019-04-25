@@ -1,6 +1,6 @@
 <template>
   <div class="introduction">
-    <div class="recommend_list" v-for="recommend in this.recommends" v-show="isNull == false">
+    <div class="recommend_list" v-for="recommend in this.recommends" v-show="isNull == false" @click="goto(recommend)">
          <img :src="recommend.cover" alt="1111">
          <a href="#" class="list_a1">{{recommend.name}}</a>
          <a href="#" class="list_a2">{{recommend.info}}</a>
@@ -36,6 +36,68 @@ import { fail } from 'assert';
           },
         }
     },
+    methods:{
+      goto(recommend){
+        console.log('type',recommend.type)
+        let id = recommend.url
+        console.log('id',id)
+        if(recommend.type === 1){
+          
+          this.$router.push(
+            {
+              path:'/commoditydetails',
+              query:{
+                data:{
+                  id
+                }
+              }
+            }
+          )
+
+        }else if(recommend.type === 2)
+        {
+          this.$router.push(
+            {
+              path:'/liveSharing',
+              query:{
+                id:id
+              }
+            }
+          )
+          window.location.reload()
+        }else if(recommend.type === 3){
+          this.$router.push(
+            {
+              path:'/projectsharing',
+              query:{
+                id:id
+              }
+            }
+          )
+        }else{
+          this.$router.push(
+            {
+              path:'/recommenddetail',
+              query:{
+                url:recommend.url,
+                name:recommend.name
+              }
+            }
+          )
+        }
+      }
+    },
+    watch:{
+      $route(){
+        this.$nextTick(
+          this.$router.replace({
+          path:this.$route.fullPath
+        })
+        )
+       
+        console.log(this.$route.fullPath);
+      }
+    }
   }
 </script>
 

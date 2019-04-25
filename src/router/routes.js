@@ -29,6 +29,7 @@ import instructions from '../components/CommodityDetails/Instructions/instructio
 import Classification from '../components/Classification/Classification'
 import orderdetail from '../components/OrderDetail/orderdetail'
 import membershiprecord from '../components/MembershipRecord/membershiprecord'
+import recommenddetail from '../components/recommendDetail/recommendDetail'
 
 
 export default [
@@ -242,6 +243,10 @@ export default [
     {
       path:'/orderdetail',
       component:orderdetail
+    },
+    {
+      path:'/recommenddetail',
+      component:recommenddetail
     },
     {
       path:'/projectsharing',

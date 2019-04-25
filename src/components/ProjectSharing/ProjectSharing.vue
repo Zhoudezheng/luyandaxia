@@ -1,7 +1,7 @@
 <template>
   <div class="project" ref="wo" >
     <div class="project_div">
-      <img src="./image/huitui.png" alt="协议按钮" class="project_check">
+      <img src="./image/huitui.png" alt="协议按钮" class="project_check" @click="huitui">
       <span  class="project_mode">{{this.proDetail.info.name}}</span>
       <img :src="imgUrl" alt="收藏" class="div_sharing" @click="shoucang" ></span>
     </div>
@@ -117,6 +117,9 @@ export default {
                        13: '直播已经结束，请稍后再来'
                 }
             })
+          },
+          huitui(){
+            this.$router.go(-1)
           },
           async shoucang(){
               //收藏类型 1直播 2项目 3文章 4商品
