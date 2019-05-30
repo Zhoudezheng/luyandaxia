@@ -63,7 +63,6 @@ export default {
 
   // 获取商家列表的异步action
   async getliveData({commit, state}, id) {
-
     let token = state.Authorization
     // 1. 发送异步ajax请求
     const result = await reqLiveData(token, id)  // {code: 0, data: shops}
@@ -108,7 +107,7 @@ export default {
       commit(LIVE_DETAIL, {detail})  // action提交给mutation的是包含数据的对象, 而不数据本身
       //commit(URL_CONTENT,{url})  //对直播详情介绍url进行复制
       var video = {}
-      if (detail.status === 1) {
+      if (detail.status === 1 || detail.status == 0 ) {
         video = {
           mp4: '',
           rtmp: '',
