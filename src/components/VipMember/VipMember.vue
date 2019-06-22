@@ -32,6 +32,8 @@
 <script>
   import {mapState} from 'vuex';
   import {reqCreateOrder} from '../../api'
+  import wx from "weixin-js-sdk";
+import { debug } from 'util';
   export default {
     data() {
       return {
@@ -68,7 +70,7 @@
         let way = this.activeClass
         let type = localStorage.getItem('type');
         var istype='';
-        let order_sn =''
+        let order_sn ='';
         if(type === '2' || type === '4'){
           istype=true;
           order_sn = localStorage.getItem('order_sndata');
@@ -80,10 +82,24 @@
         let return_url = '/VipSuccessful';
         // console.log(type, order_sn, os, way);
         if (way == 1) {
-          this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
-            let wechat = this.wechatPayment
-            the.wxInitPay(wechat)
-          })
+           os = '3';
+          if(this.orderList && !istype){
+            this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+              let wechat = this.wechatPayment
+              the.wxInitPay(wechat)
+            })
+          }else if(istype){
+            this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+              let wechat = this.wechatPayment
+              the.wxInitPay(wechat)
+            })
+          }else{
+           this.getshoppOrderData(2).then((data)=>{
+              this.orderList= data.data.order_sn;
+              this.vipsuccessful()
+           });
+          }
+         
         } else if (way == 2) {
             os = '3';
           if(this.orderList && !istype){
@@ -119,10 +135,8 @@
             let token =this.$store.state.Authorization;
             var shopping=JSON.parse(localStorage.getItem('createOrderData'));
             var result='';
-            console.log(shopping);
             result=await  reqCreateOrder(token,shopping.remark,shopping.cart_list,
             shopping.product_info,shopping.address_id,shopping.share_id,shopping.invoice,data);
-            console.log(result)
             if(result.code===200){
               this.order_sned=result.data.order_sn;
             }
@@ -147,11 +161,72 @@
         }
       },
       wxInitPay(data) {
-        const the = this
-        let {appid, noncestr, partnerid, prepayid, sign, timestamp} = data
-        let packages = data.package
-        // console.log(packages);
-      }
+        const the = this;
+        this.wexinPay(
+            {
+              appId : data.appid,
+              timestamp : data.timestamp,
+              nonceStr : data.noncestr,
+              packages : `prepay_id=${data.prepayid}`,
+              signature : data.partnerid,
+              paySign : data.sign,
+              signType : data.package,
+            },
+            //成功回调函数
+            res => {
+              this.$router.push({ path: "/login" });
+            }
+        )
+     
+      },
+      wexinPay(data, cb, errorCb) {
+        //获取后台传入的数据
+        let appId = data.appId;
+        let timestamp = data.timestamp;
+        let nonceStr = data.nonceStr;
+        let signature = data.signature;
+        let packages = data.packages;
+        let paySign = data.paySign;
+        let signType = data.signType;
+        wx.config({
+              debug:true,
+              "appId":appId,     //公众号名称，由商户传入
+              "timeStamp":timestamp, //时间戳，自1970年以来的秒数
+              "nonceStr":nonceStr, //随机串
+              "package": packages,
+              "signType":signType, //微信签名方式：
+              "paySign":paySign, //微信签名
+              //这里的信息从后台返回的接口获得。
+              jsApiList: [
+                'chooseWXPay'
+              ]
+        });
+        wx.ready(function () {
+          console.log('hhhhh')
+            wx.chooseWXPay({
+                timestamp: timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: nonceStr, // 支付签名随机串，不长于 32 位
+                package: packages, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+                signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: paySign, // 支付签名
+                success: function (res) {
+                    // 支付成功后的回调函数
+                    console.log('ssss')
+                    cb(res);
+                },
+                fail: function (res) {
+                    //失败回调函数
+                    console.log('1111')
+                    errorCb(res);
+                }
+            });
+        });
+        wx.error(function (res) {
+          console,log(res)
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            alert("config信息验证失败");
+        });
+      },
     },
     destroyed() {
     },
