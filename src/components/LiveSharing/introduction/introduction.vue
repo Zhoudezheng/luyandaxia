@@ -155,6 +155,7 @@ import { Toast } from 'mint-ui'
   }
   .introduction_title {
     text-align: left;
+    line-height: 50px;
     padding-left: 20px;
     padding-top: 20px;
     padding-right: 20px;

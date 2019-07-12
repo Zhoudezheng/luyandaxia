@@ -33,7 +33,7 @@
   import {mapState} from 'vuex';
   import {reqCreateOrder} from '../../api'
   import wx from "weixin-js-sdk";
-import { debug } from 'util';
+  import { debug } from 'util';
   export default {
     data() {
       return {
@@ -161,72 +161,35 @@ import { debug } from 'util';
         }
       },
       wxInitPay(data) {
-        const the = this;
-        this.wexinPay(
-            {
-              appId : data.appid,
-              timestamp : data.timestamp,
-              nonceStr : data.noncestr,
-              packages : `prepay_id=${data.prepayid}`,
-              signature : data.partnerid,
-              paySign : data.sign,
-              signType : data.package,
-            },
-            //成功回调函数
-            res => {
-              this.$router.push({ path: "/login" });
-            }
-        )
-     
+        if (typeof WeixinJSBridge == "undefined"){  
+              if( document.addEventListener ){  
+                  document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);  
+              }else if (document.attachEvent){  
+                  document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data));   
+                  document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data));  
+              }  
+          }else{  
+              this.onBridgeReady(data);  
+          }   
       },
-      wexinPay(data, cb, errorCb) {
-        //获取后台传入的数据
-        let appId = data.appId;
-        let timestamp = data.timestamp;
-        let nonceStr = data.nonceStr;
-        let signature = data.signature;
-        let packages = data.packages;
-        let paySign = data.paySign;
-        let signType = data.signType;
-        wx.config({
-              debug:true,
-              "appId":appId,     //公众号名称，由商户传入
-              "timeStamp":timestamp, //时间戳，自1970年以来的秒数
-              "nonceStr":nonceStr, //随机串
-              "package": packages,
-              "signType":signType, //微信签名方式：
-              "paySign":paySign, //微信签名
-              //这里的信息从后台返回的接口获得。
-              jsApiList: [
-                'chooseWXPay'
-              ]
-        });
-        wx.ready(function () {
-          console.log('hhhhh')
-            wx.chooseWXPay({
-                timestamp: timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                nonceStr: nonceStr, // 支付签名随机串，不长于 32 位
-                package: packages, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-                signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                paySign: paySign, // 支付签名
-                success: function (res) {
-                    // 支付成功后的回调函数
-                    console.log('ssss')
-                    cb(res);
-                },
-                fail: function (res) {
-                    //失败回调函数
-                    console.log('1111')
-                    errorCb(res);
-                }
-            });
-        });
-        wx.error(function (res) {
-          console,log(res)
-            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-            alert("config信息验证失败");
-        });
-      },
+      onBridgeReady(data){
+           WeixinJSBridge.invoke(  
+               'getBrandWCPayRequest', {  
+                   "appId" : data.appid,     //公众号名称，由商户传入       
+                   "timeStamp": data.timestamp,         //时间戳，自1970年以来的秒数       
+                   "nonceStr" : data.noncestr, //随机串       
+                   "package" : "prepay_id=" + data.prepayid,       
+                   "signType" : 'MD5',         //微信签名方式:       
+                   "paySign" : data.sign    //微信签名   
+               },  
+                 
+               function(res){       
+                   if(res.err_msg == "get_brand_wcpay_request:ok" ) {  
+                       alert("支付成功");  
+                   }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。   
+               }  
+           );   
+        }  
     },
     destroyed() {
     },
