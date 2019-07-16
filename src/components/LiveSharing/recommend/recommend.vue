@@ -9,7 +9,7 @@
       <img src="./image/nosou.png" alt="信息" class="listed_img">
       <div class="list_div">暂无数据</div>
     </div>
-   <div class="recommend_line"></div>
+   <!-- <div class="recommend_line"></div> -->
   </div>
 </template>
 
@@ -27,8 +27,7 @@ import { fail } from 'assert';
     computed: {
     recommends: {
           get:function () {
-              this.isNull = typeof(this.$store.state.detail.recommend) == 'undefined'?true:false
-              console.log('leixing',typeof(this.$store.state.detail.recommend))
+              this.isNull = typeof(this.$store.state.detail.recommend) == 'undefined' || [] ? true:false
               return this.$store.state.detail.recommend
           },
           set:function(){
@@ -149,8 +148,11 @@ import { fail } from 'assert';
    height: 0.8px;
    background-color: #eeeeee
  }
+ .recommend_listed{
+   margin-top: 150px;
+ }
  .listed_img{
-   width: 300px;
-   height: 300px;
+   width: 300px !important;
+   height: 250px;
  }
 </style>

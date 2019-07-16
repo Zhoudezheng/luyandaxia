@@ -32,8 +32,8 @@
        </div>
     </div>
     <div class="mask" v-show="!isShow">
-      <!-- <input type="button" class="app_download" value="立即下载" @click="11111"> -->
-      <div class="mask_a1" @click="downApp">打开app参与互动</div>
+      <img src="./image/avter.png" alt="" class="avter">
+      <div class="mask_a1" @click="downApp">下载路演大侠APP参与互动</div>
       <div class="mask_a2" @click="downApp">立即下载</div>
     </div>
     <div class="interaction_line"></div>
@@ -94,10 +94,15 @@
     right: 0;
     z-index: 20;
     height: 100%;
-    background-color: rgba(74,74,74,1);
+    background-color:#E0E0E0;
     opacity: 0.7;
     text-align: center;
     
+  }
+  .mask .avter{
+    width: 300px !important;
+    height: 300px ;
+    margin-top: 123px;
   }
   .mask .mask_text{
     /* float: left; */
@@ -108,10 +113,10 @@
   }
   .mask .mask_a1{
     text-align: center;
-    color: rgba(255,255,255,1);
+    font-size: 37px;
+    color: #000000;
     margin-top: 40px;
-    font-size: 38px;
-    text-decoration:underline ;
+    font-family: PingFangSC-Thin;
   }
   .mask .mask_a2{
     text-align: center;
@@ -122,6 +127,7 @@
     background-color: rgba(243, 117, 5, 1);
     line-height: 60px;
     border-radius: 45px;
+    font-size: 30px;
     color: rgb(255,255,255,1);
   }
   .interaction_list{

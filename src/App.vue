@@ -11,7 +11,8 @@ export default {
   name: 'App',
   components: { // 局部注册, 只能在当前组件中使用
     FootGuide
-  }
+  },
+  
 }
 </script>
 
