@@ -78,9 +78,6 @@
             vip_price:"0.00",
             handler:function(e){
                 e.preventDefault();
-                // var video = document.getElementsByTagName('video');
-                // console.log("video",video[0]);
-                // video[0].setAttribute("x5-playsinline","true");
             },
         }
     },
@@ -128,7 +125,6 @@
     mounted(){
         //获取直播id
          let id = this.$route.query.id
-         
         //获取直播信息
          //this.$store.dispatch('getlivedatalist',id)
          this.$store.dispatch('getlivedatalist',id).then(()=>{
@@ -200,6 +196,9 @@
                    
                 }
             })
+             var video = document.getElementsByTagName("video");
+             console.log("video",video[0]);
+             video[0].setAttribute("x5-playsinline","true");
           },
           async liveuserToen(){
               
