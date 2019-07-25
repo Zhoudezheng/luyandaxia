@@ -7,7 +7,7 @@
           <!-- <div class="mask_a"></div> -->
           <div class="livSharing_router nva_Fixed" id='nav_flexed' >
 			<span class="liveSharing_roterone">
-                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍</router-link>
+                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍1</router-link>
             </span>
 			<span class="liveSharing_rotertwo">
                 <router-link to='Interaction'>互动</router-link>
@@ -91,7 +91,10 @@
                 {   
                     if(val >= this.computeTime){
                         this.player.pause()
+                        this.player.fullscreen(false)
                         this.isShowLive = true
+                        
+                        console.log("isshow",this.isShowLive)
                     }
                     if(this.detail.is_vip === 0){
                         if(Math.round(this.currentTime) >= 120 && !token){
@@ -203,6 +206,7 @@
                     this.dingyue = "已订阅"
                 }
             }
+            console.log("12");
           },
           async shoucang(){
               var result = await reqShoucang(this.$store.state.Authorization,"1",this.detail.id)
@@ -342,6 +346,7 @@
     width: 370px;
     /* height: 375px; */
 }
+
 .mask_live{
       position: fixed;
       width: 100%;
@@ -673,3 +678,10 @@
     background-color: rgba(243,117,5,1)
 }
 </style>
+<style>
+.vcp-player.touchable .vcp-controls-panel .vcp-timeline .vcp-slider .vcp-slider-thumb{
+    left: 0px;
+    margin-left: 0px;
+}
+</style>
+
