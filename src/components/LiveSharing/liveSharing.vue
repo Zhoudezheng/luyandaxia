@@ -186,6 +186,7 @@
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
                 // "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
+                       12:'未成功加载该视频',
                        2032: '网络错误',
                        2048: '请求m3u8文件失败，请检查是否跨域',
                        13: '直播已经结束，请稍后再来'
@@ -323,21 +324,21 @@
     /* position: fixed;
     width:750px;
     top: 0px; */
-    height: 453px;
+    height: 504px;
 }
 .videoLess .isFixed{
     overflow: hidden;
     position:fixed;
     top:0px;
     z-index:20;
-    height: 453px;
+    height: 504px;
     overflow-y: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
 
   }
   .bbb{
-      height: 372px;
+      height: 504px;
   }
 .mask_a{
     height: 400px;
@@ -357,7 +358,7 @@
 .mask_live{
       position: fixed;
       width: 100%;
-      height: 375px;
+      height: 504px;
       z-index: 31;
       left: 0;
       right: 0;
@@ -374,7 +375,7 @@
     font-weight:400;
     color:rgba(255,255,255,1);
     line-height:33px;
-    margin-top: 114px;
+    margin-top: 198px;
     margin-left: 147px;
     white-space: nowrap;
 }
@@ -508,7 +509,7 @@
 }
 .nva_Fixed{
     position:fixed;
-    top:372px;
+    top:504px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
@@ -578,7 +579,7 @@
 }
 
 .liveSharing_route{
-    height: 10px;
+    height: 78px;
 }
 .liveSharing_route .on,.ontwo,.onthree{
     float: left;
