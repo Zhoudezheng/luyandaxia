@@ -7,7 +7,7 @@
           <!-- <div class="mask_a"></div> -->
           <div class="livSharing_router nva_Fixed" id='nav_flexed' >
 			<span class="liveSharing_roterone">
-                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍1</router-link>
+                <router-link :to="{path:'introduction',query:{id:this.detail.id}}">介绍</router-link>
             </span>
 			<span class="liveSharing_rotertwo">
                 <router-link to='Interaction'>互动</router-link>
@@ -22,9 +22,11 @@
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
         <div class="masklive_div" v-show="is_vip">
             <!-- <img src="./video/shuaxin.png" alt="刷新"> -->
-            <a href="#" @click="showBuyMask"   >立即购买</a>
+            <a href="#"  @click="downApp" >立即购买</a> 
+            <!-- @click="showBuyMask"  >立即购买</a> -->
         </div>
-        <input type="text" ref="masklive_input" value="开通VIP会员" @click="vipmember">
+        <input type="text" ref="masklive_input" value="开通VIP会员" @click="downApp" > 
+        <!-- @click="vipmember"> -->
         <!-- <div class="masklive_buy" v-show="is_vip">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
@@ -74,7 +76,12 @@
             video:{},
             player:{},
             vip_price:"0.00",
-            handler:function(e){e.preventDefault();},
+            handler:function(e){
+                e.preventDefault();
+                // var video = document.getElementsByTagName('video');
+                // console.log("video",video[0]);
+                // video[0].setAttribute("x5-playsinline","true");
+            },
         }
     },
     components:{
@@ -93,8 +100,6 @@
                         this.player.pause()
                         this.player.fullscreen(false)
                         this.isShowLive = true
-                        
-                        console.log("isshow",this.isShowLive)
                     }
                     if(this.detail.is_vip === 0){
                         if(Math.round(this.currentTime) >= 120 && !token){
@@ -123,6 +128,7 @@
     mounted(){
         //获取直播id
          let id = this.$route.query.id
+         
         //获取直播信息
          //this.$store.dispatch('getlivedatalist',id)
          this.$store.dispatch('getlivedatalist',id).then(()=>{
@@ -177,8 +183,10 @@
                 "flash":true,
                 "h5_flv":true,
                 "x5_player":true,
+                "pausePosterEnabled":true,
                 "controls":"default",
                 "systemFullscreen":true,
+                "x5_type":"h5",
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
                 // "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
@@ -682,6 +690,9 @@
 .vcp-player.touchable .vcp-controls-panel .vcp-timeline .vcp-slider .vcp-slider-thumb{
     left: 0px;
     margin-left: 0px;
+}
+.vcp-player.touchable .vcp-bigplay{
+    height: 100%;
 }
 </style>
 
