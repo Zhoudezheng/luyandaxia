@@ -45,7 +45,7 @@
     <purchase  v-show="isBuyVideo" @getcacel="getCal"></purchase>
     <div class="footer_flxed" id='isfootflxed' v-show=" $route.path != '/liveSharing/Interaction'">
            <div class= 'footFixed'>
-           <img src="./video/Bitmap.png" alt="商标">
+           <img src="./video/logo.png" alt="商标">
            <span class="footer_app"> 学路演 找大侠</span>
            <input type="button" class="app_download" value="打开APP" @click="downApp">
            </div>
@@ -109,6 +109,7 @@
     ...mapState(['userviplist']),
     detail: {
         get:function () {
+            
             return this.$store.state.detail;
         },
         set:function(){
@@ -563,6 +564,7 @@
     font-weight:600;
     line-height:40px;
 }
+
 .liveSharing_route{
     height: 10px;
 }
@@ -628,7 +630,7 @@
     width: 100%;
     position: fixed;
     z-index: 222;
-    background-color: #eeeeee;
+    background-color:#141414;
     left: 0;
     right: 0;
     bottom: 0px;
@@ -648,7 +650,10 @@
 }
 .footer_flxed .footer_app{
     float: left;
-    margin: 30px 20px 0 14px;
+    margin: 25px 20px 0 20px;
+    font-family: PingFangSC-Thin;
+    font-size: 40px;
+    color: #FFFFFF;
 }
  input:focus { 
     outline: none;

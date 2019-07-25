@@ -32,6 +32,8 @@
 <script>
   import {mapState} from 'vuex';
   import {reqCreateOrder} from '../../api'
+  import wx from "weixin-js-sdk";
+  import { debug } from 'util';
   export default {
     data() {
       return {
@@ -68,7 +70,7 @@
         let way = this.activeClass
         let type = localStorage.getItem('type');
         var istype='';
-        let order_sn =''
+        let order_sn ='';
         if(type === '2' || type === '4'){
           istype=true;
           order_sn = localStorage.getItem('order_sndata');
@@ -80,10 +82,24 @@
         let return_url = '/VipSuccessful';
         // console.log(type, order_sn, os, way);
         if (way == 1) {
-          this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
-            let wechat = this.wechatPayment
-            the.wxInitPay(wechat)
-          })
+           os = '3';
+          if(this.orderList && !istype){
+            this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+              let wechat = this.wechatPayment
+              the.wxInitPay(wechat)
+            })
+          }else if(istype){
+            this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+              let wechat = this.wechatPayment
+              the.wxInitPay(wechat)
+            })
+          }else{
+           this.getshoppOrderData(2).then((data)=>{
+              this.orderList= data.data.order_sn;
+              this.vipsuccessful()
+           });
+          }
+         
         } else if (way == 2) {
             os = '3';
           if(this.orderList && !istype){
@@ -119,10 +135,8 @@
             let token =this.$store.state.Authorization;
             var shopping=JSON.parse(localStorage.getItem('createOrderData'));
             var result='';
-            console.log(shopping);
             result=await  reqCreateOrder(token,shopping.remark,shopping.cart_list,
             shopping.product_info,shopping.address_id,shopping.share_id,shopping.invoice,data);
-            console.log(result)
             if(result.code===200){
               this.order_sned=result.data.order_sn;
             }
@@ -147,11 +161,35 @@
         }
       },
       wxInitPay(data) {
-        const the = this
-        let {appid, noncestr, partnerid, prepayid, sign, timestamp} = data
-        let packages = data.package
-        // console.log(packages);
-      }
+        if (typeof WeixinJSBridge == "undefined"){  
+              if( document.addEventListener ){  
+                  document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);  
+              }else if (document.attachEvent){  
+                  document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data));   
+                  document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data));  
+              }  
+          }else{  
+              this.onBridgeReady(data);  
+          }   
+      },
+      onBridgeReady(data){
+           WeixinJSBridge.invoke(  
+               'getBrandWCPayRequest', {  
+                   "appId" : data.appid,     //公众号名称，由商户传入       
+                   "timeStamp": data.timestamp,         //时间戳，自1970年以来的秒数       
+                   "nonceStr" : data.noncestr, //随机串       
+                   "package" : "prepay_id=" + data.prepayid,       
+                   "signType" : 'MD5',         //微信签名方式:       
+                   "paySign" : data.sign    //微信签名   
+               },  
+                 
+               function(res){       
+                   if(res.err_msg == "get_brand_wcpay_request:ok" ) {  
+                       alert("支付成功");  
+                   }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。   
+               }  
+           );   
+        }  
     },
     destroyed() {
     },

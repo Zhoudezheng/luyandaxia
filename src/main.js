@@ -24,7 +24,9 @@ function setHtmlFontSize(){
 };
 setHtmlFontSize();
 router.beforeEach((to, from, next) => {
-  //console.log(to)
+  if (to.path.indexOf("liveSharing") != -1) {
+    document.title=localStorage.getItem('livingtitle') ? localStorage.getItem('livingtitle') : '路演大侠'
+  }
   if(to.meta.requireAuth){ //判断该路由是否需要登录权限
     if(store.state.Authorization){
       next()

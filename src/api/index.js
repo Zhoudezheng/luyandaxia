@@ -4,7 +4,8 @@
  */
 import ajax from './ajax';
 
-const BASE = 'http://api.kanjian2020.com/api';
+//const BASE = 'http://api.kanjian2020.com/api';
+const BASE = 'http://47.93.41.61/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');

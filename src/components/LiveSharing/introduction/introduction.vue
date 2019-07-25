@@ -107,7 +107,8 @@ import { Toast } from 'mint-ui'
             }
       this.is_collection = this.detail.is_collection===0?false:true
         let url = this.detail.url_content
-        console.log('htmlurl',url)
+        document.title=this.detail.title
+        localStorage.setItem('livingtitle',this.detail.title)
       if (url && url.length > 0) {
       // 加载中
       let param = {
@@ -148,18 +149,22 @@ import { Toast } from 'mint-ui'
   }
 </script>
 
-<style  lscoped>
+<style  scoped>
   @import '../../../../static/font/font.css';
   .introduction{
     position: relative;
   }
   .introduction_title {
     text-align: left;
+    line-height: 50px;
     padding-left: 20px;
     padding-top: 20px;
     padding-right: 20px;
     font-size: initial;
 
+  }
+  .introduction_title >>> p{
+    line-height: 50px;
   }
   .introduction_title .title_group{
     height:40px;
