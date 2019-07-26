@@ -22,11 +22,9 @@
         <p class="masklive_p">试看结束，购买课程或者会员继续观看回看</p>
         <div class="masklive_div" v-show="is_vip">
             <!-- <img src="./video/shuaxin.png" alt="刷新"> -->
-            <a href="#"  @click="downApp" >立即购买</a> 
-            <!-- @click="showBuyMask"  >立即购买</a> -->
+            <a href="#" @click="showBuyMask"  >立即购买</a>
         </div>
-        <input type="text" ref="masklive_input" value="开通VIP会员" @click="downApp" > 
-        <!-- @click="vipmember"> -->
+        <input type="text" ref="masklive_input" value="开通VIP会员" @click="vipmember">
         <!-- <div class="masklive_buy" v-show="is_vip">
             <span>您也可以</span>
             <a href="#" @click="showBuyMask">购买单片观看</a>
@@ -92,19 +90,20 @@
                 //   console.log(this.computeTime,val)
                  let token =this.$store.state.Authorization;
                 if(this.detail.can_watch === 0)
-                {   
-                    if(val >= this.computeTime){
-                        this.player.pause()
-                        this.player.fullscreen(false)
-                        this.isShowLive = true
-                    }
+                {   //如果免费视频则浏览120s后暂停，vip视频 通过判断预览时间进行暂停
                     if(this.detail.is_vip === 0){
-                        if(Math.round(this.currentTime) >= 120 && !token){
-                           this.player.pause()
+                        if(Math.round(val) >= 120 && !token){
                            this.$router.push({
                                path:'/login'
                            })
-                    } 
+                        } 
+                    }else{
+                        if(val >= this.computeTime){
+                        console.log("val",this.detail.is_vip)
+                        this.player.pause()
+                        this.player.fullscreen(false)
+                        this.isShowLive = true
+                        }  
                     }
                 }
             }
@@ -176,12 +175,13 @@
                 "autoplay" : true,      //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
                 "coverpic" : {"style": "stretch", "src":this.detail.cover},
                 "live":this.$store.state.detail.status === 1?true:false,
-                "flash":true,
+                "flash":false,
                 "h5_flv":true,
                 "x5_player":true,
                 "pausePosterEnabled":true,
                 "controls":"default",
-                "systemFullscreen":true,
+                "x5_fullscreen":"false",
+                //"systemFullscreen":true,
                 "x5_type":"h5",
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
                 // "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
@@ -324,21 +324,21 @@
     /* position: fixed;
     width:750px;
     top: 0px; */
-    height: 504px;
+    height: 425px;
 }
 .videoLess .isFixed{
     overflow: hidden;
     position:fixed;
     top:0px;
     z-index:20;
-    height: 504px;
+    height: 425px;
     overflow-y: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
 
   }
   .bbb{
-      height: 504px;
+      height: 425px;
   }
 .mask_a{
     height: 400px;
@@ -358,7 +358,7 @@
 .mask_live{
       position: fixed;
       width: 100%;
-      height: 504px;
+      height: 425px;
       z-index: 31;
       left: 0;
       right: 0;
@@ -375,7 +375,7 @@
     font-weight:400;
     color:rgba(255,255,255,1);
     line-height:33px;
-    margin-top: 198px;
+    margin-top: 147px;
     margin-left: 147px;
     white-space: nowrap;
 }
@@ -509,7 +509,7 @@
 }
 .nva_Fixed{
     position:fixed;
-    top:504px;
+    top:425px;
     z-index:20;
     overflow-y: scroll;
     width: 100%;
@@ -693,6 +693,26 @@
 }
 .vcp-player.touchable .vcp-bigplay{
     height: 100%;
+}
+.vcp-player.touchable .vcp-controls-panel{
+    width: 93%;
+    left:22px;
+}
+.vcp-player.touchable .vcp-controls-panel .vcp-panel-bg{
+    height: 82%;
+    border-radius: 5px;
+    opacity: 0.5;
+} 
+.vcp-player.touchable .vcp-controls-panel .vcp-playtoggle{
+    width: 2.4em;
+}
+.vcp-player.touchable .vcp-controls-panel .vcp-timelabel{
+    line-height: 2.4em;
+}
+.vcp-player.touchable .vcp-controls-panel .vcp-fullscreen-toggle{
+    width: 2.4em;
+    height: 2.4em;
+
 }
 </style>
 

@@ -37,7 +37,7 @@
       <span    :class="activeClass == 1 ?'weixin_check':'weixin_checked'" ></span>
     </button>
     <div class="singlevideo_line"></div>
-     <button class="singlevideo_weixin" @click="showactives">
+     <button class="singlevideo_weixin" @click="showactives" v-show="this.zfbShow">
       <img src="./image/zhifu.png" alt="微信" class="weixin_icon">
       <span class="weixin_p">支付宝支付</span>
       <span    :class="activeClass == 2 ?'weixin_check':'weixin_checked'"></span>
@@ -60,6 +60,7 @@ import {mapState} from 'vuex'
             activeClass:1,
             amount:1,
             total_cost:0,
+            zfbShow:true
         }
     },
     computed: {
@@ -75,6 +76,9 @@ import {mapState} from 'vuex'
     },
     mounted(){
         this.total_cost = this.amount * this.detail.individual_cost
+        var ua = navigator.userAgent.toLowerCase();
+    　　 var isWeixin = ua.indexOf('micromessenger') != -1;
+    　　 this.zfbShow = !isWeixin
     },
     methods: {
         liveSharing(){
@@ -107,6 +111,7 @@ import {mapState} from 'vuex'
             let form = this.alipayPayment.key
             const div = document.createElement('div');
             div.innerHTML = form; //此处form就是后台返回接收到的数据
+            console.log("div",form);
             document.body.appendChild(div);
             document.forms[0].submit()
             // console.log(data);
@@ -148,7 +153,7 @@ import {mapState} from 'vuex'
 }
 .singlevideo_div .singlevideo_mode{
     float: left;
-    width:144px;
+    /* width:144px; */
     height:50px;
     font-size:36px;
     font-family:PingFangSC-Medium;

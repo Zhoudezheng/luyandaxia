@@ -107,7 +107,10 @@ import { Toast } from 'mint-ui'
             }
       this.is_collection = this.detail.is_collection===0?false:true
         let url = this.detail.url_content
-        document.title=this.detail.title
+          var that = this
+          setTimeout(function (){
+            document.title= that.detail.title
+          },"3000");
         localStorage.setItem('livingtitle',this.detail.title)
       if (url && url.length > 0) {
       // 加载中

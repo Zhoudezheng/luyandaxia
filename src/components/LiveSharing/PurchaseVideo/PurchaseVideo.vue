@@ -4,7 +4,7 @@
       <div class="purchase_mac"></div>
       <div class="purchase_details">
          <div class="purchase_list">
-            <img src="./image/kishi.jpg" alt="1111">
+            <img :src="this.detail.frontCover" alt="1111">
             <a href="#" class="list_a1">{{this.detail.title}}</a>
             <a href="#" class="list_a2">{{this.detail.address}}</a>
          </div>
