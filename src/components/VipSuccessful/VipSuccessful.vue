@@ -22,6 +22,7 @@
         }
     },
     mounted(){
+       alert(window.location.href)
     },
     methods: {
         liveSharing(){
