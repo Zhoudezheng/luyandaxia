@@ -27,6 +27,7 @@ import {
   IMAGE_TOKEN,
   SHOP_LIKE,
   VIP_RECORD,
+  WEIXINID,
 } from './mutation-types'
 import { stat } from 'fs';
 
@@ -130,4 +131,7 @@ export default {
   [VIP_RECORD](state,data){
     state.viprecord=data
   },
+  [WEIXINID](state,data){
+    state.weixinid=data
+  }
 }

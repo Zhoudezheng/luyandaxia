@@ -31,6 +31,8 @@ export const reqProjectData = (token, id) => ajax(BASE+'/project/detail',{token,
 export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
 //获取商城首页加载更多
 export const reqShoplikeIndex = (token,page) => ajax(BASE+'/shop/more_like',{token,page},'POST');
+// 获取微信id
+export const reqWeixinId = (page) => ajax(`http://47.95.224.184/api/wechat/getopenid?code=${page}`);
 // 商城首页
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
 //获取用户地址

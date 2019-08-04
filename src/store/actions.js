@@ -27,6 +27,7 @@ import {
   IMAGE_TOKEN,
   SHOP_LIKE,
   VIP_RECORD,
+  WEIXINID,
 } from './mutation-types'
 
 import {
@@ -56,6 +57,7 @@ import {
   reqShoplikeIndex,
   reqLiveDataList,
   reqshiprecord,
+  reqWeixinId,
 } from '../api'
 import { stat } from 'fs';
 
@@ -193,6 +195,11 @@ export default {
     console.log(result.msg);
     commit(SHOP_LIKE, {})
   }
+},
+// 获取微信id
+async getweixinid({commit},data) {
+  const result = await reqWeixinId(data);
+  commit(WEIXINID, result)
 },
   // 获取购物车列表
   async getShoppingCart({commit, state}) {

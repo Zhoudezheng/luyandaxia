@@ -27,6 +27,7 @@ export const IMAGE_TOKEN = 'image_token' //获取上传图片token
 export const SHOP_LIKE = 'shop_like'//获取商城加载更多
 export const COMMON_COLLEN= 'common_collen'//是否收藏
 export const VIP_RECORD='vip_record'//获取vip购买记录
+export const WEIXINID='weixinid'
 
 
 

@@ -31,4 +31,5 @@ export default {
   shopslike:{},
   commcollen:{},
   viprecord:{},
+  weixinid:{}
 }
