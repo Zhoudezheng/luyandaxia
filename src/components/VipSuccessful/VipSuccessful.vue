@@ -7,7 +7,7 @@
     <div class="success_content">
        <img src="./image/successful.png" alt="支付成功" class="content_icon">
        <span class="content_p">支付方式：微信支付</span>
-       <span class="content_span">支付金额：¥653.80</span>
+       <span class="content_span">支付金额：{{price}}</span>
     </div>
     <div class="vip_buy">
     <input type="button" value="确定" class="buy_button">
@@ -17,15 +17,30 @@
 
 <script>
   import {mapState} from 'vuex'
+  import {reqCreateOrder,getweixincode} from '../../api'
+  import wx from "weixin-js-sdk";
   export default {
     data(){
         return {
+            re:'',
+            orderList: '',
+            price:'',
+            os: '',
+            price: "0.00",
+            order_sned:'',
         }
     },
     computed: {
       ...mapState(['weixinid','wechatPayment'])
     },
     mounted(){
+        var b= localStorage.getItem('type');
+        if( b === '2' || b == '4'){
+            this.price= localStorage.getItem('priceed');
+        }
+        else{
+            this.getOrderDetail()
+        };
         function getParam(url, name) {
             try {
                 var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -41,6 +56,7 @@
         var url=window.location.href;
         var name="code";
         var re=getParam(url,name);
+        this.re=re;
         this.getwxappid(re);
     },
     methods: {
@@ -51,7 +67,6 @@
         },
         getwxappid(re){
           this.$store.dispatch('getweixinid',re).then(()=>{
-                //   alert(this.$store.state.weixinid.openid)
             let type = localStorage.getItem('type');
             var istype='';
             let order_sn ='';
@@ -66,48 +81,60 @@
             if(this.orderList && !istype){
                 this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os, openid: this.$store.state.weixinid.openid}).then(() => {
                 let wechat = this.wechatPayment
-                the.wxInitPay(wechat)
+                this.wxInitPay(wechat)
                 })
             }else if(istype){
-                this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os, openid: this.$store.state.weixinid.openid}).then(() => {
+                this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
                 let wechat = this.wechatPayment
-                the.wxInitPay(wechat)
+                this.wxInitPay(wechat)
                 })
+            }else{
+                this.getshoppOrderData(2).then((data)=>{
+                    this.orderList= data.data.order_sn;
+                    this.getwxappid(this.re)
+                });
             }
           })
         },
-        wxInitPay(data) {
-              alert(data)    
-            if (typeof WeixinJSBridge == "undefined"){  
-                if( document.addEventListener ){  
-                    document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);  
-                }else if (document.attachEvent){  
-                    document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data));   
-                    document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data));  
-                }  
-            }else{  
-                this.onBridgeReady(data);  
-            }   
+        async getshoppOrderData (data) {
+            let token =this.$store.state.Authorization;
+            var shopping=JSON.parse(localStorage.getItem('createOrderData'));
+            var result='';
+            result=await  reqCreateOrder(token,shopping.remark,shopping.cart_list,
+            shopping.product_info,shopping.address_id,shopping.share_id,shopping.invoice,data);
+            if(result.code===200){
+              this.order_sned=result.data.order_sn;
+            }
+            return result;
         },
-        onBridgeReady(data){
-           WeixinJSBridge.invoke(  
-               'getBrandWCPayRequest', {  
-                   "appId" : data.appid,     //公众号名称，由商户传入       
-                   "timeStamp": data.timestamp,         //时间戳，自1970年以来的秒数       
-                   "nonceStr" : data.noncestr, //随机串       
-                   "package" : "prepay_id=" + data.prepayid,       
-                   "signType" : 'MD5',         //微信签名方式:       
-                   "paySign" : data.sign,    //微信签名   
-               },  
-                 
-               function(res){   
-                   alert(res)    
-                   if(res.err_msg == "get_brand_wcpay_request:ok" ) {  
-                       alert("支付成功");  
-                   }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。   
-               }  
-           );   
-        }  
+        wxInitPay(data) {
+            alert(data)
+          wx.chooseWXPay({
+            timestamp: data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: data.noncestr, // 支付签名随机串，不长于 32 位
+            package: "prepay_id=" + data.prepayid, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: data.sign, // 支付签名
+            success: function (res) {
+                // 支付成功后的回调函数
+                alert('ssss')
+            }
+        });
+        },
+        getOrderDetail() {
+            let orderDetail = localStorage.getItem('orderDetail')
+            orderDetail = JSON.parse(orderDetail)
+            this.price = orderDetail.total;
+            console.log('order',this.price)
+            let os = navigator.userAgent
+            let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
+            let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+            if (isAndroid) {
+            this.os = '1'
+            } else if (isiOS) {
+            this.os = '2'
+            }
+       }
     },
     destroyed () {
     },

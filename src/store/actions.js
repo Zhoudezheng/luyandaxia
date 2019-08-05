@@ -227,7 +227,6 @@ async getweixinid({commit},data) {
 
   // 创建商城订单
   async createOrder({commit, state}, {remark, cart_list, product_info, address_id,share_id}) {
-    console.log(remark, cart_list, product_info, address_id)
     const token = state.Authorization
     let result = await reqCreateOrder(token, remark, cart_list, product_info, address_id,share_id)
     if (result.code === 200) {
@@ -259,9 +258,9 @@ async getweixinid({commit},data) {
     commit(SAVE_ORDER,data)
   },
   // 微信支付
-  async wechatPayment({commit, state}, {order_sn, device_type, type}) {
+  async wechatPayment({commit, state}, {order_sn, device_type, type,openid}) {
     let token = state.Authorization
-    let result = await reqWechatPayment(token, order_sn, device_type, type)
+    let result = await reqWechatPayment(token, order_sn, device_type, type,openid)
     if (result.code === 200) {
       let data = result.data
       commit(WECHAT_PAYMENT, data)
@@ -274,7 +273,6 @@ async getweixinid({commit},data) {
   async alipayPayment({commit, state}, {order_sn, device_type, type, return_url}) {
     let token = state.Authorization
     let result = await reqAlipayPayment(token, order_sn, device_type, type, return_url);
-    console.log(result)
     if (result.code === 200) {
       let data = result.data
       commit(ALIPAY_PAYMENT, data)

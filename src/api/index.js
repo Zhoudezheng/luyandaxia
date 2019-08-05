@@ -5,7 +5,8 @@
 import ajax from './ajax';
 
 //const BASE = 'http://api.kanjian2020.com/api';
-const BASE = 'http://47.93.41.61/api';
+// const BASE = 'http://47.93.41.61/api';
+const BASE = 'http://47.95.224.184/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
@@ -50,7 +51,7 @@ export const reqCreateOrder = (token,remark,cart_list,product_info,address_id,sh
 // 预览订单
 export const reqConfirmOrder = (token,product_info) => ajax(BASE+'/order/confirm',{token,product_info},'POST');
 // 微信支付
-export const reqWechatPayment = (token,order_sn,device_type,type) => ajax(BASE+'/wechat/payment',{token,order_sn,device_type,type},'POST');
+export const reqWechatPayment = (token,order_sn,device_type,type,openid) => ajax(BASE+'/wechat/payment',{token,order_sn,device_type,type,openid},'POST');
 // 支付宝支付
 export const reqAlipayPayment = (token,order_sn,device_type,type) => ajax(BASE+'/alipay/payment',{token,order_sn,device_type,type},'POST');
 //获取商品详情
