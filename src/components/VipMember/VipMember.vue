@@ -106,6 +106,7 @@
           if(this.orderList && !istype){
             let order_sn=this.orderList;
             this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            localStorage.setItem('typePay','支付宝支付')
             let form = this.alipayPayment.key
             const div = document.createElement('div');
             div.innerHTML = form; //此处form就是后台返回接收到的数据
@@ -114,6 +115,7 @@
            })
           }else if(istype){
             this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+            localStorage.setItem('typePay','支付宝支付')
             let form = this.alipayPayment.key
             const div = document.createElement('div');
             div.innerHTML = form; //此处form就是后台返回接收到的数据

@@ -83,13 +83,9 @@ import { Toast } from 'mint-ui';
     },
     methods: {
         liveSharing(){
-            // this.$router.push({  
-            //     path:'/liveSharing',
-            // })
             this.$router.go(-1)
         },
         singlevideo() {
-      
             const the = this
             let way = this.activeClass
             let type = localStorage.getItem('type');
@@ -101,12 +97,7 @@ import { Toast } from 'mint-ui';
             }
             let os = this.os;
             let return_url = '/VipSuccessful';
-            // console.log(type, order_sn, os, way);
             if (way == 1) {
-            //   this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
-            //     let wechat = this.wechatPayment
-            //     the.wxInitPay(wechat)
-            //   })
               if (/MicroMessenger/.test(window.navigator.userAgent)) {
                 os = '3';
                 let a = urlencode('http://zuanshi.fansutech.com/viple');
@@ -126,18 +117,14 @@ import { Toast } from 'mint-ui';
             } else if (way == 2) {
             os = '3'
             this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+                localStorage.setItem('typePay','支付宝支付')
                 let form = this.alipayPayment.key
                 const div = document.createElement('div');
                 div.innerHTML = form; //此处form就是后台返回接收到的数据
-                console.log("div",form);
                 document.body.appendChild(div);
                 document.forms[0].submit()
-                // console.log(data);
             })
             }
-        // this.$router.push({
-        //   path: '/vipsuccessful',
-        // })
         },
         showactive(){
            this.activeClass=1

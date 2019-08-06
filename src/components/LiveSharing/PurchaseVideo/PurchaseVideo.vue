@@ -88,7 +88,6 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
         this.$emit('getcacel',false)
       },
       singlevideo(){
-        //console.log("cost",this.tatal_cost)
         if(this.activeClass ==1){
             this.buyviplist()
         }else{
@@ -98,13 +97,14 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
       async buyvideolist(){
           let token = this.$store.state.Authorization;
           let result= await reqvideoOrder(token,this.detail.id);
-          console.log(result)
+          localStorage.setItem('priceed', this.tatal_cost);
           let order_sn=result.data.order_sn;
           this.buyvideo(order_sn);
       },
       buyvideo(order_sn){
         localStorage.setItem('type', '3');
         localStorage.setItem('order_sndata', order_sn);
+        localStorage.setItem('priceed', this.tatal_cost);
         this.$router.push({
            path: '/singlevideo',
          })

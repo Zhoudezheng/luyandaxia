@@ -6,11 +6,11 @@
     <div class="success_line"></div>
     <div class="success_content">
        <img src="./image/successful.png" alt="支付成功" class="content_icon">
-       <span class="content_p">支付方式：微信支付</span>
+       <span class="content_p">支付方式：{{patytype}}</span>
        <span class="content_span">支付金额：{{price}}</span>
     </div>
-    <div class="vip_buy">
-    <input type="button" value="确定" class="buy_button">
+    <div class="vip_buy" >
+    <input type="button" value="确定" class="buy_button" @click="tonewurl">
     </div>
   </div>
 </template>
@@ -23,34 +23,27 @@
     data(){
         return {
             price: "0.00",
+            patytype:'微信支付',
+            url:'',
         }
     },
     computed: {
     },
     mounted(){
-        var b= localStorage.getItem('type');
-        if( b === '2' || b == '3'){
-            this.price= localStorage.getItem('priceed');
+      this.price= localStorage.getItem('priceP');
+      this.patytype = localStorage.getItem('typePay');
+      let type = localStorage.getItem('type');
+        if(type === '2' || type === '3'){
+            this.url = localStorage.getItem('redeurl')
+        }else{
+            this.url = localStorage.getItem('redeurled')
         }
-        else{
-            this.getOrderDetail()
-        };
     },
     methods: {
-        getOrderDetail() {
-            let orderDetail = localStorage.getItem('orderDetail')
-            orderDetail = JSON.parse(orderDetail)
-            this.price = orderDetail.total;
-            let os = navigator.userAgent
-            let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
-            let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-            if (isAndroid) {
-            this.os = '1'
-            } else if (isiOS) {
-            this.os = '2'
-            }
-       }
-    }
+        tonewurl(){
+          window.location.href=this.url;
+        }
+    },
 }
 </script>
 

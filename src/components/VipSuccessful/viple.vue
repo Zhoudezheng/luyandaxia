@@ -16,6 +16,7 @@
             os: '',
             price: "0.00",
             order_sned:'',
+            url:'',
         }
     },
     computed: {
@@ -23,7 +24,7 @@
     },
     mounted(){
         var b= localStorage.getItem('type');
-        if( b === '2' || b == '4'){
+        if( b === '2' || b == '3'){
             this.price= localStorage.getItem('priceed');
         }
         else{
@@ -65,14 +66,17 @@
             if(type === '2' || type === '3'){
                 istype=true;
                 order_sn = localStorage.getItem('order_sndata');
+                this.url = localStorage.getItem('redeurl')
             }else{
                 istype=false;
                 order_sn = this.order_sned;
+                this.url = localStorage.getItem('redeurled')
             }
             let os = '3';
             if(this.orderList && !istype){
                 this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os, openid: this.$store.state.weixinid.openid}).then(() => {
                 let wechat = this.wechatPayment
+                localStorage.setItem('priceP',this.price)
                 wx.config({
                     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                     appId: wechat.appId, // 必填，公众号的唯一标识
@@ -86,6 +90,7 @@
             }else if(istype){
                 this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os,openid: this.$store.state.weixinid.openid}).then(() => {
                 let wechat = this.wechatPayment
+                localStorage.setItem('priceP',this.price)
                 wx.config({
                     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                     appId: wechat.appId, // 必填，公众号的唯一标识
@@ -123,17 +128,14 @@
                 signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: data.paySign, // 支付签名
                 success: function (res) {
-                    alert('成功')
-                    this.$router.push('/vipsuccessful')
+                    localStorage.setItem('typePay','微信支付')
+                    window.location.href='http://zuanshi.fansutech.com/vipsuccessful'
                 },
                 fail: function (res) {
-                    alert('失败:'+JSON.stringify(res))
-                    this.$router.go(-1)
+                   window.location.href=this.url
                 },
                 cancel: function (res) {
-                     toast("已取消支付！");
-                     alert('取消')
-                     this.$router.go(-1)
+                   window.location.href=this.url
                 }
           });
          })

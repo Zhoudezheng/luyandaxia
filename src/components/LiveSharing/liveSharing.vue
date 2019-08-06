@@ -160,6 +160,7 @@
 //           }
 //         },true)
          window.addEventListener('scroll', this.handleScrollfoot,true);
+         localStorage.setItem('redeurl',window.location.href)
     },
     
     methods: {
@@ -210,7 +211,6 @@
                     this.dingyue = "已订阅"
                 }
             }
-            console.log("12");
           },
           async shoucang(){
               var result = await reqShoucang(this.$store.state.Authorization,"1",this.detail.id)

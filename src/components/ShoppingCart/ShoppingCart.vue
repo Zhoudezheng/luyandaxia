@@ -84,6 +84,7 @@ import { reqShoppingCart ,reqShoppingChange} from '../../api';
       localStorage.setItem('invoice' ,"不开发票");
       localStorage.setItem('createOrderData','');
       localStorage.setItem('invoiceed','')
+      localStorage.setItem('redeurled',window.location.href)
     },
     watch: {
       'goodLits': {

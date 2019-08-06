@@ -98,9 +98,10 @@ export default {
       console.log(result.msg);
     }
   },
-  async getlivedatalist({commit}, id) {
+  async getlivedatalist({commit,state}, id) {
     // 1. 发送异步ajax请求
-    const result = await reqLiveDataList(id)
+    let token = state.Authorization
+    const result = await reqLiveDataList(token,id)
     console.log(result)  // {code: 0, data: shops}
     // 2. 根据结果提交mutation
     if (result.code === 200) {
