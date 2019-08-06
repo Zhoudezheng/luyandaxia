@@ -84,7 +84,7 @@
         // console.log(type, order_sn, os, way);
         if (way == 1) {
            os = '3';
-           let a = urlencode('http://zuanshi.fansutech.com/vipsuccessful');
+           let a = urlencode('http://zuanshi.fansutech.com/viple');
            function urlencode (str) {  
              str = (str + '').toString();   
               return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  

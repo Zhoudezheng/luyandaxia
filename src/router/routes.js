@@ -7,6 +7,7 @@ import recommend from '../components/LiveSharing/recommend/recommend'
 import vipmember from '../components/VipMember/VipMember'
 import singlevideo from '../components/SingleVideo/SingleVideo'
 import vipsuccessful from '../components/VipSuccessful/VipSuccessful'
+import viple from '../components/VipSuccessful/viple'
 import videosuccessful from '../components/VideoSuccessful/videoSuccessful'
 import shoppingmall from '../components/ShoppingMall/ShoppingMall'
 import shoppingcart from '../components/ShoppingCart/ShoppingCart'
@@ -137,6 +138,13 @@ export default [
         requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
       },
       component:videosuccessful,
+    },
+    {
+      path:'/viple',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
+      component:viple,
     },
     {
     path: '/MyOrders',
