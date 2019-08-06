@@ -34,6 +34,7 @@
   import {reqCreateOrder,getweixincode} from '../../api'
   import wx from "weixin-js-sdk";
   import { debug } from 'util';
+  import { Toast } from 'mint-ui';
   export default {
     data() {
       return {
@@ -66,6 +67,7 @@
           this.$router.go(-1)
       },
       vipsuccessful() {
+    
         const the = this
         let way = this.activeClass
         let type = localStorage.getItem('type');
@@ -83,6 +85,7 @@
         let return_url = '/VipSuccessful';
         // console.log(type, order_sn, os, way);
         if (way == 1) {
+          if (/MicroMessenger/.test(window.navigator.userAgent)) {
            os = '3';
            let a = urlencode('http://zuanshi.fansutech.com/viple');
            function urlencode (str) {  
@@ -91,6 +94,13 @@
               replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
             }
             window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx594763adaadef6d5&redirect_uri=${a}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
+          } else if (/AlipayClient/.test(window.navigator.userAgent)) {
+            Toast('请回微信内支付')
+            return
+          } else {
+            Toast('请回微信内支付')
+            return
+          }        
         } else if (way == 2) {
             os = '3';
           if(this.orderList && !istype){

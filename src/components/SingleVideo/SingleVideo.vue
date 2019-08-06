@@ -40,7 +40,7 @@
      <button class="singlevideo_weixin" @click="showactives" v-show="this.zfbShow">
       <img src="./image/zhifu.png" alt="微信" class="weixin_icon">
       <span class="weixin_p">支付宝支付</span>
-      <span    :class="activeClass == 2 ?'weixin_check':'weixin_checked'"></span>
+      <span   :class="activeClass == 2 ?'weixin_check':'weixin_checked'"></span>
     </button>
     <div class="singlevideo_buy">
         <div class="buy_content">
@@ -54,6 +54,7 @@
 
 <script>
 import {mapState} from 'vuex'
+import { Toast } from 'mint-ui';
   export default {
     data(){
         return {
@@ -88,47 +89,56 @@ import {mapState} from 'vuex'
             this.$router.go(-1)
         },
         singlevideo() {
-        const the = this
-        let way = this.activeClass
-        let type = localStorage.getItem('type');
-        let order_sn =''
-        if(type === '2'||type === '3'){
-          order_sn = localStorage.getItem('order_sndata');
-        }else{
-          order_sn = this.orderId;
-        }
-        let os = this.os;
-        let return_url = '/VipSuccessful';
-        // console.log(type, order_sn, os, way);
-        if (way == 1) {
-        //   this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
-        //     let wechat = this.wechatPayment
-        //     the.wxInitPay(wechat)
-        //   })
-            os = '3';
-            let a = urlencode('http://zuanshi.fansutech.com/viple');
-            function urlencode (str) {  
-              str = (str + '').toString();   
-              return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
-              replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+      
+            const the = this
+            let way = this.activeClass
+            let type = localStorage.getItem('type');
+            let order_sn =''
+            if(type === '2'||type === '3'){
+            order_sn = localStorage.getItem('order_sndata');
+            }else{
+            order_sn = this.orderId;
             }
-            window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx594763adaadef6d5&redirect_uri=${a}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
-        } else if (way == 2) {
-          os = '3'
-          this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
-            let form = this.alipayPayment.key
-            const div = document.createElement('div');
-            div.innerHTML = form; //此处form就是后台返回接收到的数据
-            console.log("div",form);
-            document.body.appendChild(div);
-            document.forms[0].submit()
-            // console.log(data);
-          })
-        }
+            let os = this.os;
+            let return_url = '/VipSuccessful';
+            // console.log(type, order_sn, os, way);
+            if (way == 1) {
+            //   this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+            //     let wechat = this.wechatPayment
+            //     the.wxInitPay(wechat)
+            //   })
+              if (/MicroMessenger/.test(window.navigator.userAgent)) {
+                os = '3';
+                let a = urlencode('http://zuanshi.fansutech.com/viple');
+                function urlencode (str) {  
+                str = (str + '').toString();   
+                return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+                replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+                }
+                window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx594763adaadef6d5&redirect_uri=${a}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
+              } else if (/AlipayClient/.test(window.navigator.userAgent)) {
+                Toast('请回微信内支付')
+                return
+              } else {
+                Toast('请回微信内支付')
+                return
+              }      
+            } else if (way == 2) {
+            os = '3'
+            this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
+                let form = this.alipayPayment.key
+                const div = document.createElement('div');
+                div.innerHTML = form; //此处form就是后台返回接收到的数据
+                console.log("div",form);
+                document.body.appendChild(div);
+                document.forms[0].submit()
+                // console.log(data);
+            })
+            }
         // this.$router.push({
         //   path: '/vipsuccessful',
         // })
-      },
+        },
         showactive(){
            this.activeClass=1
         },
