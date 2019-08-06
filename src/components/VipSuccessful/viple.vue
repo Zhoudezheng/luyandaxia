@@ -62,7 +62,7 @@
             let type = localStorage.getItem('type');
             var istype='';
             let order_sn ='';
-            if(type === '2' || type === '4'){
+            if(type === '2' || type === '3'){
                 istype=true;
                 order_sn = localStorage.getItem('order_sndata');
             }else{
@@ -86,6 +86,14 @@
             }else if(istype){
                 this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os,openid: this.$store.state.weixinid.openid}).then(() => {
                 let wechat = this.wechatPayment
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: wechat.appId, // 必填，公众号的唯一标识
+                    timestamp: wechat.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: wechat.nonceStr, // 必填，生成签名的随机串
+                    signature: wechat.paySign, // 必填，签名
+                    jsApiList: [] // 必填，需要使用的JS接口列表
+                })
                 this.wxInitPay(wechat)
                 })
             }else{
@@ -115,6 +123,7 @@
                 signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: data.paySign, // 支付签名
                 success: function (res) {
+                    alert('成功')
                     this.$router.push('/vipsuccessful')
                 },
                 fail: function (res) {
@@ -123,6 +132,7 @@
                 },
                 cancel: function (res) {
                      toast("已取消支付！");
+                     alert('取消')
                      this.$router.go(-1)
                 }
           });

@@ -66,7 +66,7 @@
             isShowLive:false,
             isBuyVideo:false,
             computeTime:0,
-            currentTime:0,
+            currentTime:'',
             is_vip:true,
             dingyue:'',
             is_subscribe:false,
@@ -99,10 +99,10 @@
                         } 
                     }else{
                         if(val >= this.computeTime){
-                        console.log("val",this.detail.is_vip)
                         this.player.pause()
                         this.player.fullscreen(false)
                         this.isShowLive = true
+                        this.getandir()
                         }  
                     }
                 }
@@ -113,7 +113,6 @@
     ...mapState(['userviplist']),
     detail: {
         get:function () {
-            
             return this.$store.state.detail;
         },
         set:function(){
@@ -183,6 +182,7 @@
                 "x5_fullscreen":"false",
                 //"systemFullscreen":true,
                 "x5_type":"h5",
+                "x5-playsinline":true,
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
                 // "height" : '200',//视频的显示高度，请尽量使用视频分辨率高度
                 'wording': {
@@ -194,12 +194,8 @@
                 "listener":(msg)=>{
                     if(msg.type != 'error')
                     this.currentTime = msg.src.el.currentTime
-                   
                 }
             })
-             var video = document.getElementsByTagName("video");
-             console.log("video",video[0]);
-             video[0].setAttribute("x5-playsinline","true");
           },
           async liveuserToen(){
               
@@ -306,7 +302,19 @@
                     //Android终端
                     window.location ='https://android.myapp.com/myapp/detail.htm?apkName=com.BlackDiamond2010.hzs&ADTAG=mobile'
                 }
-        }, 
+          }, 
+         getandir(){
+             let ua = navigator.userAgent.toLowerCase();
+                //Android终端
+             let isAndroid = ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1;  
+             let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+             if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+                    //Ios
+              
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                this.player.destroy()
+            }
+         },
     },
     destroyed () {
           window.removeEventListener('scroll', this.handleScrollfoot)
@@ -325,6 +333,7 @@
     width:750px;
     top: 0px; */
     height: 425px;
+    z-index: -1;
 }
 .videoLess .isFixed{
     overflow: hidden;
@@ -359,13 +368,13 @@
       position: fixed;
       width: 100%;
       height: 425px;
-      z-index: 31;
+      z-index: 2000;
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
       background-color: black;
-      opacity: 0.8;
+      opacity: 1;
 }
 .mask_live .masklive_p{
      width:456px;

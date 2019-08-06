@@ -159,7 +159,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
  .purchase{
    position: fixed;
    bottom: 0;
-   z-index: 999;
+   z-index: 3000;
    left: 0;
    right: 0;
    height: 100%;

@@ -29,7 +29,7 @@
     },
     mounted(){
         var b= localStorage.getItem('type');
-        if( b === '2' || b == '4'){
+        if( b === '2' || b == '3'){
             this.price= localStorage.getItem('priceed');
         }
         else{

@@ -71,7 +71,7 @@
         let type = localStorage.getItem('type');
         var istype='';
         let order_sn ='';
-        if(type === '2' || type === '4'){
+        if(type === '2' || type === '3'){
           istype=true;
           order_sn = localStorage.getItem('order_sndata');
         }else{
@@ -141,7 +141,6 @@
         let orderDetail = localStorage.getItem('orderDetail')
         orderDetail = JSON.parse(orderDetail)
         this.price = orderDetail.total;
-        console.log('order',this.price)
         let os = navigator.userAgent
         let isAndroid = os.indexOf('Android') > -1 || os.indexOf('Adr') > -1
         let isiOS = !!os.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);

@@ -101,10 +101,18 @@ import {mapState} from 'vuex'
         let return_url = '/VipSuccessful';
         // console.log(type, order_sn, os, way);
         if (way == 1) {
-          this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
-            let wechat = this.wechatPayment
-            the.wxInitPay(wechat)
-          })
+        //   this.$store.dispatch('wechatPayment', {type, order_sn, device_type: os}).then(() => {
+        //     let wechat = this.wechatPayment
+        //     the.wxInitPay(wechat)
+        //   })
+            os = '3';
+            let a = urlencode('http://zuanshi.fansutech.com/viple');
+            function urlencode (str) {  
+              str = (str + '').toString();   
+              return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+              replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+            }
+            window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx594763adaadef6d5&redirect_uri=${a}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
         } else if (way == 2) {
           os = '3'
           this.$store.dispatch('alipayPayment', {type, order_sn, device_type: os, return_url}).then(() => {
