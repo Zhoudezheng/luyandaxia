@@ -133,16 +133,32 @@
             // 停止计时
             this.computeTime = 0
           }
-
+        console.log('code',result.code)
         // 2. 根据请求返回的结果, 做不同的响应
-        if(result.code===0) { // 登陆请求成功
+        if(result.code===200) { // 登陆请求成功
           // 保存user到state中
           const user = result.data
           // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
-          this.$router.replace('/liveSharing')
+          MessageBox.confirm('', {
+                    title: '提示',
+                    message: result.msg,
+                    showCancelButton: false,
+                }).then(action => {
+                    if (action == 'confirm') { //确认的回调
+                      this.$router.push({
+                        path:'/login'
+                      }) 
+                    }
+                }).catch(err => {
+                    if (err == 'cancel') { //取消的回调
+                        window.location.reload();
+                    }
+                });
+          //this.$router.replace('/liveSharing')
         } else { // 失败
           MessageBox.alert(result.msg)
+          
         }
     },
      async sendCode() {
@@ -168,6 +184,7 @@
           this.computeTime = 0
           // alert('发送验证码失败')
           MessageBox.alert(result.msg)
+          
         }
       },
     },
@@ -365,4 +382,10 @@
     color:rgba(243,117,5,1);
     line-height:42px;
   }
+  
+</style>
+<style>
+.mint-msgbox {
+  width:60%;
+}
 </style>

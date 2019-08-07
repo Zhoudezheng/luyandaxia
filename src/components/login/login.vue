@@ -98,12 +98,13 @@
         // 1. 进行前台表单验证
         const {username, password} = this
         let result
+        if (!password) {
+            return MessageBox.alert('密码必须指定')
+          } 
           // 2. 发送登陆的请求
         result = await reqPwdLogin(username, password)
         console.log(result)
-         if (!password) {
-            return MessageBox.alert('密码必须指定')
-          } 
+         
 
         // 2. 根据请求返回的结果, 做不同的响应
         if(result.code===200) { // 登陆请求成功
@@ -267,4 +268,11 @@
     line-height:42px;
   }
 
+
 </style>
+<style>
+.mint-msgbox {
+  width:60%;
+}
+</style>
+

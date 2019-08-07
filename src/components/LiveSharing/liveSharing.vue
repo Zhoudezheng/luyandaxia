@@ -89,6 +89,7 @@
                 //判断是否能看，能看则播放，不能看则判断试看时间
                 //   console.log(this.computeTime,val)
                  let token =this.$store.state.Authorization;
+                 console.log(token)
                 if(this.detail.can_watch === 0)
                 {   //如果免费视频则浏览120s后暂停，vip视频 通过判断预览时间进行暂停
                     if(this.detail.is_vip === 0){
@@ -161,6 +162,7 @@
 //         },true)
          window.addEventListener('scroll', this.handleScrollfoot,true);
          localStorage.setItem('redeurl',window.location.href)
+         console.log('redeurl',window.location.href)
     },
     
     methods: {
@@ -704,8 +706,8 @@
     height: 100%;
 }
 .vcp-player.touchable .vcp-controls-panel{
-    width: 93%;
-    left:22px;
+    width: 85%;
+    left:55px;
 }
 .vcp-player.touchable .vcp-controls-panel .vcp-panel-bg{
     height: 82%;

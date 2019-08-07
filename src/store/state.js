@@ -4,7 +4,7 @@
 // }
 // export default state
 export default {
-  Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
+  Authorization: sessionStorage.getItem('Authorization') ? sessionStorage.getItem('Authorization') : '',
   detail: {}, 
   videoUrl:{},
   editadd:{},
