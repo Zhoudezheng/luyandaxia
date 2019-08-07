@@ -140,7 +140,6 @@
           const user = result.data
           // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
-          console.log(user)
           this.$router.replace('/liveSharing')
         } else { // 失败
           MessageBox.alert(result.msg)

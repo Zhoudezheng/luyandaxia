@@ -82,7 +82,7 @@
      login(){
        this.$router.push({  
         //  回到注册页面
-        path:'/',
+        path:'/register',
       })
     },
    
@@ -110,13 +110,17 @@
           // 保存user到state中
           const user = result.data;
           const userToken =result.data.token;
-          console.log(userToken)
           this.$store.dispatch('setUserData', userToken)
           // 跳转到个人中心
           if(this.$route.query.redirect){
             this.$router.replace(this.$route.query.redirect);
           }else{
-            this.$router.go(-1)
+            let a= localStorage.getItem('redeurl');
+            if(a){
+             window.location.href=a
+            }else{
+             this.$router.push('/shoppingmall')
+            }
           }
         
           
