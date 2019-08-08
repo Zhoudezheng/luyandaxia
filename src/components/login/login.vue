@@ -164,9 +164,9 @@
     background:rgba(255,255,255,1);
   }
   .login_content div input{
-    margin: 77px 399px 11px 0;
+    /* margin: 77px 399px 11px 0; */
     width:100%;
-    height:40px;
+    height:56%;
     font-size:28px;
     font-family:PingFangSC-Regular;
     font-weight:400;
@@ -204,9 +204,9 @@
     background:rgba(255,255,255,1);
   }
   .login_passcss input{
-    margin: 77px 0 11px 0;
+    /* margin: 77px 0 11px 0; */
     width:196px;
-    height:40px;
+    height:56%;
     font-size:28px;
     font-family:PingFangSC-Regular;
     font-weight:400;
@@ -222,6 +222,9 @@
     width:587px;
     height:2px;
     border-top:3px solid rgba(253,153,27,1);
+  }
+  .login_submit{
+    /* margin-top: 50px; */
   }
   .login_submit .login_button{
     margin: 70px 61px 0 60px;
