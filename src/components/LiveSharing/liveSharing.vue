@@ -77,6 +77,7 @@
             handler:function(e){
                 e.preventDefault();
             },
+            id:'',
         }
     },
     components:{
@@ -88,8 +89,7 @@
             handler: function (val){
                 //判断是否能看，能看则播放，不能看则判断试看时间
                 //   console.log(this.computeTime,val)
-                 let token =this.$store.state.Authorization;
-                 console.log(token)
+                let token =this.$store.state.Authorization;
                 if(this.detail.can_watch === 0)
                 {   //如果免费视频则浏览120s后暂停，vip视频 通过判断预览时间进行暂停
                     if(this.detail.is_vip === 0){
@@ -124,6 +124,7 @@
     mounted(){
         //获取直播id
          let id = this.$route.query.id
+         this.id=id;
         //获取直播信息
          //this.$store.dispatch('getlivedatalist',id)
          this.$store.dispatch('getlivedatalist',id).then(()=>{
@@ -147,22 +148,8 @@
             this.setVideo();
          },1000)
          this.box = this.$refs.wo;
-//          this.box.addEventListener('scroll', () => {
-//          var nav = document.querySelector('#nav_flexed')
-//          var offsetTop = document.querySelector('#nav_flexed').offsetTop;
-//          console.log('nav',nav)
-//          console.log('dscroll',this.$refs.wo.scrollTop)
-//          console.log('nscroll',offsetTop)
-//           if (this.$refs.wo.scrollTop > 20) {
-//                  this.nvaBarFixed = true
-//           } 
-//            if( this.$refs.wo.scrollTop < 20) {
-//                  this.nvaBarFixed = false
-//           }
-//         },true)
          window.addEventListener('scroll', this.handleScrollfoot,true);
          localStorage.setItem('redeurl',window.location.href)
-         console.log('redeurl',window.location.href)
     },
     
     methods: {
@@ -199,11 +186,21 @@
                     this.currentTime = msg.src.el.currentTime
                 }
             })
+            if(this.id == localStorage.getItem('livesharingId')){
+               let token = this.$store.state.Authorization;
+               if(this.detail.can_watch === 0){
+                if(token){
+                    this.isBuyVideo=true;
+                    this.player.currentTime(120)
+                }
+               }
+            }else{
+               localStorage.setItem('livesharingId',this.id)
+            }
+         
           },
           async liveuserToen(){
-              
             var result = await reqDingyue(this.$store.state.Authorization,this.detail.publisher_id)
-
             if (result.code === 200) {
                 Toast(result.msg);
                 this.is_subscribe = !this.is_subscribe
@@ -257,7 +254,7 @@
             let token =this.$store.state.Authorization;
             if(token){
               //this.closeTouch();
-              this.isBuyVideo=true
+              this.isBuyVideo=true;
             }else{
               this.$router.push({
                  path:'/login'
