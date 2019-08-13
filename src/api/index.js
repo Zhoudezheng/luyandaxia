@@ -4,9 +4,9 @@
  */
 import ajax from './ajax';
 
-//const BASE = 'http://api.kanjian2020.com/api';
+const BASE = 'http://api.kanjian2020.com/api';
 // const BASE = 'http://47.93.41.61/api';
-const BASE = 'http://47.95.224.184/api';
+// const BASE = 'http://47.95.224.184/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
@@ -33,7 +33,7 @@ export const reqShopIndex = () => ajax(BASE+'/shop/index1',{},'POST');
 //获取商城首页加载更多
 export const reqShoplikeIndex = (token,page) => ajax(BASE+'/shop/more_like',{token,page},'POST');
 // 获取微信id
-export const reqWeixinId = (page) => ajax(`http://47.95.224.184/api/wechat/getopenid?code=${page}`);
+export const reqWeixinId = (page) => ajax(`http://api.kanjian2020.com/api/wechat/getopenid?code=${page}`);
 // 商城首页
 export const reqShoppingCart = (token) => ajax(BASE+'/shopping_cart/list',{token},'POST');
 //获取用户地址

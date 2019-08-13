@@ -169,8 +169,8 @@
                 "x5_player":true,
                 "pausePosterEnabled":true,
                 "controls":"default",
-                "x5_fullscreen":"false",
-                //"systemFullscreen":true,
+                "x5_fullscreen":"true",
+                "systemFullscreen":true,
                 "x5_type":"h5",
                 "x5-playsinline":true,
                 // "width" :  '370',//视频的显示宽度，请尽量使用视频分辨率宽度
@@ -309,7 +309,7 @@
              let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
              if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                     //Ios
-              
+              this.player.destroy()
             } else if (/(Android)/i.test(navigator.userAgent)) {
                 this.player.destroy()
             }

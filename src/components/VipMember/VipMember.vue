@@ -87,7 +87,7 @@
         if (way == 1) {
           if (/MicroMessenger/.test(window.navigator.userAgent)) {
            os = '3';
-           let a = urlencode('http://zuanshi.fansutech.com/viple');
+           let a = urlencode('http://www.kanjian2020.com/viple');
            function urlencode (str) {  
              str = (str + '').toString();   
               return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
