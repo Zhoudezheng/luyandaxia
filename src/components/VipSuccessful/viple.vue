@@ -129,7 +129,7 @@
                 paySign: data.paySign, // 支付签名
                 success: function (res) {
                     localStorage.setItem('typePay','微信支付')
-                    window.location.href='http://zuanshi.fansutech.com/vipsuccessful'
+                    window.location.href='http://www.kanjian2020.com/vipsuccessful'
                 },
                 fail: function (res) {
                    window.location.href=this.url
