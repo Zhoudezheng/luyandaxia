@@ -219,9 +219,9 @@
     background:rgba(255,255,255,1);
   }
   .register_content div input{
-    margin: 77px 399px 11px 0;
+    margin: 50px 399px 0 0;
     width:100%;
-    height:40px;
+    height:56%;
     font-size:28px;
     font-family:PingFangSC-Regular;
     font-weight:400;
@@ -260,9 +260,9 @@
   }
   .register_content .register_verificationInput input{
     float: left;
-    margin: 77px 150px 11px 0;
+    margin: 60px 150px 0px 0;
     width:168px;
-    height:40px;
+    height:56%;
     font-size:28px;
     font-family:PingFangSC-Regular;
     font-weight:400;
