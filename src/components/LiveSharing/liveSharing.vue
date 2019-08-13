@@ -196,13 +196,21 @@
             if(this.id == localStorage.getItem('livesharingId')){
                let token = this.$store.state.Authorization;
                if(this.detail.can_watch === 0){
+                this.showprompt=true
                 if(token){
                     this.isBuyVideo=true;
                     this.player.currentTime(120)
                 }
+               }else{
+                 this.showprompt=false
                }
             }else{
                localStorage.setItem('livesharingId',this.id)
+               if(this.detail.can_watch === 0){
+                this.showprompt=true
+               }else{
+                 this.showprompt=false
+               }
             }
          
           },
