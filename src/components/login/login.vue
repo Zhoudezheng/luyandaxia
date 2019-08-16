@@ -1,6 +1,5 @@
 <template>
-  <section class="loginContainer">
-    <div class="loginInner">
+  <div class="loginInner" ref="outerWrapper">
       <div class="login_header">
         <img src="./image/Bitmap.png" alt="头像">
         <p>路演大侠</p>
@@ -10,13 +9,13 @@
           <div >
             <section class="login_phone">
               <div class="login_phoneInput">
-               <input type="tel" maxlength="11" placeholder="输入11位手机号码" v-model="username" @focus="focus" @blur.prevent="inputLoseFocus">
+               <input type="tel" maxlength="11" placeholder="输入11位手机号码" v-model="username" @focus="focus" @blur="inputLoseFocus">
                <div class="login_phonep" :class="{login_phonepfocus: isfocus}" ></div>
               </div>
             </section>
             <section class="login_pass">
                <div class="login_passcss">
-                <input :type="showPwd ? 'text' : 'password'" maxlength="16" placeholder="请输入登录密码" v-model="password" @focus="focusPwd" @blur.prevent="inputLoseFocus">
+                <input :type="showPwd ? 'text' : 'password'" maxlength="16" placeholder="请输入登录密码" v-model="password" @focus="focusPwd" @blur="inputLoseFocus">
                 <div class="switch_button" >
                   <div class="switch_circle"></div>
                   <span class="switch_text">{{showPwd ? 'abc' : ''}}</span>
@@ -34,8 +33,7 @@
           <!-- <button class="login_submit" @click.prevent="login">登录</button> -->
         </form>
       </div>
-    </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -50,6 +48,7 @@
         showPwd:false,
         isfocus:false,
         focuspwds:false,
+        isCanScroll: false
      }
    },
     mounted () {
@@ -72,13 +71,14 @@
         return /^1\d{10}$/.test(this.username)
       },
     },
-    
+   watch: {
+      'isCanScroll' (value) {
+        if (value) {
+          this.$refs.outerWrapper.scrollIntoView()
+        }
+      }
+   }, 
    methods: {
-     inputLoseFocus() {
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-        }, 100);
-      },
      login(){
        this.$router.push({  
         //  回到注册页面
@@ -87,12 +87,17 @@
     },
    
     focus(){
-         this.isfocus=true
-         this.focuspwds=false
+        this.isCanScroll = false
+        this.isfocus=true
+        this.focuspwds=false
      },
      focusPwd(){
+         this.isCanScroll = false
          this.isfocus=false
          this.focuspwds=true
+     },
+     inputLoseFocus(){
+        this.isCanScroll = true
      },
     async liveSharing () {
         // 1. 进行前台表单验证
@@ -140,6 +145,13 @@
 
 <style  scoped>
   @import '../../../static/font/font.css';
+  .loginInner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
   .login_header img{
     width: 160px;
     height: 160px;
@@ -275,7 +287,32 @@
 </style>
 <style>
 .mint-msgbox {
-  width:60%;
+  width:75%;
+  height: 19%;
+}
+.mint-msgbox-header{
+  padding-top: 30px;
+  height: 40px;
+}
+.mint-msgbox-title{
+  height: 100%;
+  font-size: 36px !important;
+}
+.mint-msgbox-content{
+  height: 70px;
+  line-height: 70px;
+}
+.mint-msgbox-message{
+  font-size: 32px;
+  line-height: 80px;
+}
+.mint-msgbox-btns{
+  height: 80px;
+  line-height: 80px;
+}
+.mint-msgbox-confirm{
+  font-size: 34px;
+  line-height: 80px;
 }
 </style>
 

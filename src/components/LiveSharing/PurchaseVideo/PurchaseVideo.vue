@@ -11,18 +11,18 @@
          <div class="purchase_lines"></div>
          <p class="purchase_content">{{this.detail.info}}</p>
          <div class="purchase_linesed"></div>
-         <button type="button" :class="activeClass == 1 ? 'purchase_button':'purchase_buttoned'" @click="showactive">
+         <div  :class="activeClass == 1 ? 'purchase_button':'purchase_buttoned'" @click="showactive">
            <span class="button_span">VIP会员</span>
            <span class="button_Vip">（所有全免费）</span>
            <span class="button_money">¥{{this.vip_price}}</span>
            <img src="./image/Group.png" alt="已勾选" v-show="activeClass == 1" class="button_po">
-         </button>
-          <button type="button" :class="activeClass == 2 ? 'purchase_button':'purchase_buttoned'" @click="showactives" >
+         </div>
+          <div :class="activeClass == 2 ? 'purchase_button':'purchase_buttoned'" @click="showactives" >
            <span class="button_span">购买视频</span>
            <span class="button_Vip">（本视频{{this.detail.viewing_time}}小时免费看）</span>
-           <span class="button_money">¥{{this.video_price}}</span>
+           <div class="button_money">¥{{this.video_price}}</div>
            <img src="./image/Group.png" alt="已勾选" v-show='activeClass == 2' class="button_po"> 
-         </button>
+         </div>
          <div class="purchase_quanyi">
            <!-- <img src="./image/quanyi.png" alt="权益"> -->
            <span v-html="instro_html">VIP特权</span>
@@ -254,6 +254,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     height: 106px;
  }
  .purchase_details .purchase_button{
+    margin-left: 20px;
     width:694px;
     height:98px;
     background:rgba(255,247,233,1);
@@ -266,6 +267,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     text-align: left;
  }
  .purchase_details .purchase_buttoned{
+    margin-left: 20px;
     width:694px;
     height:98px;
     background:rgba(249,250,251,1);
@@ -312,6 +314,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     line-height:28px;
     margin-right: 28px;
     margin-top: 33px;
+    z-index: 11111
  }
  .purchase_button img{
     width: 40px !important;
@@ -355,6 +358,7 @@ import {reqvipinfolist,reqvideoOrder} from '../../../api'
     line-height:28px;
     margin-right: 28px;
     margin-top: 33px;
+    z-index: 11111
 }
 .purchase_buttoned img{
     position: absolute;

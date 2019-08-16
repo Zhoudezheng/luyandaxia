@@ -1,6 +1,5 @@
 <template>
-  <section class="registerContainer">
-    <div class="registerInner">
+    <div class="registerInner" ref="outerWrapper">
       <div class="register_header">
         <img src="./image/Bitmap.png" alt="头像">
         <p>路演大侠</p>
@@ -10,13 +9,13 @@
           <div class="register_flex">
             <section class="register_phone">
               <div class="register_phoneInput">
-               <input  type="tel" maxlength="11" placeholder="输入11位手机号码" v-model="phone" @focus="focus" @blur.prevent="inputLoseFocus">
+               <input  type="tel" maxlength="11" placeholder="输入11位手机号码" v-model="phone" @focus="focus" @blur="inputLoseFocus">
                <div class="register_phonep" :class="{register_phonepfocus: isfocus}" ></div>
               </div>
             </section>
             <section class="register_verification">
               <div class="register_verificationInput">
-               <input type="text" maxlength="6" placeholder="请输入验证码" v-model="code" @focus="focusCode" @blur.prevent="inputLoseFocus">
+               <input type="text" maxlength="6" placeholder="请输入验证码" v-model="code" @focus="focusCode" @blur="inputLoseFocus">
                <span class='register_verificationspan'></span>
                <button type="button" class="register_secode" 
                   :disabled="!isRightPhone || computeTime>0" 
@@ -28,7 +27,7 @@
             </section>
             <section class="register_pass">
                <div class="register_passcss">
-                <input  id='abc' maxlength="16" type='password' placeholder="请输入登录密码" v-model="password" @focus="focusPwd" @blur.prevent="inputLoseFocus">
+                <input  id='abc' maxlength="16" type='password' placeholder="请输入登录密码" v-model="password" @focus="focusPwd" @blur="inputLoseFocus">
                 <div class="switch_button">
                   <div class="switch_circle"></div>
                   <span class="switch_text"></span>
@@ -54,8 +53,6 @@
         </form>
       </div>
     </div>
-  </section>
- 
 </template>
 
 <script>
@@ -73,6 +70,7 @@
         focuspwds:false,
         buttonImgs:false,
         intervalId:null,
+        isCanScroll: false
       }
     },
     mounted () {
@@ -89,7 +87,13 @@
       } 
 
     },
- 
+   watch: {
+      'isCanScroll' (value) {
+        if (value) {
+          this.$refs.outerWrapper.scrollIntoView()
+        }
+      }
+   }, 
    computed: {
       // 判断phone是否是一个正确的手机号
       isRightPhone () {
@@ -97,22 +101,23 @@
       }
     },
    methods: {
-     inputLoseFocus() {
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-        }, 100);
+      inputLoseFocus() {
+        this.isCanScroll = true
       },
      focus(){
+         this.isCanScroll = false
          this.isfocus=true
          this.focusCodes=false
          this.focuspwds=false
      },
      focusCode(){
+         this.isCanScroll = false
          this.isfocus=false
          this.focuspwds=false
          this.focusCodes=true
      },
      focusPwd(){
+         this.isCanScroll = false
          this.isfocus=false
          this.focuspwds=true
          this.focusCodes=false
@@ -193,8 +198,19 @@
 }
 </script>
 
-<style  lscoped>
+<style  scoped>
   @import '../../../static/font/font.css';
+  .registerInner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+    overflow-x: hidden;
+    padding-bottom: 30px;
+  }
   .register_header img{
     width: 160px;
     height: 160px;
@@ -386,6 +402,31 @@
 </style>
 <style>
 .mint-msgbox {
-  width:60%;
+  width:75%;
+  height: 19%;
+}
+.mint-msgbox-header{
+  padding-top: 30px;
+  height: 40px;
+}
+.mint-msgbox-title{
+  height: 100%;
+  font-size: 36px !important;
+}
+.mint-msgbox-content{
+  height: 70px;
+  line-height: 70px;
+}
+.mint-msgbox-message{
+  font-size: 32px;
+  line-height: 80px;
+}
+.mint-msgbox-btns{
+  height: 80px;
+  line-height: 80px;
+}
+.mint-msgbox-confirm{
+  font-size: 34px;
+  line-height: 80px;
 }
 </style>
