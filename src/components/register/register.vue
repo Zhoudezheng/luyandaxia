@@ -402,6 +402,7 @@
 </style>
 <style>
 .mint-msgbox {
+  padding: 20px 0 !important;
   width:75%;
   height: 19%;
 }
@@ -414,19 +415,19 @@
   font-size: 36px !important;
 }
 .mint-msgbox-content{
-  height: 70px;
-  line-height: 70px;
+  height: 70px !important;
+  line-height: 70px !important;
 }
 .mint-msgbox-message{
   font-size: 32px;
-  line-height: 80px;
+  line-height: 80px !important;
 }
 .mint-msgbox-btns{
-  height: 80px;
-  line-height: 80px;
+  height: 80px !important;
+  line-height: 80px !important;
 }
 .mint-msgbox-confirm{
-  font-size: 34px;
-  line-height: 80px;
+  font-size: 34px !important;
+  line-height: 80px !important;
 }
 </style>
