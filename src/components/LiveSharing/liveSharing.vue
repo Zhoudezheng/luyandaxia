@@ -3,7 +3,8 @@
     <div class="videoLess" id='flxedoff'>
           <div class="isFixed">
            <div id="id_test_video" style="width:100%;" class="bbb"></div>
-           <div class="prompt" v-show="showprompt">当前可试看到02:01,请购买课程或开通VIP</div>
+            <!-- //视频试看提示 后期打开 -->
+           <!-- <div class="prompt" v-show="showprompt">当前可试看到02:01,请购买课程或开通VIP</div> -->
           </div>
           <!-- <div class="mask_a"></div> -->
           <div class="livSharing_router nva_Fixed" id='nav_flexed' >
@@ -75,7 +76,8 @@
             video:{},
             player:{},
             vip_price:"0.00",
-            showprompt:false,
+             //视频试看提示 后期打开
+            // showprompt:false,
             handler:function(e){
                 e.preventDefault();
             },
@@ -145,11 +147,12 @@
             }
             //是否收藏
             this.is_collection = this.detail.is_collection===0?false:true
-            if(this.detail.can_watch === 0){
-                this.showprompt=true
-            }else{
-                this.showprompt=false
-            }
+             //视频试看提示 后期打开
+            // if(this.detail.can_watch === 0){
+            //     this.showprompt=true
+            // }else{
+            //     this.showprompt=false
+            // }
          })
           setTimeout(()=>{
             this.setVideo();
@@ -196,21 +199,24 @@
             if(this.id == localStorage.getItem('livesharingId')){
                let token = this.$store.state.Authorization;
                if(this.detail.can_watch === 0){
-                this.showprompt=true
+                 //视频试看提示 后期打开
+                // this.showprompt=true
                 if(token){
                     this.isBuyVideo=true;
                     this.player.currentTime(120)
                 }
-               }else{
-                 this.showprompt=false
+                 //视频试看提示 后期打开
+            //    }else{
+            //      this.showprompt=false
                }
             }else{
                localStorage.setItem('livesharingId',this.id)
-               if(this.detail.can_watch === 0){
-                this.showprompt=true
-               }else{
-                 this.showprompt=false
-               }
+                //视频试看提示 后期打开
+            //    if(this.detail.can_watch === 0){
+            //     this.showprompt=true
+            //    }else{
+            //      this.showprompt=false
+            //    }
             }
          
           },
@@ -359,7 +365,8 @@
     width: 100%;
     -webkit-overflow-scrolling: touch;
   }
-  .prompt{
+   /* //视频试看提示 后期打开 */
+  /* .prompt{
     position: absolute;
     bottom: 110px;
     height: 40px;
@@ -369,7 +376,7 @@
     background-color: black;
     left: 60px;
     color: #ffffff;
-  }
+  } */
   .bbb{
       height: 425px;
   }
