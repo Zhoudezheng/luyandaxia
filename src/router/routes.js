@@ -1,5 +1,6 @@
 import register from '../components/register/register'
 import Login from '../components/login/login'
+import passWord from '../components/login/passWord'
 import LiveSharing from '../components/LiveSharing/liveSharing'
 import Interaction from '../components/LiveSharing/interaction/interaction'
 import introduction from '../components/LiveSharing/introduction/introduction'
@@ -31,7 +32,6 @@ import Classification from '../components/Classification/Classification'
 import orderdetail from '../components/OrderDetail/orderdetail'
 import membershiprecord from '../components/MembershipRecord/membershiprecord'
 import recommenddetail from '../components/recommendDetail/recommendDetail'
-
 export default [
     {
       path: '/login',
@@ -40,6 +40,10 @@ export default [
     {
       path: '/register',
       component: register,
+    },
+    {
+      path: '/passWord',
+      component: passWord,
     },
     {
       path: '/liveSharing',

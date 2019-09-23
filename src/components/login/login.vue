@@ -28,7 +28,8 @@
                <input style='-webkit-appearance:none,appearance:none' class="login_buttoned" type="button" value="确定" :disabled="!isRightPhone" :class="{login_button:isRightPhone}" @click.prevent="liveSharing">
           </div>
           <p class="login_users">
-             <a class="login_user" @click="login">注册账号</a>
+            <a class="login_user" @click="login">注册账号</a>
+            <a class="login_userd" @click="resPossword">忘记密码</a>
           </p>
           <!-- <button class="login_submit" @click.prevent="login">登录</button> -->
         </form>
@@ -79,13 +80,15 @@
       }
    }, 
    methods: {
-     login(){
+    login(){
        this.$router.push({  
         //  回到注册页面
         path:'/register',
       })
     },
-   
+    resPossword () {
+      this.$router.push('/passWord')
+    },
     focus(){
         this.isCanScroll = false
         this.isfocus=true
@@ -114,8 +117,8 @@
         // 2. 根据请求返回的结果, 做不同的响应
         if(result.code===200) { // 登陆请求成功
           // 保存user到state中
-          const user = result.data;
-          const userToken =result.data.token;
+          const user =result && result.data;
+          const userToken =result && result.data.token;
           this.$store.dispatch('setUserData', userToken)
           // 跳转到个人中心
           if(this.$route.query.redirect){
@@ -128,8 +131,6 @@
              this.$router.push('/shoppingmall')
             }
           }
-        
-          
           // 测试页面专用
           // this.$router.push({
           //   path:'/shoppingmall'
@@ -235,9 +236,9 @@
     height:2px;
     border-top:3px solid rgba(253,153,27,1);
   }
-  .login_submit{
-    /* margin-top: 50px; */
-  }
+  /* .login_submit{
+    margin-top: 50px;
+  } */
   .login_submit .login_button{
     margin: 70px 61px 0 60px;
     width:629px;
@@ -271,7 +272,10 @@
      background-color: #C0C0C0!important; 
    } 
   .login_users{
-    margin-top: 30px;
+    /* margin-top: 30px; */
+    margin: 30px 101px 0 101px;
+    display: flex;
+    justify-content:space-between;
   }
   .login_users .login_user{
     width:120px;
@@ -280,6 +284,15 @@
     font-family:PingFangSC-Regular;
     font-weight:400;
     color:rgba(243,117,5,1);
+    line-height:42px;
+  }
+  .login_users .login_userd{
+    width:120px;
+    height:42px;
+    font-size:30px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    /* color:rgba(243,117,5,1); */
     line-height:42px;
   }
 

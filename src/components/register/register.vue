@@ -138,11 +138,11 @@
             // 停止计时
             this.computeTime = 0
           }
-        console.log('code',result.code)
+        // console.log('code',result.code)
         // 2. 根据请求返回的结果, 做不同的响应
         if(result.code===200) { // 登陆请求成功
           // 保存user到state中
-          const user = result.data
+          const user = result && result.data
           // this.$store.dispatch('saveUser', user)
           // 跳转到个人中心
           MessageBox.confirm('', {
@@ -161,12 +161,16 @@
                     }
                 });
           //this.$router.replace('/liveSharing')
+        } else if(result.code === 400){
+          Toast(result.msg)
+          this.$router.push({
+            path:'/login'
+          }) 
         } else { // 失败
           MessageBox.alert(result.msg)
-          
         }
     },
-     async sendCode() {
+    sendCode() {
         // 开始倒计时
         this.computeTime = 60
         // 启动循环定时器
@@ -180,17 +184,24 @@
           }
         }, 1000)
         // 发送ajax
-        const result = await reqSendCode(this.phone,'register')
-        if(result.code===200) { // 发送验证码成功
+        reqSendCode(this.phone,'register').then((result)=>{
+          if(result.code===200) { // 发送验证码成功
           // alert('发送验证码成功')
-          Toast(result.msg);
-        } else { // 失败了
-          // 停止定时器
-          this.computeTime = 0
-          // alert('发送验证码失败')
-          MessageBox.alert(result.msg)
-          
-        }
+            Toast(result.msg);
+          } else if(result.code == 400){
+            Toast(result.msg)
+          } else { // 失败了
+            // 停止定时器
+            this.computeTime = 0
+            // alert('发送验证码失败')
+            Toast(result.msg);
+          }
+        }).catch((result)=>{
+            this.computeTime = 0
+            // alert('发送验证码失败')
+            Toast('该用户已注册');
+        })
+        
       },
     },
 
@@ -401,6 +412,14 @@
   
 </style>
 <style>
+.mint-toast{
+  width: 45%;
+  height: 6%;
+  font-size: 16px;
+}
+.mint-toast-text{
+  font-size: 36px;
+}
 .mint-msgbox {
   padding: 20px 0 !important;
   width:75%;

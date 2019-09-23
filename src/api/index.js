@@ -4,9 +4,9 @@
  */
 import ajax from './ajax';
 
-const BASE = 'http://api.kanjian2020.com/api';
+// const BASE = 'http://api.kanjian2020.com/api';
 // const BASE = 'http://47.93.41.61/api';
-// const BASE = 'http://47.95.224.184/api';
+const BASE = 'http://47.95.224.184/api';
 
 // [1、发送短信验证码](#7发送短信验证码)<br/>
 export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
@@ -14,6 +14,10 @@ export const reqSendCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'P
 export const reqSmsLogin = (nickname,phone,code,password) => ajax(BASE + '/account/register', {nickname,phone,code,password},'POST');
 // [3、用户名密码登陆](#6用户名密码登陆)<br/
 export const reqPwdLogin = (username, password) => ajax(BASE+'/login/phone', {username, password}, 'POST');
+// 重置密码
+export const reqforgetLogin = (phone, password,check_code) => ajax(BASE+'/account/modify_password', {phone, password,check_code}, 'POST');
+// 重置发送验证码
+export const reqforgetCode = (phone,type) => ajax(BASE + '/sms', {phone,type }, 'POST');
 //  4.直播详情
 //export const reqLiveDetail = (id)=>ajax(BASE+'/',{id},'POST');
 //[4、直播信息]
