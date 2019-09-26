@@ -260,7 +260,7 @@
             })
            },
           handleScrollfoot () {
-              let sh = document.getElementById('aaa').scrollHeight
+              let sh =document.getElementById('aaa') && document.getElementById('aaa').scrollHeight
               let st = document.documentElement.scrollTop
               let ch = document.documentElement.clientHeight
 	          if (Math.ceil(st + ch) > sh) {

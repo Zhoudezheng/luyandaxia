@@ -104,4 +104,6 @@ export const reqpagelist = (token,page) => ajax(BASE+'/shop/more_like',{token,pa
 export const reqvideoOrder = (token,id) => ajax(BASE+'/live/buy',{token,id},'POST');
 //创建项目订单
 export const reqProjectOrder = (token,id,type) => ajax(BASE+'/project/buy',{token,id,type},'POST');
-
+// 获取频道分享id
+export const reqpublisher = (id) => ajax(BASE+`/publisher/infoH5?id=${id}`);
+export const reqsharingList = (obj) => ajax(BASE+`/live/listByChannel`, obj ,'POST');

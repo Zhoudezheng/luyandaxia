@@ -32,6 +32,8 @@ import Classification from '../components/Classification/Classification'
 import orderdetail from '../components/OrderDetail/orderdetail'
 import membershiprecord from '../components/MembershipRecord/membershiprecord'
 import recommenddetail from '../components/recommendDetail/recommendDetail'
+import channelShare from '../components/channelShare/channelShare'
+import chanelDetail from '../components/channelShare/chanelDetail/chanelDetail'
 export default [
     {
       path: '/login',
@@ -86,6 +88,17 @@ export default [
         requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
       },
       component: vipmember,
+    },
+    {
+      path: '/channelShare',
+      meta: {
+        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+      },
+      component: channelShare,
+    },
+    {
+      path: '/chanelDetail',
+      component: chanelDetail,
     },
     {
       path:'/singlevideo',
