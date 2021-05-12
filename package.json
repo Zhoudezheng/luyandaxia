@@ -24,7 +24,7 @@
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.23.0",
     "qiniu-js": "^2.5.4",
-    "swiper": "^4.4.6",
+    "swiper": "^6.5.1",
     "videojs-contrib-hls": "^5.15.0",
     "videojs-contrib-hls.js": "^3.2.0",
     "vue": "^2.5.2",
